@@ -53,7 +53,7 @@ public final class DyBase implements Base {
 
     @Override
     public Pitches pitches() {
-        return new DyPitches();
+        return new DyPitches(this.region);
     }
 
     @Override

@@ -17,6 +17,7 @@
  */
 package com.seedramp.haters.model;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -37,7 +38,7 @@ public interface Pitch {
     /**
      * ID of it.
      */
-    int id();
+    int id() throws IOException;
 
     /**
      * Approve it.
@@ -48,30 +49,30 @@ public interface Pitch {
      * Name of the author.
      * @return Author of the pitch (twitter handle)
      */
-    String author();
+    String author() throws IOException;
 
     /**
      * Text of the pitch.
      * @return The text
      */
-    String text();
+    String text() throws IOException;
 
     /**
      * When was it posted.
      * @return The date
      */
-    Date date();
+    Date date() throws IOException;
 
     /**
      * Points.
      * @return How many points it has
      */
-    int points();
+    int points() throws IOException;
 
     /**
      * How many times it was voted.
      * @return How many votes it has
      */
-    int voted();
+    int voted() throws IOException;
 
 }

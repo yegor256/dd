@@ -17,6 +17,11 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
 import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Pitches;
 
@@ -29,13 +34,42 @@ import com.seedramp.haters.model.Pitches;
  */
 public final class DyPitches implements Pitches {
 
+    /**
+     * The region to work with.
+     */
+    private final transient Region region;
+
+    /**
+     * Ctor.
+     * @param reg Region
+     */
+    public DyPitches(final Region reg) {
+        this.region = reg;
+    }
+
     @Override
     public Iterable<Pitch> home() {
-        throw new UnsupportedOperationException("#home()");
+        return Iterables.transform(
+            this.table().frame(),
+            new Function<Item, Pitch>() {
+                @Override
+                public Pitch apply(final Item item) {
+                    return new DyPitch(item);
+                }
+            }
+        );
     }
 
     @Override
     public void post(final String text, final String author) {
         throw new UnsupportedOperationException("#post()");
+    }
+
+    /**
+     * Table to work with.
+     * @return Table
+     */
+    private Table table() {
+        return this.region.table("authors");
     }
 }
