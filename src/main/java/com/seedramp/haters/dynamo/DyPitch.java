@@ -17,6 +17,9 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.dynamo.Item;
 import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Votes;
@@ -56,8 +59,13 @@ public final class DyPitch implements Pitch {
     }
 
     @Override
-    public void approve() {
-        throw new UnsupportedOperationException("#approve()");
+    public void approve(final String author) throws IOException {
+        this.item.put(
+            "visible",
+            new AttributeValueUpdate()
+                .withAction(AttributeAction.PUT)
+                .withValue(new AttributeValue().withN("1"))
+        );
     }
 
     @Override

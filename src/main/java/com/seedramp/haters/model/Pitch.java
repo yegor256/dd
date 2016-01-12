@@ -42,8 +42,9 @@ public interface Pitch {
 
     /**
      * Approve it.
+     * @param author Who approves it
      */
-    void approve();
+    void approve(String author) throws IOException;
 
     /**
      * Name of the author.

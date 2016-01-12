@@ -29,6 +29,19 @@
             <body>
                 <section>
                     <xsl:apply-templates select="flash"/>
+                    <p>
+                        <a href="{links/link[@rel='home']/@href}">
+                            <xsl:text>home</xsl:text>
+                        </a>
+                        <xsl:text> </xsl:text>
+                        <a href="{links/link[@rel='takes:github']/@href}">
+                            <xsl:text>login</xsl:text>
+                        </a>
+                        <xsl:text> </xsl:text>
+                        <a href="{links/link[@rel='submit']/@href}">
+                            <xsl:text>submit</xsl:text>
+                        </a>
+                    </p>
                     <xsl:apply-templates select="." mode="body"/>
                 </section>
             </body>

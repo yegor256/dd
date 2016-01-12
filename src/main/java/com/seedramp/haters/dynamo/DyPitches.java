@@ -19,11 +19,16 @@ package com.seedramp.haters.dynamo;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Tv;
+import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
+import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Pitches;
+import java.io.IOException;
 
 /**
  * Dynamo Pitches.
@@ -50,7 +55,16 @@ public final class DyPitches implements Pitches {
     @Override
     public Iterable<Pitch> home() {
         return Iterables.transform(
-            this.table().frame(),
+            this.table()
+                .frame()
+                .through(
+                    new QueryValve()
+                        .withLimit(Tv.TWENTY)
+                        .withIndexName("home")
+                        .withScanIndexForward(false)
+                        .withConsistentRead(false)
+                )
+                .where("visible", Conditions.equalTo(1)),
             new Function<Item, Pitch>() {
                 @Override
                 public Pitch apply(final Item item) {
@@ -61,8 +75,18 @@ public final class DyPitches implements Pitches {
     }
 
     @Override
-    public void post(final String text, final String author) {
-        throw new UnsupportedOperationException("#post()");
+    public Pitch post(final String text, final String author)
+        throws IOException {
+        final Item item = this.table().put(
+            new Attributes()
+                .with("id", System.currentTimeMillis())
+                .with("text", text)
+                .with("author", author)
+                .with("visible", 0)
+                .with("date", System.currentTimeMillis())
+                .with("rank", 0)
+        );
+        return new DyPitch(item);
     }
 
     /**
@@ -70,6 +94,6 @@ public final class DyPitches implements Pitches {
      * @return Table
      */
     private Table table() {
-        return this.region.table("authors");
+        return this.region.table("pitches");
     }
 }

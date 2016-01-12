@@ -15,31 +15,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.dynamo;
 
-import java.io.IOException;
+import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.model.Pitches;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Pitches.
- *
+ * Integration case for {@link DyPitches}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public interface Pitches {
+public final class DyPitchesITCase {
 
     /**
-     * Home page.
-     * @return Iterable of pitches for home page
+     * DyPitches can post and list.
+     * @throws Exception If some problem inside
      */
-    Iterable<Pitch> home();
-
-    /**
-     * Post a new pitch.
-     * @param text Text to post
-     * @param author Author who is posting
-     * @return Pitch
-     */
-    Pitch post(String text, String author) throws IOException;
+    @Test
+    public void postsAndLists() throws Exception {
+        final Pitches pitches = new DyPitches(new Dynamo());
+        final Pitch pitch = pitches.post("test", "jeffrey");
+        pitch.approve("bobby");
+        MatcherAssert.assertThat(
+            pitches.home(),
+            Matchers.not(Matchers.<Pitch>emptyIterable())
+        );
+    }
 
 }

@@ -94,6 +94,7 @@ final class RsPage extends RsWrap {
                 new XeFlash(req),
                 new XeGithubLink(req, Manifests.read("Haters-GithubId")),
                 new XeLogoutLink(req),
+                new XeLink("submit", "/submit"),
                 new XeAppend(
                     "version",
                     new XeAppend("name", Manifests.read("Haters-Version")),

@@ -41,7 +41,7 @@ public final class FkPitch implements Pitch {
     }
 
     @Override
-    public void approve() {
+    public void approve(final String author) {
         // nothing to do
     }
 

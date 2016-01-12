@@ -36,7 +36,7 @@ public final class FkPitches implements Pitches {
     }
 
     @Override
-    public void post(final String text, final String author) {
-        // nothing to do
+    public Pitch post(final String text, final String author) {
+        return new FkPitch();
     }
 }

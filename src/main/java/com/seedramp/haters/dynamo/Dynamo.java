@@ -60,17 +60,21 @@ final class Dynamo implements Region {
             key,
             Manifests.read("Haters-DynamoSecret")
         );
+        final Region region;
         if (key.startsWith("AAAAA")) {
             final int port = Integer.parseInt(
                 System.getProperty("dynamo.port")
             );
-            creds = new Credentials.Direct(creds, port);
+            region = new Region.Simple(new Credentials.Direct(creds, port));
             Logger.warn(Dynamo.class, "test DynamoDB at port #%d", port);
+        } else {
+            region = new Region.Prefixed(
+                new ReRegion(new Region.Simple(creds)),
+                "haters-"
+            );
         }
         Logger.info(Dynamo.class, "DynamoDB connected as %s", key);
-        return new Region.Prefixed(
-            new ReRegion(new Region.Simple(creds)), "haters-"
-        );
+        return region;
     }
 
 }

@@ -5,8 +5,8 @@
             "AttributeType": "N"
         },
         {
-            "AttributeName": "pending",
-            "AttributeType": "B"
+            "AttributeName": "visible",
+            "AttributeType": "N"
         },
         {
             "AttributeName": "author",
@@ -31,13 +31,13 @@
         "ReadCapacityUnits": "1",
         "WriteCapacityUnits": "1"
     },
-    "TableName": "haters-pitches",
+    "TableName": "pitches",
     "GlobalSecondaryIndexes": [
         {
             "IndexName": "home",
             "KeySchema": [
                 {
-                    "AttributeName": "pending",
+                    "AttributeName": "visible",
                     "KeyType": "HASH"
                 },
                 {

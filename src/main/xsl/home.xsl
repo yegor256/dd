@@ -25,15 +25,9 @@
         <title>
             <xsl:text>haters</xsl:text>
         </title>
-        <link rel="stylesheet" type="text/css" media="all"
-            href="/css/home.css"/>
+        <link rel="stylesheet" href="/css/home.css"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <p>
-            <a href="{links/link[@rel='takes:twitter']/@href}">
-                <xsl:text>login</xsl:text>
-            </a>
-        </p>
         <xsl:apply-templates select="pitches"/>
     </xsl:template>
     <xsl:template match="pitches">

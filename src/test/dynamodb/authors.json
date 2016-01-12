@@ -15,5 +15,5 @@
         "ReadCapacityUnits": "1",
         "WriteCapacityUnits": "1"
     },
-    "TableName": "haters-authors"
+    "TableName": "authors"
 }

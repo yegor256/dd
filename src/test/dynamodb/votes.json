@@ -27,7 +27,7 @@
         "ReadCapacityUnits": "1",
         "WriteCapacityUnits": "1"
     },
-    "TableName": "haters-votes",
+    "TableName": "votes",
     "LocalSecondaryIndexes": [
         {
             "IndexName": "top",

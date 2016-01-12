@@ -25,12 +25,14 @@
         <title>
             <xsl:text>submit</xsl:text>
         </title>
+        <link rel="stylesheet" href="/css/home.css"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <form action="">
-            <textarea name="text">
+        <form action="" method="post">
+            <textarea name="text" style="width:100%;height:5em;">
                 <xsl:text> </xsl:text>
             </textarea>
+            <button type="submit">Submit</button>
         </form>
     </xsl:template>
 </xsl:stylesheet>

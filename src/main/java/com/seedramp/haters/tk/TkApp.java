@@ -17,18 +17,24 @@
  */
 package com.seedramp.haters.tk;
 
+import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.seedramp.haters.model.Base;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import org.takes.Take;
 import org.takes.facets.auth.TkSecure;
 import org.takes.facets.flash.TkFlash;
 import org.takes.facets.fork.FkAnonymous;
 import org.takes.facets.fork.FkAuthenticated;
+import org.takes.facets.fork.FkFixed;
+import org.takes.facets.fork.FkHitRefresh;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.facets.forward.TkForward;
 import org.takes.tk.TkClasspath;
+import org.takes.tk.TkFiles;
 import org.takes.tk.TkGzip;
 import org.takes.tk.TkMeasured;
 import org.takes.tk.TkVersioned;
@@ -55,8 +61,9 @@ public final class TkApp extends TkWrap {
     /**
      * Ctor.
      * @param base Base
+     * @throws IOException If fails
      */
-    public TkApp(final Base base) {
+    public TkApp(final Base base) throws IOException {
         super(TkApp.make(base));
     }
 
@@ -64,8 +71,9 @@ public final class TkApp extends TkWrap {
      * Ctor.
      * @param base Base
      * @return Takes
+     * @throws IOException If fails
      */
-    private static Take make(final Base base) {
+    private static Take make(final Base base) throws IOException {
         if (!"UTF-8".equals(Charset.defaultCharset().name())) {
             throw new IllegalStateException(
                 String.format(
@@ -98,17 +106,24 @@ public final class TkApp extends TkWrap {
      * Regex takes.
      * @param base Base
      * @return Takes
+     * @throws IOException If fails
      */
-    private static Take regex(final Base base) {
+    private static Take regex(final Base base) throws IOException {
         return new TkFork(
             new FkRegex("/robots.txt", ""),
             new FkRegex(
-                "/xsl/.*",
-                new TkWithType(new TkClasspath(), "text/xsl")
+                "/xsl/[a-z\\-]+\\.xsl",
+                new TkWithType(
+                    TkApp.refresh("./src/main/xsl"),
+                    "text/xsl"
+                )
             ),
             new FkRegex(
-                "/css/.*",
-                new TkWithType(new TkClasspath(), "text/css")
+                "/css/[a-z]+\\.css",
+                new TkWithType(
+                    TkApp.refresh("./src/main/scss"),
+                    "text/css"
+                )
             ),
             new FkAnonymous(
                 new TkFork(
@@ -123,6 +138,34 @@ public final class TkApp extends TkWrap {
                     )
                 )
             )
+        );
+    }
+
+    /**
+     * Hit refresh fork.
+     * @param path Path of files
+     * @return Fork
+     * @throws IOException If fails
+     */
+    @SuppressWarnings("PMD.DoNotUseThreads")
+    private static Take refresh(final String path) throws IOException {
+        return new TkFork(
+            new FkHitRefresh(
+                new File(path),
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        new VerboseProcess(
+                            new ProcessBuilder(
+                                "mvn",
+                                "generate-resources"
+                            )
+                        ).stdout();
+                    }
+                },
+                new TkFiles("./target/classes")
+            ),
+            new FkFixed(new TkClasspath())
         );
     }
 

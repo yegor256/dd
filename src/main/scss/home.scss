@@ -1,15 +1,2 @@
-* {
-  font-family: monospace;
-}
+@import 'layout';
 
-.flash {
-  &.SEVERE {
-    color: red;
-  }
-  &.INFO {
-    color: green;
-  }
-  &.WARNING {
-    color: orange;
-  }
-}
