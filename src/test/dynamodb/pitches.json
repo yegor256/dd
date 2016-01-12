@@ -1,0 +1,77 @@
+{
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "id",
+            "AttributeType": "N"
+        },
+        {
+            "AttributeName": "pending",
+            "AttributeType": "B"
+        },
+        {
+            "AttributeName": "author",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "date",
+            "AttributeType": "N"
+        },
+        {
+            "AttributeName": "rank",
+            "AttributeType": "N"
+        }
+    ],
+    "KeySchema": [
+        {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+        }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": "1",
+        "WriteCapacityUnits": "1"
+    },
+    "TableName": "haters-pitches",
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "home",
+            "KeySchema": [
+                {
+                    "AttributeName": "pending",
+                    "KeyType": "HASH"
+                },
+                {
+                    "AttributeName": "rank",
+                    "KeyType": "RANGE"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": "1",
+                "WriteCapacityUnits": "1"
+            }
+        },
+        {
+            "IndexName": "mine",
+            "KeySchema": [
+                {
+                    "AttributeName": "author",
+                    "KeyType": "HASH"
+                },
+                {
+                    "AttributeName": "date",
+                    "KeyType": "RANGE"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": "1",
+                "WriteCapacityUnits": "1"
+            }
+        }
+    ]
+}

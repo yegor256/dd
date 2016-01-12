@@ -1,0 +1,8 @@
+Haters-Revision: BUILD
+Haters-Version: ${project.version}
+Haters-Date: ${timestamp}
+Haters-DynamoKey: ${dynamo.key}
+Haters-DynamoSecret: ${dynamo.secret}
+Haters-GithubId: ${github.id}
+Haters-GithubSecret: ${github.secret}
+Haters-SecurityKey: ${security.key}

@@ -1,0 +1,15 @@
+* {
+  font-family: monospace;
+}
+
+.flash {
+  &.SEVERE {
+    color: red;
+  }
+  &.INFO {
+    color: green;
+  }
+  &.WARNING {
+    color: orange;
+  }
+}

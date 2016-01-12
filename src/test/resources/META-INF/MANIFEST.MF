@@ -1,0 +1,8 @@
+Haters-Revision: a1b2c3e
+Haters-Version: 1.0
+Haters-Date: ${timestamp}
+Haters-DynamoKey: ${failsafe.dynamo.key}
+Haters-DynamoSecret: ${failsafe.dynamo.secret}
+Haters-GithubId: ${failsafe.github.id}
+Haters-GithubSecret: ${failsafe.github.secret}
+Haters-SecurityKey: ${failsafe.security.key}
