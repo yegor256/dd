@@ -115,7 +115,7 @@ public final class TkAppTest {
             "/robots.txt",
             "/submit",
             "/xsl/layout.xsl",
-            "/css/index.css",
+            "/css/home.css",
         };
         for (final String uri : uris) {
             MatcherAssert.assertThat(

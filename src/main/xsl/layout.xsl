@@ -24,8 +24,6 @@
                 <meta charset="UTF-8"/>
                 <link rel="shortcut icon" type="image/png"
                     href="http://www.seedramp.com/images/icon-64x64.png"/>
-                <link rel="stylesheet" type="text/css" media="all"
-                    href="//yegor256.github.io/tacit/tacit.min.css"/>
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>

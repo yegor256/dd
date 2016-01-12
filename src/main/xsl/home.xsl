@@ -25,6 +25,8 @@
         <title>
             <xsl:text>haters</xsl:text>
         </title>
+        <link rel="stylesheet" type="text/css" media="all"
+            href="/css/home.css"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <p>
