@@ -27,6 +27,7 @@ import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Votes;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Dynamo Pitch.
@@ -72,11 +73,12 @@ public final class DyPitch implements Pitch {
 
     @Override
     public void delete() throws IOException {
-        this.item.frame()
+        final Iterator<Item> items = this.item.frame()
             .through(new QueryValve().withLimit(1))
             .where("id", Conditions.equalTo(this.id()))
-            .iterator()
-            .remove();
+            .iterator();
+        items.next();
+        items.remove();
     }
 
     @Override
