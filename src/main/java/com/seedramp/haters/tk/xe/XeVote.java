@@ -18,6 +18,7 @@
 package com.seedramp.haters.tk.xe;
 
 import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.model.Vote;
 import java.io.IOException;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
@@ -27,41 +28,37 @@ import org.takes.rs.xe.XeWrap;
 import org.xembly.Directives;
 
 /**
- * Pitch as a Xembly source.
+ * Vote as a Xembly source.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class XePitch extends XeWrap {
+public final class XeVote extends XeWrap {
 
     /**
      * Ctor.
-     * @param pitch Pitch
+     * @param vote Vote
      * @throws IOException If fails
      */
-    public XePitch(final Pitch pitch) throws IOException {
+    public XeVote(final Pitch pitch, final Vote vote) throws IOException {
         super(
             new XeAppend(
-                "pitch",
+                "vote",
                 new XeChain(
                     new XeDirectives(
                         new Directives()
-                            .add("id").set(pitch.id()).up()
-                            .add("text").set(pitch.text()).up()
-                            .add("points").set(pitch.points()).up()
+                            .add("author").set(vote.author()).up()
+                            .add("text").set(vote.text()).up()
+                            .add("points").set(vote.points()).up()
+                            .add("positive").set(vote.positive()).up()
                     ),
                     new XeLink(
-                        "see",
-                        String.format("/p/%d", pitch.id())
-                    ),
-                    new XeLink(
-                        "delete",
-                        String.format("/p/%d/delete", pitch.id())
-                    ),
-                    new XeLink(
-                        "approve",
-                        String.format("/p/%d/approve", pitch.id())
+                        "vote",
+                        String.format(
+                            "/p/%d/vote/%s",
+                            pitch.id(), vote.author()
+                        )
                     )
                 )
             )

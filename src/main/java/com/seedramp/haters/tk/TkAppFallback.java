@@ -77,7 +77,7 @@ final class TkAppFallback extends TkWrap {
                 new FbStatus(
                     HttpURLConnection.HTTP_BAD_REQUEST,
                     new RsWithStatus(
-                        new RsText("invalid request"),
+                        new RsText("bad request"),
                         HttpURLConnection.HTTP_BAD_REQUEST
                     )
                 ),

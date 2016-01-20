@@ -49,7 +49,8 @@ public final class TkPitch extends TkWrap {
             new FkPitch("", new TkIndex(base)),
             new FkPitch("/approve", new TkApprove(base)),
             new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/vote", new TkVote(base))
+            new FkPitch("/post", new TkPost(base)),
+            new FkPitch("/vote/.*", new TkVote(base))
         );
     }
 

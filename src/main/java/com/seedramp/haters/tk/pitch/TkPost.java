@@ -15,29 +15,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.tk.pitch;
 
+import com.seedramp.haters.model.Base;
+import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
 
 /**
- * Author.
+ * Post a vote.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Author {
+final class TkPost implements Take {
 
     /**
-     * How many points it has now.
-     * @return Points
+     * Base.
      */
-    long points() throws IOException;
+    private final transient Base base;
 
     /**
-     * Add points.
-     * @param points Points to add
+     * Ctor.
+     * @param bse Base
      */
-    void add(long points) throws IOException;
+    TkPost(final Base bse) {
+        this.base = bse;
+    }
+
+    @Override
+    public Response act(final Request req) throws IOException {
+        final Pitch pitch = new RqPitch(this.base, req).pitch();
+        pitch.votes().post(
+            new RqForm.Smart(new RqForm.Base(req)).single("text"),
+            new RqAuthor(req).name()
+        );
+        return new RsForward(
+            new RsFlash("thanks!"),
+            String.format("/p/%d", pitch.id())
+        );
+    }
 
 }

@@ -53,7 +53,10 @@ final class TkApprove implements Take {
     public Response act(final Request req) throws IOException {
         final Pitch pitch = new RqPitch(this.base, req).pitch();
         pitch.approve(new RqAuthor(req).name());
-        return new RsForward(new RsFlash("approved, thanks!"));
+        return new RsForward(
+            new RsFlash("approved, thanks!"),
+            "/pending"
+        );
     }
 
 }

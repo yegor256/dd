@@ -19,17 +19,15 @@ package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.model.Base;
 import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
 
 /**
- * Post a vote.
+ * Vote for a vote.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -53,10 +51,7 @@ final class TkVote implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Pitch pitch = new RqPitch(this.base, req).pitch();
-        pitch.votes().post(
-            new RqForm.Smart(new RqForm.Base(req)).single("text"),
-            new RqAuthor(req).name()
-        );
+        // not implemented yet
         return new RsForward(new RsFlash("thanks!"));
     }
 

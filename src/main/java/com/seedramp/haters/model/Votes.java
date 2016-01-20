@@ -17,6 +17,8 @@
  */
 package com.seedramp.haters.model;
 
+import java.io.IOException;
+
 /**
  * Votes.
  *
@@ -37,6 +39,6 @@ public interface Votes {
      * @param text Text of the vote
      * @param author Author posting
      */
-    void post(String text, String author);
+    void post(String text, String author) throws IOException;
 
 }

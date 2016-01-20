@@ -15,29 +15,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.dynamo;
 
+import com.jcabi.dynamo.Item;
+import com.seedramp.haters.model.Vote;
 import java.io.IOException;
 
 /**
- * Author.
+ * Dynamo Vote.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Author {
+public final class DyVote implements Vote {
 
     /**
-     * How many points it has now.
-     * @return Points
+     * The item.
      */
-    long points() throws IOException;
+    private final transient Item item;
 
     /**
-     * Add points.
-     * @param points Points to add
+     * Ctor.
+     * @param itm Item with pitch
      */
-    void add(long points) throws IOException;
+    public DyVote(final Item itm) {
+        this.item = itm;
+    }
 
+    @Override
+    public String author() throws IOException {
+        return this.item.get("author").getS();
+    }
+
+    @Override
+    public String text() throws IOException {
+        return this.item.get("text").getS();
+    }
+
+    @Override
+    public boolean positive() throws IOException {
+        return Integer.parseInt(this.item.get("positive").getN()) != 0;
+    }
+
+    @Override
+    public long points() throws IOException {
+        return Long.parseLong(this.item.get("points").getN());
+    }
 }

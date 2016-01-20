@@ -15,29 +15,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.tk.xe;
 
+import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.model.Vote;
 import java.io.IOException;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeTransform;
+import org.takes.rs.xe.XeWrap;
 
 /**
- * Author.
+ * Votes as a Xembly source.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Author {
+public final class XeVotes extends XeWrap {
 
     /**
-     * How many points it has now.
-     * @return Points
+     * Ctor.
+     * @param pitch Pitch
+     * @param votes Votes
      */
-    long points() throws IOException;
-
-    /**
-     * Add points.
-     * @param points Points to add
-     */
-    void add(long points) throws IOException;
-
+    public XeVotes(final Pitch pitch, final Iterable<Vote> votes) {
+        super(
+            new XeAppend(
+                "votes",
+                new XeTransform<>(
+                    votes,
+                    new XeTransform.Func<Vote>() {
+                        @Override
+                        public XeSource transform(final Vote vote)
+                            throws IOException {
+                            return new XeVote(pitch, vote);
+                        }
+                    }
+                )
+            )
+        );
+    }
 }

@@ -17,6 +17,8 @@
  */
 package com.seedramp.haters.model;
 
+import java.io.IOException;
+
 /**
  * Vote.
  *
@@ -30,24 +32,24 @@ public interface Vote {
      * Name of the author.
      * @return Author of the vote (twitter handle)
      */
-    String author();
+    String author() throws IOException;
 
     /**
      * Text of the vote.
      * @return The text
      */
-    String text();
+    String text() throws IOException;
 
     /**
      * Is it positive?
      * @return TRUE if positive
      */
-    boolean positive();
+    boolean positive() throws IOException;
 
     /**
      * Points.
      * @return How many points it has (absolute value, always above zero)
      */
-    int points();
+    long points() throws IOException;
 
 }

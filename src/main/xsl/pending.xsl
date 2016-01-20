@@ -35,8 +35,10 @@
     </xsl:template>
     <xsl:template match="pitch">
         <p>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="id"/>
+            <xsl:text>: </xsl:text>
             <xsl:value-of select="text"/>
-            <br/>
             <a href="{links/link[@rel='approve']/@href}">
                 <xsl:text>approve</xsl:text>
             </a>

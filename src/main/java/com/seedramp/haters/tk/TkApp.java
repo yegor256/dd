@@ -17,6 +17,7 @@
  */
 package com.seedramp.haters.tk;
 
+import com.jcabi.aspects.Tv;
 import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.seedramp.haters.model.Base;
@@ -135,7 +136,13 @@ public final class TkApp extends TkWrap {
                 new TkSecure(
                     new TkFork(
                         new FkRegex("/", new TkHome(base)),
-                        new FkRegex("/pending", new TkPending(base)),
+                        new FkRegex(
+                            "/pending",
+                            new TkSecret(
+                                base, new TkPending(base),
+                                (long) Tv.HUNDRED
+                            )
+                        ),
                         new FkRegex("/submit", new TkSubmit(base)),
                         new FkRegex("/p/.*", new TkPitch(base))
                     )

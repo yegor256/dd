@@ -33,7 +33,7 @@ public interface Pitch {
      * Votes.
      * @return How many votes it has
      */
-    Votes votes();
+    Votes votes() throws IOException;
 
     /**
      * ID of it.

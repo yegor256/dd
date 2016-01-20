@@ -15,29 +15,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
-
-import java.io.IOException;
 
 /**
- * Author.
+ * Xembly sources for the model.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Author {
-
-    /**
-     * How many points it has now.
-     * @return Points
-     */
-    long points() throws IOException;
-
-    /**
-     * Add points.
-     * @param points Points to add
-     */
-    void add(long points) throws IOException;
-
-}
+package com.seedramp.haters.tk.xe;

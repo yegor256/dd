@@ -59,21 +59,21 @@ public final class DyAuthor implements Author {
     }
 
     @Override
-    public int points() throws IOException {
-        return Integer.parseInt(
+    public long points() throws IOException {
+        return Long.parseLong(
             this.item().get("points").getN()
         );
     }
 
     @Override
-    public void add(final int points) throws IOException {
+    public void add(final long points) throws IOException {
         this.item().put(
             "points",
             new AttributeValueUpdate()
                 .withAction(AttributeAction.ADD)
                 .withValue(
                     new AttributeValue()
-                        .withN(Integer.toString(points))
+                        .withN(Long.toString(points))
                 )
         );
     }

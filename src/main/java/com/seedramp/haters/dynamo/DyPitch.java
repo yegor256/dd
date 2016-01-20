@@ -52,8 +52,8 @@ public final class DyPitch implements Pitch {
     }
 
     @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
+    public Votes votes() throws IOException {
+        return new DyVotes(this.item.frame().table().region(), this.id());
     }
 
     @Override

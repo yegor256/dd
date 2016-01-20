@@ -28,13 +28,11 @@
             </head>
             <body>
                 <section>
+                    <a href="{links/link[@rel='home']/@href}" class="logo">
+                        <xsl:text>startup haters</xsl:text>
+                    </a>
                     <xsl:apply-templates select="flash"/>
                     <ul class="menu">
-                        <li>
-                            <a href="{links/link[@rel='home']/@href}">
-                                <xsl:text>home</xsl:text>
-                            </a>
-                        </li>
                         <li>
                             <xsl:if test="identity">
                                 <xsl:text>@</xsl:text>
