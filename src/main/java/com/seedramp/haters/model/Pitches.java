@@ -35,6 +35,19 @@ public interface Pitches {
     Iterable<Pitch> home();
 
     /**
+     * Pending.
+     * @return Iterable of pending pitches
+     */
+    Iterable<Pitch> pending();
+
+    /**
+     * Get one by number.
+     * @param num Number
+     * @return Pitch
+     */
+    Pitch pitch(long num);
+
+    /**
      * Post a new pitch.
      * @param text Text to post
      * @param author Author who is posting

@@ -23,16 +23,27 @@
     <xsl:include href="/xsl/layout.xsl"/>
     <xsl:template match="page" mode="head">
         <title>
-            <xsl:text>submit</xsl:text>
+            <xsl:text>pending</xsl:text>
         </title>
         <link rel="stylesheet" href="/css/home.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <form action="" method="post">
-            <textarea name="text" style="width:100%;height:5em;">
-                <xsl:text> </xsl:text>
-            </textarea>
-            <button type="submit">Submit</button>
-        </form>
+        <xsl:apply-templates select="pitches"/>
+    </xsl:template>
+    <xsl:template match="pitches">
+        <xsl:apply-templates select="pitch"/>
+    </xsl:template>
+    <xsl:template match="pitch">
+        <p>
+            <xsl:value-of select="text"/>
+            <br/>
+            <a href="{links/link[@rel='approve']/@href}">
+                <xsl:text>approve</xsl:text>
+            </a>
+            <xsl:text> </xsl:text>
+            <a href="{links/link[@rel='delete']/@href}">
+                <xsl:text>delete</xsl:text>
+            </a>
+        </p>
     </xsl:template>
 </xsl:stylesheet>

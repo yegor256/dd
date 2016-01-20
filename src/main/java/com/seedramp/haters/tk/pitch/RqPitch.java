@@ -15,64 +15,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.tk.pitch;
 
+import com.seedramp.haters.model.Base;
 import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Votes;
 import java.io.IOException;
-import java.util.Date;
+import org.takes.Request;
+import org.takes.rq.RqHeaders;
+import org.takes.rq.RqWrap;
 
 /**
- * Fake Pitch.
+ * Index of the pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkPitch implements Pitch {
+public final class RqPitch extends RqWrap {
 
-    @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse The base
+     * @param req Request
+     */
+    public RqPitch(final Base bse, final Request req) {
+        super(req);
+        this.base = bse;
     }
 
-    @Override
-    public long id() {
-        return 1L;
+    /**
+     * Get deck.
+     * @return The deck
+     * @throws IOException If fails
+     */
+    public Pitch pitch() throws IOException {
+        return this.base.pitches().pitch(
+            Long.parseLong(
+                new RqHeaders.Smart(
+                    new RqHeaders.Base(this)
+                ).single("X-Haters-Pitch")
+            )
+        );
     }
 
-    @Override
-    public void approve(final String author) {
-        // nothing to do
-    }
-
-    @Override
-    public void delete() throws IOException {
-        // nothing
-    }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
-    }
 }

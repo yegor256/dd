@@ -29,19 +29,36 @@
             <body>
                 <section>
                     <xsl:apply-templates select="flash"/>
-                    <p>
-                        <a href="{links/link[@rel='home']/@href}">
-                            <xsl:text>home</xsl:text>
-                        </a>
-                        <xsl:text> </xsl:text>
-                        <a href="{links/link[@rel='takes:github']/@href}">
-                            <xsl:text>login</xsl:text>
-                        </a>
-                        <xsl:text> </xsl:text>
-                        <a href="{links/link[@rel='submit']/@href}">
-                            <xsl:text>submit</xsl:text>
-                        </a>
-                    </p>
+                    <ul class="menu">
+                        <li>
+                            <a href="{links/link[@rel='home']/@href}">
+                                <xsl:text>home</xsl:text>
+                            </a>
+                        </li>
+                        <li>
+                            <xsl:if test="identity">
+                                <xsl:text>@</xsl:text>
+                                <xsl:value-of select="identity/name"/>
+                            </xsl:if>
+                            <xsl:if test="not(identity)">
+                                <a href="{links/link[@rel='takes:github']/@href}">
+                                    <xsl:text>login</xsl:text>
+                                </a>
+                            </xsl:if>
+                        </li>
+                        <li>
+                            <a href="{links/link[@rel='submit']/@href}">
+                                <xsl:text>submit</xsl:text>
+                            </a>
+                        </li>
+                        <li>
+                            <xsl:if test="links/link[@rel='pending']">
+                                <a href="{links/link[@rel='pending']/@href}">
+                                    <xsl:text>pending</xsl:text>
+                                </a>
+                            </xsl:if>
+                        </li>
+                    </ul>
                     <xsl:apply-templates select="." mode="body"/>
                 </section>
             </body>

@@ -78,7 +78,7 @@
         <dependency>
             <groupId>org.takes</groupId>
             <artifactId>takes</artifactId>
-            <version>0.27</version>
+            <version>0.31</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>com.jcabi.incubator</groupId>
             <artifactId>xembly</artifactId>
-            <version>0.21</version>
+            <version>0.22</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>

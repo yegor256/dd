@@ -38,13 +38,18 @@ public interface Pitch {
     /**
      * ID of it.
      */
-    int id() throws IOException;
+    long id() throws IOException;
 
     /**
      * Approve it.
      * @param author Who approves it
      */
     void approve(String author) throws IOException;
+
+    /**
+     * Delete it.
+     */
+    void delete() throws IOException;
 
     /**
      * Name of the author.
@@ -68,12 +73,12 @@ public interface Pitch {
      * Points.
      * @return How many points it has
      */
-    int points() throws IOException;
+    long points() throws IOException;
 
     /**
      * How many times it was voted.
      * @return How many votes it has
      */
-    int voted() throws IOException;
+    long voted() throws IOException;
 
 }

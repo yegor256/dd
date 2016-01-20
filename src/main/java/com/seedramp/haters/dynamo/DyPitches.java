@@ -75,6 +75,40 @@ public final class DyPitches implements Pitches {
     }
 
     @Override
+    public Iterable<Pitch> pending() {
+        return Iterables.transform(
+            this.table()
+                .frame()
+                .through(
+                    new QueryValve()
+                        .withLimit(Tv.TWENTY)
+                        .withIndexName("home")
+                        .withScanIndexForward(false)
+                        .withConsistentRead(false)
+                )
+                .where("visible", Conditions.equalTo(0)),
+            new Function<Item, Pitch>() {
+                @Override
+                public Pitch apply(final Item item) {
+                    return new DyPitch(item);
+                }
+            }
+        );
+    }
+
+    @Override
+    public Pitch pitch(final long num) {
+        return new DyPitch(
+            this.table()
+                .frame()
+                .through(new QueryValve().withLimit(1))
+                .where("id", Conditions.equalTo(num))
+                .iterator()
+                .next()
+        );
+    }
+
+    @Override
     public Pitch post(final String text, final String author)
         throws IOException {
         final Item item = this.table().put(
@@ -82,6 +116,8 @@ public final class DyPitches implements Pitches {
                 .with("id", System.currentTimeMillis())
                 .with("text", text)
                 .with("author", author)
+                .with("points", 0)
+                .with("votes", 0)
                 .with("visible", 0)
                 .with("date", System.currentTimeMillis())
                 .with("rank", 0)

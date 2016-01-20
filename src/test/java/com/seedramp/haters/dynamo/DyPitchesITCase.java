@@ -47,4 +47,18 @@ public final class DyPitchesITCase {
         );
     }
 
+    /**
+     * DyPitches can save all.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void savesAllAttributes() throws Exception {
+        final Pitches pitches = new DyPitches(new Dynamo());
+        final Pitch pitch = pitches.post("xyz", "bobby");
+        MatcherAssert.assertThat(pitch.text(), Matchers.startsWith("xy"));
+        MatcherAssert.assertThat(pitch.author(), Matchers.startsWith("bob"));
+        MatcherAssert.assertThat(pitch.points(), Matchers.equalTo(0L));
+        MatcherAssert.assertThat(pitch.voted(), Matchers.equalTo(0L));
+    }
+
 }

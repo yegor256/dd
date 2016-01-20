@@ -30,7 +30,7 @@ public interface Votes {
      * Top votes.
      * @return List them
      */
-    Vote top();
+    Iterable<Vote> top();
 
     /**
      * Post a new vote.

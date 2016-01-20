@@ -26,6 +26,7 @@
             <xsl:text>#</xsl:text>
             <xsl:value-of select="pitch/id"/>
         </title>
+        <link rel="stylesheet" href="/css/pitch.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitch"/>

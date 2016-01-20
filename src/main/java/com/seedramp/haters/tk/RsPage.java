@@ -28,6 +28,7 @@ import org.takes.facets.auth.social.XeGithubLink;
 import org.takes.facets.flash.XeFlash;
 import org.takes.facets.fork.FkTypes;
 import org.takes.facets.fork.RsFork;
+import org.takes.rs.RsPrettyXML;
 import org.takes.rs.RsWithType;
 import org.takes.rs.RsWrap;
 import org.takes.rs.RsXSLT;
@@ -53,7 +54,7 @@ import org.takes.rs.xe.XeStylesheet;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @EqualsAndHashCode(callSuper = true)
-final class RsPage extends RsWrap {
+public final class RsPage extends RsWrap {
 
     /**
      * Ctor.
@@ -62,7 +63,7 @@ final class RsPage extends RsWrap {
      * @param src Source
      * @throws IOException If fails
      */
-    RsPage(final String xsl, final Request req, final XeSource... src)
+    public RsPage(final String xsl, final Request req, final XeSource... src)
         throws IOException {
         super(RsPage.make(xsl, req, src));
     }
@@ -95,6 +96,7 @@ final class RsPage extends RsWrap {
                 new XeGithubLink(req, Manifests.read("Haters-GithubId")),
                 new XeLogoutLink(req),
                 new XeLink("submit", "/submit"),
+                new XeLink("pending", "/pending"),
                 new XeAppend(
                     "version",
                     new XeAppend("name", Manifests.read("Haters-Version")),
@@ -107,7 +109,7 @@ final class RsPage extends RsWrap {
             req,
             new FkTypes(
                 "application/xml,text/xml",
-                new RsWithType(raw, "text/xml")
+                new RsPrettyXML(new RsWithType(raw, "text/xml"))
             ),
             new FkTypes(
                 "*/*",

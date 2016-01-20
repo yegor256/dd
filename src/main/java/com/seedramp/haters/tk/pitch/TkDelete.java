@@ -15,64 +15,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.tk.pitch;
 
+import com.seedramp.haters.model.Base;
 import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Votes;
 import java.io.IOException;
-import java.util.Date;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
 
 /**
- * Fake Pitch.
+ * Delete this pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkPitch implements Pitch {
+final class TkDelete implements Take {
 
-    @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
+    /**
+     * Base.
+     */
+    private final transient Base base;
+
+    /**
+     * Ctor.
+     * @param bse Base
+     */
+    TkDelete(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public long id() {
-        return 1L;
+    public Response act(final Request req) throws IOException {
+        final Pitch pitch = new RqPitch(this.base, req).pitch();
+        pitch.delete();
+        return new RsForward(new RsFlash("deleted, thanks!"));
     }
 
-    @Override
-    public void approve(final String author) {
-        // nothing to do
-    }
-
-    @Override
-    public void delete() throws IOException {
-        // nothing
-    }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
-    }
 }

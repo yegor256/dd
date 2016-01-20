@@ -25,7 +25,7 @@
         <title>
             <xsl:text>haters</xsl:text>
         </title>
-        <link rel="stylesheet" href="/css/home.css"/>
+        <link rel="stylesheet" href="/css/home.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitches"/>

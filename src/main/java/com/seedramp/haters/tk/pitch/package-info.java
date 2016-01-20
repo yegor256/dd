@@ -15,64 +15,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
-
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Votes;
-import java.io.IOException;
-import java.util.Date;
 
 /**
- * Fake Pitch.
+ * Takes for a selected pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkPitch implements Pitch {
-
-    @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
-    }
-
-    @Override
-    public long id() {
-        return 1L;
-    }
-
-    @Override
-    public void approve(final String author) {
-        // nothing to do
-    }
-
-    @Override
-    public void delete() throws IOException {
-        // nothing
-    }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
-    }
-}
+package com.seedramp.haters.tk.pitch;

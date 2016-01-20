@@ -15,64 +15,43 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.tk.xe;
 
 import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Votes;
 import java.io.IOException;
-import java.util.Date;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeTransform;
+import org.takes.rs.xe.XeWrap;
 
 /**
- * Fake Pitch.
+ * Pitches as a Xembly source.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkPitch implements Pitch {
+public final class XePitches extends XeWrap {
 
-    @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
-    }
-
-    @Override
-    public long id() {
-        return 1L;
-    }
-
-    @Override
-    public void approve(final String author) {
-        // nothing to do
-    }
-
-    @Override
-    public void delete() throws IOException {
-        // nothing
-    }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
+    /**
+     * Ctor.
+     * @param pitches Pitches
+     */
+    public XePitches(final Iterable<Pitch> pitches) {
+        super(
+            new XeAppend(
+                "pitches",
+                new XeTransform<>(
+                    pitches,
+                    new XeTransform.Func<Pitch>() {
+                        @Override
+                        public XeSource transform(final Pitch pitch)
+                            throws IOException {
+                            return new XePitch(pitch);
+                        }
+                    }
+                )
+            )
+        );
     }
 }

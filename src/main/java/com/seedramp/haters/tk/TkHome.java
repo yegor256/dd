@@ -18,16 +18,11 @@
 package com.seedramp.haters.tk;
 
 import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.tk.xe.XePitches;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
-import org.xembly.Directives;
 
 /**
  * Index resource, front page of the website.
@@ -56,31 +51,7 @@ final class TkHome implements Take {
         return new RsPage(
             "/xsl/home.xsl",
             req,
-            new XeAppend(
-                "pitches",
-                new XeTransform<>(
-                    this.base.pitches().home(),
-                    new XeTransform.Func<Pitch>() {
-                        @Override
-                        public XeSource transform(final Pitch pitch)
-                            throws IOException {
-                            return new XeAppend(
-                                "pitch",
-                                new XeDirectives(
-                                    new Directives()
-                                        .add("id")
-                                        .set(Integer.toString(pitch.id()))
-                                        .up()
-                                        .add("text").set(pitch.text()).up()
-                                        .add("points")
-                                        .set(Integer.toString(pitch.points()))
-                                        .up()
-                                )
-                            );
-                        }
-                    }
-                )
-            )
+            new XePitches(this.base.pitches().home())
         );
     }
 

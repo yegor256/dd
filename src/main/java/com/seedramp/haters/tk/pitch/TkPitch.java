@@ -15,64 +15,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Votes;
-import java.io.IOException;
-import java.util.Date;
+import com.seedramp.haters.model.Base;
+import org.takes.Take;
+import org.takes.facets.fork.TkFork;
+import org.takes.tk.TkWrap;
 
 /**
- * Fake Pitch.
+ * Index of pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkPitch implements Pitch {
+public final class TkPitch extends TkWrap {
 
-    @Override
-    public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
+    /**
+     * Ctor.
+     * @param base Base
+     */
+    public TkPitch(final Base base) {
+        super(TkPitch.make(base));
     }
 
-    @Override
-    public long id() {
-        return 1L;
+    /**
+     * Ctor.
+     * @param base Base
+     * @return Take
+     */
+    private static Take make(final Base base) {
+        return new TkFork(
+            new FkPitch("", new TkIndex(base)),
+            new FkPitch("/approve", new TkApprove(base)),
+            new FkPitch("/delete", new TkDelete(base)),
+            new FkPitch("/vote", new TkVote(base))
+        );
     }
 
-    @Override
-    public void approve(final String author) {
-        // nothing to do
-    }
-
-    @Override
-    public void delete() throws IOException {
-        // nothing
-    }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
-    }
 }

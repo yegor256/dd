@@ -33,13 +33,13 @@ import org.takes.rq.RqWrap;
  * @version $Id$
  * @since 1.0
  */
-final class RqAuthor extends RqWrap {
+public final class RqAuthor extends RqWrap {
 
     /**
      * Ctor.
      * @param req Request
      */
-    RqAuthor(final Request req) {
+    public RqAuthor(final Request req) {
         super(req);
     }
 

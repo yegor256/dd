@@ -20,6 +20,7 @@ package com.seedramp.haters.tk;
 import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.seedramp.haters.model.Base;
+import com.seedramp.haters.tk.pitch.TkPitch;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -134,7 +135,9 @@ public final class TkApp extends TkWrap {
                 new TkSecure(
                     new TkFork(
                         new FkRegex("/", new TkHome(base)),
-                        new FkRegex("/submit", new TkSubmit(base))
+                        new FkRegex("/pending", new TkPending(base)),
+                        new FkRegex("/submit", new TkSubmit(base)),
+                        new FkRegex("/p/.*", new TkPitch(base))
                     )
                 )
             )

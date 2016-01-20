@@ -36,6 +36,16 @@ public final class FkPitches implements Pitches {
     }
 
     @Override
+    public Iterable<Pitch> pending() {
+        return Collections.<Pitch>singleton(new FkPitch());
+    }
+
+    @Override
+    public Pitch pitch(final long num) {
+        return new FkPitch();
+    }
+
+    @Override
     public Pitch post(final String text, final String author) {
         return new FkPitch();
     }
