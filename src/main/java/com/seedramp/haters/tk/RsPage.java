@@ -17,8 +17,14 @@
  */
 package com.seedramp.haters.tk;
 
+import com.google.common.collect.Iterables;
 import com.jcabi.manifests.Manifests;
+import com.seedramp.haters.model.Base;
+import com.seedramp.haters.tk.xe.XeAuthor;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
 import lombok.EqualsAndHashCode;
 import org.takes.Request;
 import org.takes.Response;
@@ -65,6 +71,39 @@ public final class RsPage extends RsWrap {
      */
     public RsPage(final String xsl, final Request req, final XeSource... src)
         throws IOException {
+        this(xsl, req, Arrays.asList(src));
+    }
+
+    /**
+     * Ctor.
+     * @param xsl XSL
+     * @param req Request
+     * @param src Source
+     * @throws IOException If fails
+     */
+    public RsPage(final Base base, final String xsl,
+        final Request req, final XeSource... src)
+        throws IOException {
+        this(
+            xsl,
+            req,
+            Iterables.concat(
+                Arrays.asList(src),
+                RsPage.extra(base, req)
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param xsl XSL
+     * @param req Request
+     * @param src Source
+     * @throws IOException If fails
+     */
+    public RsPage(final String xsl, final Request req,
+        final Iterable<XeSource> src)
+        throws IOException {
         super(RsPage.make(xsl, req, src));
     }
 
@@ -77,7 +116,7 @@ public final class RsPage extends RsWrap {
      * @throws IOException If fails
      */
     private static Response make(final String xsl, final Request req,
-        final XeSource... src) throws IOException {
+        final Iterable<XeSource> src) throws IOException {
         final Response raw = new RsXembly(
             new XeStylesheet(xsl),
             new XeAppend(
@@ -96,7 +135,6 @@ public final class RsPage extends RsWrap {
                 new XeGithubLink(req, Manifests.read("Haters-GithubId")),
                 new XeLogoutLink(req),
                 new XeLink("submit", "/submit"),
-                new XeLink("pending", "/pending"),
                 new XeAppend(
                     "version",
                     new XeAppend("name", Manifests.read("Haters-Version")),
@@ -116,6 +154,27 @@ public final class RsPage extends RsWrap {
                 new RsXSLT(new RsWithType(raw, "text/html"))
             )
         );
+    }
+
+    /**
+     * Ctor.
+     * @param base Base
+     * @param req Request
+     * @throws IOException If fails
+     */
+    private static Iterable<XeSource> extra(final Base base,
+        final Request req) throws IOException {
+        final Collection<XeSource> extra = new LinkedList<>();
+        final RqAuthor author = new RqAuthor(req);
+        if (author.authorized()) {
+            extra.addAll(
+                Arrays.asList(
+                    new XeLink("pending", "/pending"),
+                    new XeAuthor(base.author(author.name()))
+                )
+            );
+        }
+        return extra;
     }
 
 }

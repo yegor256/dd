@@ -20,7 +20,6 @@ package com.seedramp.haters.tk.xe;
 import com.seedramp.haters.model.Pitch;
 import java.io.IOException;
 import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
 import org.takes.rs.xe.XeWrap;
@@ -44,25 +43,23 @@ public final class XePitch extends XeWrap {
         super(
             new XeAppend(
                 "pitch",
-                new XeChain(
-                    new XeDirectives(
-                        new Directives()
-                            .add("id").set(pitch.id()).up()
-                            .add("text").set(pitch.text()).up()
-                            .add("points").set(pitch.points()).up()
-                    ),
-                    new XeLink(
-                        "see",
-                        String.format("/p/%d", pitch.id())
-                    ),
-                    new XeLink(
-                        "delete",
-                        String.format("/p/%d/delete", pitch.id())
-                    ),
-                    new XeLink(
-                        "approve",
-                        String.format("/p/%d/approve", pitch.id())
-                    )
+                new XeDirectives(
+                    new Directives()
+                        .add("id").set(pitch.id()).up()
+                        .add("text").set(pitch.text()).up()
+                        .add("points").set(pitch.points()).up()
+                ),
+                new XeLink(
+                    "see",
+                    String.format("/p/%d", pitch.id())
+                ),
+                new XeLink(
+                    "delete",
+                    String.format("/p/%d/delete", pitch.id())
+                ),
+                new XeLink(
+                    "approve",
+                    String.format("/p/%d/approve", pitch.id())
                 )
             )
         );

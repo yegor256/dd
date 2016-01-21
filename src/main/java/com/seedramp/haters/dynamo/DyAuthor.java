@@ -17,17 +17,9 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Item;
-import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
 import com.seedramp.haters.model.Author;
 import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Dynamo Author.
@@ -60,54 +52,7 @@ public final class DyAuthor implements Author {
 
     @Override
     public long points() throws IOException {
-        return Long.parseLong(
-            this.item().get("points").getN()
-        );
-    }
-
-    @Override
-    public void add(final long points) throws IOException {
-        this.item().put(
-            "points",
-            new AttributeValueUpdate()
-                .withAction(AttributeAction.ADD)
-                .withValue(
-                    new AttributeValue()
-                        .withN(Long.toString(points))
-                )
-        );
-    }
-
-    /**
-     * My item.
-     * @return Item
-     * @throws IOException If fails
-     */
-    private Item item() throws IOException {
-        final Iterator<Item> items = this.table()
-            .frame()
-            .through(new QueryValve().withLimit(1))
-            .where("name", this.handle)
-            .iterator();
-        final Item item;
-        if (items.hasNext()) {
-            item = items.next();
-        } else {
-            item = this.table().put(
-                new Attributes()
-                    .with("name", this.handle)
-                    .with("points", 0)
-            );
-        }
-        return item;
-    }
-
-    /**
-     * Table to work with.
-     * @return Table
-     */
-    private Table table() {
-        return this.region.table("authors");
+        return new TbAuthors(this.region).points(this.handle);
     }
 
 }

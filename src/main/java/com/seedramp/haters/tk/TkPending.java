@@ -49,6 +49,7 @@ final class TkPending implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         return new RsPage(
+            this.base,
             "/xsl/pending.xsl",
             req,
             new XePitches(this.base.pitches().pending())

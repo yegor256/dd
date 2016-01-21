@@ -69,6 +69,7 @@ public final class DyPitch implements Pitch {
                 .withAction(AttributeAction.PUT)
                 .withValue(new AttributeValue().withN("1"))
         );
+        new TbAuthors(this.item.frame().table().region()).add(author, 1L);
     }
 
     @Override
@@ -77,8 +78,10 @@ public final class DyPitch implements Pitch {
             .through(new QueryValve().withLimit(1))
             .where("id", Conditions.equalTo(this.id()))
             .iterator();
-        items.next();
+        final Item itm = items.next();
+        final String author = itm.get("author").getS();
         items.remove();
+        new TbAuthors(this.item.frame().table().region()).add(author, -1L);
     }
 
     @Override

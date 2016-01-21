@@ -17,7 +17,6 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.jcabi.aspects.Tv;
 import com.seedramp.haters.model.Author;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -33,17 +32,15 @@ import org.junit.Test;
 public final class DyAuthorITCase {
 
     /**
-     * DyAuthor can add points.
+     * DyAuthor can fetch points.
      * @throws Exception If some problem inside
      */
     @Test
-    public void addsPoints() throws Exception {
+    public void retrievesPoints() throws Exception {
         final Author author = new DyAuthor(new Dynamo(), "jeff");
-        author.add(Tv.FIVE);
-        author.add(1);
         MatcherAssert.assertThat(
             author.points(),
-            Matchers.equalTo(Tv.SIX)
+            Matchers.greaterThanOrEqualTo(0L)
         );
     }
 

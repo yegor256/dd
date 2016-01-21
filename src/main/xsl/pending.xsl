@@ -29,6 +29,9 @@
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitches"/>
+        <xsl:if test="not(pitches/pitch)">
+            <xsl:text>There is nothing here, but thanks for checking!</xsl:text>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="pitches">
         <xsl:apply-templates select="pitch"/>
@@ -39,6 +42,7 @@
             <xsl:value-of select="id"/>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="text"/>
+            <xsl:text> </xsl:text>
             <a href="{links/link[@rel='approve']/@href}">
                 <xsl:text>approve</xsl:text>
             </a>

@@ -29,12 +29,8 @@ import com.seedramp.haters.model.Author;
 public final class FkAuthor implements Author {
 
     @Override
-    public int points() {
-        return 1;
+    public long points() {
+        return 1L;
     }
 
-    @Override
-    public void add(final int points) {
-        // nothing
-    }
 }

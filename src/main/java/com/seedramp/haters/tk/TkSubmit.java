@@ -59,7 +59,7 @@ final class TkSubmit implements Take {
             );
             response = new RsForward(new RsFlash("thanks!"));
         } else {
-            response = new RsPage("/xsl/submit.xsl", req);
+            response = new RsPage(this.base, "/xsl/submit.xsl", req);
         }
         return response;
     }

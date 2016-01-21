@@ -34,10 +34,4 @@ public interface Author {
      */
     long points() throws IOException;
 
-    /**
-     * Add points.
-     * @param points Points to add
-     */
-    void add(long points) throws IOException;
-
 }

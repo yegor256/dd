@@ -17,7 +17,6 @@
  */
 package com.seedramp.haters.tk;
 
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
 import com.seedramp.haters.model.Base;
@@ -140,7 +139,7 @@ public final class TkApp extends TkWrap {
                             "/pending",
                             new TkSecret(
                                 base, new TkPending(base),
-                                (long) Tv.HUNDRED
+                                (long) 0
                             )
                         ),
                         new FkRegex("/submit", new TkSubmit(base)),

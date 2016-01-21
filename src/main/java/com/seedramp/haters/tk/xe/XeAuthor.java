@@ -17,46 +17,34 @@
  */
 package com.seedramp.haters.tk.xe;
 
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Vote;
+import com.seedramp.haters.model.Author;
 import java.io.IOException;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeLink;
 import org.takes.rs.xe.XeWrap;
 import org.xembly.Directives;
 
 /**
- * Vote as a Xembly source.
+ * Author as a Xembly source.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class XeVote extends XeWrap {
+public final class XeAuthor extends XeWrap {
 
     /**
      * Ctor.
-     * @param vote Vote
+     * @param author Author
      * @throws IOException If fails
      */
-    public XeVote(final Pitch pitch, final Vote vote) throws IOException {
+    public XeAuthor(final Author author) throws IOException {
         super(
             new XeAppend(
-                "vote",
+                "author",
                 new XeDirectives(
                     new Directives()
-                        .add("author").set(vote.author()).up()
-                        .add("text").set(vote.text()).up()
-                        .add("points").set(vote.points()).up()
-                        .add("positive").set(vote.positive()).up()
-                ),
-                new XeLink(
-                    "vote",
-                    String.format(
-                        "/p/%d/vote/%s",
-                        pitch.id(), vote.author()
-                    )
+                        .add("points").set(author.points()).up()
                 )
             )
         );

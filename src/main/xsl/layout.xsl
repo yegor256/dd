@@ -37,6 +37,9 @@
                             <xsl:if test="identity">
                                 <xsl:text>@</xsl:text>
                                 <xsl:value-of select="identity/name"/>
+                                <xsl:text> (</xsl:text>
+                                <xsl:value-of select="author/points"/>
+                                <xsl:text>)</xsl:text>
                             </xsl:if>
                             <xsl:if test="not(identity)">
                                 <a href="{links/link[@rel='takes:github']/@href}">

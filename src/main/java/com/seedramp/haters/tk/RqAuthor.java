@@ -44,6 +44,15 @@ public final class RqAuthor extends RqWrap {
     }
 
     /**
+     * Is he authorized.
+     * @return TRUE if authorized
+     * @throws IOException If fails
+     */
+    public boolean authorized() throws IOException {
+        return !new RqAuth(this).identity().equals(Identity.ANONYMOUS);
+    }
+
+    /**
      * Get his name.
      * @return Name
      * @throws IOException If fails

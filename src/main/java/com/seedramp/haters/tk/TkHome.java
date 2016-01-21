@@ -49,6 +49,7 @@ final class TkHome implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         return new RsPage(
+            this.base,
             "/xsl/home.xsl",
             req,
             new XePitches(this.base.pitches().home())
