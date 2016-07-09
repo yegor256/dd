@@ -48,14 +48,13 @@ public final class XeVote extends XeWrap {
                     new Directives()
                         .add("author").set(vote.author()).up()
                         .add("text").set(vote.text()).up()
-                        .add("points").set(vote.points()).up()
-                        .add("positive").set(vote.positive()).up()
+                        .add("points").set(vote.points())
                 ),
                 new XeLink(
                     "vote",
                     String.format(
                         "/p/%d/vote/%s",
-                        pitch.id(), vote.author()
+                        pitch.number(), vote.author()
                     )
                 )
             )

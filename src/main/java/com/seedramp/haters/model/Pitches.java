@@ -52,6 +52,7 @@ public interface Pitches {
      * @param text Text to post
      * @param author Author who is posting
      * @return Pitch
+     * @throws IOException If fails
      */
     Pitch post(String text, String author) throws IOException;
 

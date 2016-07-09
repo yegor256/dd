@@ -102,7 +102,7 @@ public final class DyPitches implements Pitches {
             this.table()
                 .frame()
                 .through(new QueryValve().withLimit(1))
-                .where("id", Conditions.equalTo(num))
+                .where("number", Conditions.equalTo(num))
                 .iterator()
                 .next()
         );
@@ -113,11 +113,10 @@ public final class DyPitches implements Pitches {
         throws IOException {
         final Item item = this.table().put(
             new Attributes()
-                .with("id", System.currentTimeMillis())
+                .with("number", System.currentTimeMillis())
                 .with("text", text)
                 .with("author", author)
                 .with("points", 0)
-                .with("votes", 0)
                 .with("visible", 0)
                 .with("date", System.currentTimeMillis())
                 .with("rank", 0)

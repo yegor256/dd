@@ -26,7 +26,6 @@ import com.jcabi.dynamo.QueryValve;
 import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Votes;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -53,12 +52,12 @@ public final class DyPitch implements Pitch {
 
     @Override
     public Votes votes() throws IOException {
-        return new DyVotes(this.item.frame().table().region(), this.id());
+        return new DyVotes(this.item.frame().table().region(), this.number());
     }
 
     @Override
-    public long id() throws IOException {
-        return Long.parseLong(this.item.get("id").getN());
+    public long number() throws IOException {
+        return Long.parseLong(this.item.get("number").getN());
     }
 
     @Override
@@ -76,7 +75,7 @@ public final class DyPitch implements Pitch {
     public void delete() throws IOException {
         final Iterator<Item> items = this.item.frame()
             .through(new QueryValve().withLimit(1))
-            .where("id", Conditions.equalTo(this.id()))
+            .where("number", Conditions.equalTo(this.number()))
             .iterator();
         final Item itm = items.next();
         final String author = itm.get("author").getS();
@@ -94,18 +93,4 @@ public final class DyPitch implements Pitch {
         return this.item.get("text").getS();
     }
 
-    @Override
-    public Date date() throws IOException {
-        return new Date(Long.parseLong(this.item.get("date").getN()));
-    }
-
-    @Override
-    public long points() throws IOException {
-        return Long.parseLong(this.item.get("points").getN());
-    }
-
-    @Override
-    public long voted() throws IOException {
-        return Long.parseLong(this.item.get("votes").getN());
-    }
 }

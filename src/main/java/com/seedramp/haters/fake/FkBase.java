@@ -17,9 +17,6 @@
  */
 package com.seedramp.haters.fake;
 
-import com.jcabi.dynamo.Region;
-import com.seedramp.haters.dynamo.DyAuthor;
-import com.seedramp.haters.dynamo.DyPitches;
 import com.seedramp.haters.model.Author;
 import com.seedramp.haters.model.Base;
 import com.seedramp.haters.model.Pitches;

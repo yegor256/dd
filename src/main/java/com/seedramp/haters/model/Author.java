@@ -31,6 +31,7 @@ public interface Author {
     /**
      * How many points it has now.
      * @return Points
+     * @throws IOException If fails
      */
     long points() throws IOException;
 

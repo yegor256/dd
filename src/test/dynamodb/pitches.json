@@ -1,19 +1,11 @@
 {
     "AttributeDefinitions": [
         {
-            "AttributeName": "id",
+            "AttributeName": "number",
             "AttributeType": "N"
         },
         {
             "AttributeName": "visible",
-            "AttributeType": "N"
-        },
-        {
-            "AttributeName": "author",
-            "AttributeType": "S"
-        },
-        {
-            "AttributeName": "date",
             "AttributeType": "N"
         },
         {
@@ -23,7 +15,7 @@
     ],
     "KeySchema": [
         {
-            "AttributeName": "id",
+            "AttributeName": "number",
             "KeyType": "HASH"
         }
     ],
@@ -42,26 +34,6 @@
                 },
                 {
                     "AttributeName": "rank",
-                    "KeyType": "RANGE"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "ALL"
-            },
-            "ProvisionedThroughput": {
-                "ReadCapacityUnits": "1",
-                "WriteCapacityUnits": "1"
-            }
-        },
-        {
-            "IndexName": "mine",
-            "KeySchema": [
-                {
-                    "AttributeName": "author",
-                    "KeyType": "HASH"
-                },
-                {
-                    "AttributeName": "date",
                     "KeyType": "RANGE"
                 }
             ],

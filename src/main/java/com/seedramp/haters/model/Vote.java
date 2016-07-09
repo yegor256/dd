@@ -31,24 +31,21 @@ public interface Vote {
     /**
      * Name of the author.
      * @return Author of the vote (twitter handle)
+     * @throws IOException If fails
      */
     String author() throws IOException;
 
     /**
      * Text of the vote.
      * @return The text
+     * @throws IOException If fails
      */
     String text() throws IOException;
 
     /**
-     * Is it positive?
-     * @return TRUE if positive
-     */
-    boolean positive() throws IOException;
-
-    /**
      * Points.
-     * @return How many points it has (absolute value, always above zero)
+     * @return How many points it has
+     * @throws IOException If fails
      */
     long points() throws IOException;
 

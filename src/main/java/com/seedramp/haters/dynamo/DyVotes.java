@@ -89,8 +89,12 @@ public final class DyVotes implements Votes {
                 .with("text", text)
                 .with("author", author)
                 .with("points", 0)
-                .with("positive", 1)
         );
+    }
+
+    @Override
+    public long points() throws IOException {
+        return 0L;
     }
 
     /**

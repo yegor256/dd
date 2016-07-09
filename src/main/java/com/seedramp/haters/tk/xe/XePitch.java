@@ -45,21 +45,25 @@ public final class XePitch extends XeWrap {
                 "pitch",
                 new XeDirectives(
                     new Directives()
-                        .add("id").set(pitch.id()).up()
+                        .add("id").set(pitch.number()).up()
                         .add("text").set(pitch.text()).up()
-                        .add("points").set(pitch.points()).up()
+                        .add("points").set(pitch.votes().points())
                 ),
                 new XeLink(
                     "see",
-                    String.format("/p/%d", pitch.id())
+                    String.format("/p/%d", pitch.number())
+                ),
+                new XeLink(
+                    "post",
+                    String.format("/p/%d/post", pitch.number())
                 ),
                 new XeLink(
                     "delete",
-                    String.format("/p/%d/delete", pitch.id())
+                    String.format("/p/%d/delete", pitch.number())
                 ),
                 new XeLink(
                     "approve",
-                    String.format("/p/%d/approve", pitch.id())
+                    String.format("/p/%d/approve", pitch.number())
                 )
             )
         );

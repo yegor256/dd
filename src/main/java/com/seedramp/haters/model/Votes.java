@@ -38,7 +38,15 @@ public interface Votes {
      * Post a new vote.
      * @param text Text of the vote
      * @param author Author posting
+     * @throws IOException If fails
      */
     void post(String text, String author) throws IOException;
+
+    /**
+     * Points total.
+     * @return Points
+     * @throws IOException If fails
+     */
+    long points() throws IOException;
 
 }

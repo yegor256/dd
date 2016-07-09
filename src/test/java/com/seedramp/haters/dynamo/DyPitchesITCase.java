@@ -57,8 +57,7 @@ public final class DyPitchesITCase {
         final Pitch pitch = pitches.post("xyz", "bobby");
         MatcherAssert.assertThat(pitch.text(), Matchers.startsWith("xy"));
         MatcherAssert.assertThat(pitch.author(), Matchers.startsWith("bob"));
-        MatcherAssert.assertThat(pitch.points(), Matchers.equalTo(0L));
-        MatcherAssert.assertThat(pitch.voted(), Matchers.equalTo(0L));
+        MatcherAssert.assertThat(pitch.votes().points(), Matchers.equalTo(0L));
     }
 
 }

@@ -20,7 +20,6 @@ package com.seedramp.haters.fake;
 import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.model.Votes;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Fake Pitch.
@@ -33,11 +32,11 @@ public final class FkPitch implements Pitch {
 
     @Override
     public Votes votes() {
-        throw new UnsupportedOperationException("#votes()");
+        return new FkVotes();
     }
 
     @Override
-    public long id() {
+    public long number() {
         return 1L;
     }
 
@@ -61,18 +60,4 @@ public final class FkPitch implements Pitch {
         return "it's a fake pitch";
     }
 
-    @Override
-    public Date date() {
-        return new Date();
-    }
-
-    @Override
-    public long points() {
-        return 1L;
-    }
-
-    @Override
-    public long voted() {
-        return 1L;
-    }
 }

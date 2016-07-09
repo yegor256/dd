@@ -18,7 +18,6 @@
 package com.seedramp.haters.model;
 
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Pitch.
@@ -31,54 +30,43 @@ public interface Pitch {
 
     /**
      * Votes.
-     * @return How many votes it has
+     * @return Its votes
+     * @throws IOException If fails
      */
     Votes votes() throws IOException;
 
     /**
      * ID of it.
+     * @return ID of the pitch
+     * @throws IOException If fails
      */
-    long id() throws IOException;
+    long number() throws IOException;
 
     /**
      * Approve it.
      * @param author Who approves it
+     * @throws IOException If fails
      */
     void approve(String author) throws IOException;
 
     /**
      * Delete it.
+     * @throws IOException If fails
      */
     void delete() throws IOException;
 
     /**
      * Name of the author.
      * @return Author of the pitch (twitter handle)
+     * @throws IOException If fails
      */
     String author() throws IOException;
 
     /**
      * Text of the pitch.
      * @return The text
+     * @throws IOException If fails
      */
     String text() throws IOException;
-
-    /**
-     * When was it posted.
-     * @return The date
-     */
-    Date date() throws IOException;
-
-    /**
-     * Points.
-     * @return How many points it has
-     */
-    long points() throws IOException;
-
-    /**
-     * How many times it was voted.
-     * @return How many votes it has
-     */
-    long voted() throws IOException;
 
 }

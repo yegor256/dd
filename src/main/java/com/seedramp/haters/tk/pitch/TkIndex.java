@@ -26,7 +26,6 @@ import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.xe.XeLink;
 
 /**
  * Index of the pitch.
@@ -57,7 +56,6 @@ final class TkIndex implements Take {
             this.base,
             "/xsl/pitch.xsl",
             req,
-            new XeLink("post", String.format("/p/%d/post", pitch.id())),
             new XePitch(pitch),
             new XeVotes(pitch, pitch.votes().top())
         );

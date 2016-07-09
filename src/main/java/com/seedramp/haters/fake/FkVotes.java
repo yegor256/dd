@@ -15,46 +15,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.dynamo;
+package com.seedramp.haters.fake;
 
-import com.jcabi.dynamo.Item;
 import com.seedramp.haters.model.Vote;
+import com.seedramp.haters.model.Votes;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
- * Dynamo Vote.
+ * Fake Votes.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class DyVote implements Vote {
+public final class FkVotes implements Votes {
 
-    /**
-     * The item.
-     */
-    private final transient Item item;
-
-    /**
-     * Ctor.
-     * @param itm Item with pitch
-     */
-    public DyVote(final Item itm) {
-        this.item = itm;
+    @Override
+    public Iterable<Vote> top() {
+        return Collections.emptyList();
     }
 
     @Override
-    public String author() throws IOException {
-        return this.item.get("author").getS();
-    }
-
-    @Override
-    public String text() throws IOException {
-        return this.item.get("text").getS();
+    public void post(final String text, final String author) throws IOException {
+        // nothing
     }
 
     @Override
     public long points() throws IOException {
-        return Long.parseLong(this.item.get("points").getN());
+        return 1L;
     }
 }

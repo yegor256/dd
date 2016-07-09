@@ -59,7 +59,7 @@ final class TkPost implements Take {
         );
         return new RsForward(
             new RsFlash("thanks!"),
-            String.format("/p/%d", pitch.id())
+            String.format("/p/%d", pitch.number())
         );
     }
 
