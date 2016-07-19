@@ -23,7 +23,7 @@
     <xsl:include href="/xsl/layout.xsl"/>
     <xsl:template match="page" mode="head">
         <title>
-            <xsl:text>haters</xsl:text>
+            <xsl:text>pitches</xsl:text>
         </title>
         <link rel="stylesheet" href="/css/pitches.css?{version/revision}"/>
     </xsl:template>

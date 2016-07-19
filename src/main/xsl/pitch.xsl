@@ -23,49 +23,35 @@
     <xsl:include href="/xsl/layout.xsl"/>
     <xsl:template match="page" mode="head">
         <title>
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="pitch/id"/>
+            <xsl:value-of select="pitch/title"/>
         </title>
         <link rel="stylesheet" href="/css/pitch.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitch"/>
         <form action="{links/link[@rel='post']/@href}" method="post">
+            <label>What do you think about it?</label>
             <textarea name="text" style="width:100%;height:5em;">
                 <xsl:text> </xsl:text>
             </textarea>
             <button type="submit">Submit</button>
         </form>
-        <xsl:apply-templates select="votes"/>
+        <xsl:apply-templates select="comments"/>
     </xsl:template>
     <xsl:template match="pitch">
         <p>
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="id"/>
-            <xsl:text>: </xsl:text>
+            <strong><xsl:value-of select="title"/></strong>
+        </p>
+        <p>
             <xsl:value-of select="text"/>
         </p>
     </xsl:template>
-    <xsl:template match="votes">
-        <xsl:apply-templates select="vote"/>
+    <xsl:template match="comments">
+        <xsl:apply-templates select="comment"/>
     </xsl:template>
-    <xsl:template match="vote">
+    <xsl:template match="comment">
         <p>
-            <a href="{links/link[@rel='up']/@href}">
-                <span>
-                    <xsl:attribute name="style">
-                        <xsl:text>color: </xsl:text>
-                        <xsl:if test="positive = 'true'">
-                            <xsl:text>green</xsl:text>
-                        </xsl:if>
-                        <xsl:if test="positive = 'false'">
-                            <xsl:text>red</xsl:text>
-                        </xsl:if>
-                    </xsl:attribute>
-                    <xsl:value-of select="points"/>
-                </span>
-            </a>
-            <xsl:text> @</xsl:text>
+            <xsl:text>@</xsl:text>
             <xsl:value-of select="author"/>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="text"/>

@@ -18,14 +18,18 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitch;
 import com.seedramp.haters.tk.RsPage;
-import com.seedramp.haters.tk.xe.XePitch;
-import com.seedramp.haters.tk.xe.XeVotes;
 import java.io.IOException;
+import java.util.Arrays;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeChain;
+import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeLink;
+import org.takes.rs.xe.XeSource;
+import org.xembly.Directives;
 
 /**
  * Index of the pitch.
@@ -51,13 +55,60 @@ final class TkIndex implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req).pitch();
         return new RsPage(
             this.base,
             "/xsl/pitch.xsl",
             req,
-            new XePitch(pitch),
-            new XeVotes(pitch, pitch.votes().top())
+            new XeAppend(
+                "pitch",
+                new XeDirectives(
+                    new Directives()
+                        .add("title").set("rultor, a DevOps chat bot").up()
+                        .add("text").set("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n" +
+                        "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n" +
+                        "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n" +
+                        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n" +
+                        "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n" +
+                        "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.").up()
+                        .add("author").set("yegor256").up()
+                        .add("alive").set("true").up()
+                        .add("age").set("14 hours").up()
+                )
+            ),
+            new XeAppend(
+                "comments",
+                new XeChain(
+                    Arrays.<XeSource>asList(
+                        new XeAppend(
+                            "comment",
+                            new XeChain(
+                                new XeLink("vote", "/p/123/c/5/vote"),
+                                new XeDirectives(
+                                    new Directives()
+                                        .add("text").set("I love it").up()
+                                        .add("author").set("yegor256").up()
+                                )
+                            )
+                        ),
+                        new XeAppend(
+                            "comment",
+                            new XeChain(
+                                new XeLink("vote", "/p/123/c/6/vote"),
+                                new XeDirectives(
+                                    new Directives()
+                                        .add("text").set("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n" +
+                                        "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n" +
+                                        "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n" +
+                                        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n" +
+                                        "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n" +
+                                        "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.").up()
+                                        .add("author").set("jeff").up()
+                                )
+                            )
+                        )
+                    )
+                )
+            )
         );
     }
 

@@ -47,7 +47,6 @@ public final class TkPitch extends TkWrap {
     private static Take make(final Base base) {
         return new TkFork(
             new FkPitch("", new TkIndex(base)),
-            new FkPitch("/approve", new TkApprove(base)),
             new FkPitch("/delete", new TkDelete(base)),
             new FkPitch("/post", new TkPost(base)),
             new FkPitch("/vote/.*", new TkVote(base))

@@ -69,10 +69,8 @@ final class TkPitches implements Take {
                                 new XeDirectives(
                                     new Directives()
                                         .add("title").set("rultor, a DevOps chat bot").up()
-                                        .add("author").set("yegor256").up()
                                         .add("comments").set("3").up()
                                         .add("alive").set("true").up()
-                                        .add("age").set("14 hours").up()
                                 )
                             )
                         )
