@@ -17,8 +17,13 @@
  */
 package com.seedramp.haters.core;
 
+import com.google.common.collect.Iterators;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
+import java.util.Iterator;
 import org.xembly.Directive;
+import org.xembly.Xembler;
 
 /**
  * Pitches.
@@ -49,5 +54,43 @@ public interface Pitches {
      * @return Xembly
      */
     Iterable<Directive> inXembly() throws IOException;
+
+    /**
+     * List them as array.
+     */
+    final class AsArray implements Iterable<Pitch> {
+        /**
+         * Original.
+         */
+        private final transient Pitches pitches;
+        /**
+         * Ctor.
+         * @param origin Pitches
+         */
+        public AsArray(final Pitches origin) {
+            this.pitches = origin;
+        }
+        @Override
+        public Iterator<Pitch> iterator() {
+            final XML xml;
+            try {
+                xml = new XMLDocument(
+                    new Xembler(this.pitches.inXembly()).xmlQuietly()
+                );
+            } catch (final IOException ex) {
+                throw new IllegalStateException(ex);
+            }
+            return Iterators.transform(
+                xml.xpath("//pitch/id/text()").iterator(),
+                input -> {
+                    try {
+                        return this.pitches.pitch(Long.parseLong(input));
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
+                }
+            );
+        }
+    }
 
 }

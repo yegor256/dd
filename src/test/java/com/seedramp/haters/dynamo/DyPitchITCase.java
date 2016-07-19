@@ -17,9 +17,13 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
  * Integration case for {@link DyPitch}.
@@ -38,8 +42,26 @@ public final class DyPitchITCase {
     public void deletesItself() throws Exception {
         final Author author = new DyAuthor(new Dynamo(), "jeff");
         author.pitches().submit("the title", "the body");
-        final Pitch pitch = author.pitches().pitch(1L);
+        final Pitch pitch =
+            new Pitches.AsArray(author.pitches()).iterator().next();
         pitch.delete();
+    }
+
+    /**
+     * DyPitch can count comments.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void countsComments() throws Exception {
+        final Author author = new DyAuthor(new Dynamo(), "peter");
+        author.pitches().submit("the title 1", "the body 2");
+        final Pitch pitch =
+            new Pitches.AsArray(author.pitches()).iterator().next();
+        pitch.comments().post("the comment");
+        MatcherAssert.assertThat(
+            new Xembler(pitch.inXembly()).xml(),
+            XhtmlMatchers.hasXPaths("/pitch[comments=1]")
+        );
     }
 
 }

@@ -15,50 +15,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.dynamo;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.seedramp.haters.core.Base;
-import com.seedramp.haters.fake.FkBase;
+import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import org.takes.Take;
-import org.takes.rq.RqFake;
-import org.takes.rq.RqWithHeaders;
-import org.takes.rs.RsPrint;
+import org.xembly.Xembler;
 
 /**
- * Test case for {@link TkIndex}.
+ * Integration case for {@link DyComments}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TkIndexTest {
+public final class DyCommentsITCase {
 
     /**
-     * TkIndex can render home page.
+     * DyComments can post new comments.
      * @throws Exception If some problem inside
      */
     @Test
-    public void rendersHomePage() throws Exception {
-        final Base base = new FkBase();
-        final Take take = new TkIndex(base);
+    public void postsNewComments() throws Exception {
+        final Author author = new DyAuthor(new Dynamo(), "alan");
+        author.pitches().submit("the title", "the body");
+        final Pitch pitch =
+            new Pitches.AsArray(author.pitches()).iterator().next();
+        pitch.comments().post("the comment");
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new RsPrint(
-                    take.act(
-                        new RqWithHeaders(
-                            new RqFake("GET", "/"),
-                            "Accept: text/xml",
-                            "X-Haters-Pitch: 123"
-                        )
-                    )
-                ).printBody()
-            ),
+            new Xembler(pitch.comments().inXembly()).xml(),
             XhtmlMatchers.hasXPaths(
-                "/page/millis",
-                "/page/pitch[@open='true']",
-                "/page/comments/comment"
+                "/comments[count(comment)=1]",
+                "/comments/comment[id]",
+                "/comments/comment[pitch]",
+                "/comments/comment[text]",
+                "/comments/comment[created]"
             )
         );
     }

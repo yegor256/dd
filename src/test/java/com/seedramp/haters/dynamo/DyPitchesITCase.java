@@ -38,17 +38,16 @@ public final class DyPitchesITCase {
      */
     @Test
     public void postsAndLists() throws Exception {
-        final Pitches pitches = new DyAuthor(new Dynamo(), "jeff").pitches();
+        final Pitches pitches = new DyAuthor(new Dynamo(), "judy").pitches();
         pitches.submit("hello", "the body");
         MatcherAssert.assertThat(
             new Xembler(pitches.inXembly()).xml(),
             XhtmlMatchers.hasXPaths(
-                "/pitches[count(pitch)=1]",
+                "/pitches[count(pitch)>1]",
                 "/pitches/pitch[id]",
-                "/pitches/pitch[title='hello']",
-                "/pitches/pitch[text='the body']",
-                "/pitches/pitch[comments=0]",
-                "/pitches/pitch[author='jeff']"
+                "/pitches/pitch[title]",
+                "/pitches/pitch[comments]",
+                "/pitches/pitch[author]"
             )
         );
     }
