@@ -25,8 +25,6 @@ import java.io.IOException;
 import org.takes.Request;
 import org.takes.facets.auth.Identity;
 import org.takes.facets.auth.RqAuth;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
 
 /**
  * Author from HTTP request.
@@ -69,10 +67,13 @@ public final class RqAuthor implements Author {
      */
     private Author author() throws IOException {
         final Identity identity = new RqAuth(this.request).identity();
+        final String name;
         if (identity.equals(Identity.ANONYMOUS)) {
-            throw new RsForward(new RsFlash("you must login first"));
+            name = "nobody";
+        } else {
+            name = identity.urn().split(":", Tv.THREE)[2];
         }
-        return this.base.author(identity.urn().split(":", Tv.THREE)[2]);
+        return this.base.author(name);
     }
 
 }

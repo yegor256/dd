@@ -59,7 +59,8 @@ public final class TkPitchesTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/page/millis",
-                "/page/pitches/pitch[id=1]",
+                "/page/pitches/pitch[@open='true']",
+                "/page/pitches/pitch/links/link[@rel='see']",
                 "/page/links/link[@rel='takes:github']"
             )
         );

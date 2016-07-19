@@ -19,7 +19,7 @@ package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.tk.RsPage;
+import com.seedramp.haters.tk.RsHtmlPage;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
@@ -51,7 +51,7 @@ final class TkIndex implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Pitch pitch = new RqPitch(this.base, req);
-        return new RsPage(
+        return new RsHtmlPage(
             this.base,
             "/xsl/pitch.xsl",
             req,

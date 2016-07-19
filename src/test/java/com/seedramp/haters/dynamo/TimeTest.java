@@ -17,39 +17,48 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import com.seedramp.haters.core.Pitches;
+import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.xembly.Xembler;
 
 /**
- * Integration case for {@link DyPitches}.
+ * Test case for {@link Time}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DyPitchesITCase {
+public final class TimeTest {
 
     /**
-     * DyAuthor can post and list.
+     * Time can print ISO 8601.
      * @throws Exception If some problem inside
      */
     @Test
-    public void postsAndLists() throws Exception {
-        final Pitches pitches = new DyAuthor(new Dynamo(), "jeff").pitches();
-        pitches.submit("hello", "the body");
+    public void printsToIso() throws Exception {
+        final Time time = new Time(System.currentTimeMillis());
         MatcherAssert.assertThat(
-            new Xembler(pitches.inXembly()).xml(),
-            XhtmlMatchers.hasXPaths(
-                "/pitches[count(pitch)=1]",
-                "/pitches/pitch[id]",
-                "/pitches/pitch[title='hello']",
-                "/pitches/pitch[text='the body']",
-                "/pitches/pitch[comments=0]",
-                "/pitches/pitch[author='jeff']"
-            )
+            time.iso(),
+            Matchers.containsString("T")
+        );
+    }
+
+    /**
+     * Time can check maturity.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void checksMaturity() throws Exception {
+        MatcherAssert.assertThat(
+            new Time(System.currentTimeMillis()).isMature(),
+            Matchers.is(false)
+        );
+        MatcherAssert.assertThat(
+            new Time(
+                System.currentTimeMillis()
+                - TimeUnit.DAYS.toMillis(10L)
+            ).isMature(),
+            Matchers.is(true)
         );
     }
 

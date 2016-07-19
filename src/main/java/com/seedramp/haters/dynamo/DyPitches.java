@@ -87,20 +87,26 @@ final class DyPitches implements Pitches {
                 new QueryValve()
                     .withLimit(Tv.TWENTY)
                     .withIndexName("recent")
-                    .withAttributesToGet("id", "text", "author", "comments")
+                    .withAttributesToGet(
+                        "id", "title", "author",
+                        "comments", "created"
+                    )
                     .withScanIndexForward(false)
                     .withConsistentRead(false)
             )
             .where("valid", Conditions.equalTo(1));
         final Directives dirs = new Directives().add("pitches");
         for (final Item item : items) {
+            final String author = item.get("author").getS();
+            final Time created = new Time(item.get("created"));
             dirs.add("pitch")
-                .attr("open", "true")
+                .attr("open", created.isMature())
+                .attr("mine", author.equals(this.name))
                 .add("id").set(item.get("id").getN()).up()
                 .add("title").set(item.get("title").getS()).up()
                 .add("comments").set(item.get("comments").getN()).up()
-                .add("author").set(item.get("author").getS()).up()
-                .add("lifespan").set("12 hours").up()
+                .add("author").set(author).up()
+                .add("created").set(created.iso()).up()
                 .up();
         }
         return dirs.up();

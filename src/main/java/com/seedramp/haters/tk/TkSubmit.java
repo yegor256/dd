@@ -48,7 +48,7 @@ final class TkSubmit implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        return new RsPage(
+        return new RsHtmlPage(
             this.base,
             "/xsl/submit.xsl",
             req,

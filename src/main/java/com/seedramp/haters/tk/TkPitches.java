@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rs.RsXSLT;
 import org.takes.rs.xe.XeDirectives;
 
 /**
@@ -48,11 +49,18 @@ final class TkPitches implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        return new RsPage(
-            this.base,
-            "/xsl/pitches.xsl",
+        return new RsHtmlPage(
             req,
-            new XeDirectives(new RqAuthor(this.base, req).pitches().inXembly())
+            new RsXSLT(
+                new RsPage(
+                    this.base,
+                    "/com/seedramp/haters/tk/pre-pitches.xsl",
+                    req,
+                    new XeDirectives(
+                        new RqAuthor(this.base, req).pitches().inXembly()
+                    )
+                )
+            )
         );
     }
 
