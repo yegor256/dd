@@ -35,6 +35,10 @@
     </xsl:template>
     <xsl:template match="pitch">
         <p>
+            <xsl:if test="not(@alive) or @alive != 'true'">
+                <xsl:value-of select="date"/>
+                <xsl:text>: </xsl:text>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="links/link[@rel='see']">
                     <a href="{links/link[@rel='see']/@href}">
@@ -47,6 +51,17 @@
             </xsl:choose>
             <xsl:text> /</xsl:text>
             <xsl:value-of select="comments"/>
+            <xsl:text> [</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@alive = 'true'">
+                    <xsl:value-of select="left"/>
+                    <xsl:text> left</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>closed</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>]</xsl:text>
         </p>
     </xsl:template>
 </xsl:stylesheet>

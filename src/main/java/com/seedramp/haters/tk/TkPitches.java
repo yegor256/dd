@@ -68,9 +68,22 @@ final class TkPitches implements Take {
                                 new XeLink("see", "/p/123"),
                                 new XeDirectives(
                                     new Directives()
+                                        .attr("alive", true)
                                         .add("title").set("rultor, a DevOps chat bot").up()
                                         .add("comments").set("3").up()
-                                        .add("alive").set("true").up()
+                                        .add("left").set("12 days").up()
+                                )
+                            )
+                        ),
+                        new XeAppend(
+                            "pitch",
+                            new XeChain(
+                                new XeLink("see", "/p/124"),
+                                new XeDirectives(
+                                    new Directives()
+                                        .add("title").set("jare.io, a free CDN").up()
+                                        .add("comments").set("7").up()
+                                        .add("date").set("5 May").up()
                                 )
                             )
                         )

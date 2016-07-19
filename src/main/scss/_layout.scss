@@ -5,6 +5,7 @@ body {
 }
 
 section {
+  margin-left: 1em;
   width: 40em;
 }
 
@@ -18,6 +19,15 @@ nav {
 
 footer {
   font-size: .75em;
+}
+
+.bar {
+  background-color: $blue;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 1em;
 }
 
 .logo {

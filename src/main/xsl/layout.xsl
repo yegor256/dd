@@ -28,6 +28,7 @@
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
+                <aside class="bar"/>
                 <section>
                     <header>
                         <nav>
