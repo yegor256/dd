@@ -17,10 +17,11 @@
  */
 package com.seedramp.haters.fake;
 
-import com.seedramp.haters.core.Comment;
+import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import java.util.Collections;
+import org.xembly.Directive;
 
 /**
  * Fake Pitch.
@@ -32,22 +33,17 @@ import java.util.Collections;
 public final class FkPitch implements Pitch {
 
     @Override
-    public Iterable<Comment> recent() {
-        return Collections.<Comment>singleton(new FkComment());
-    }
-
-    @Override
-    public Comment comment(final long num) throws IOException {
-        return new FkComment();
-    }
-
-    @Override
-    public void post(final String text) throws IOException {
-        // nothing
+    public Comments comments() {
+        return new FkComments();
     }
 
     @Override
     public void delete() throws IOException {
         // nothing
+    }
+
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return Collections.emptyList();
     }
 }

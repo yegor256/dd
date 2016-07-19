@@ -15,45 +15,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.dynamo;
+package com.seedramp.haters.fake;
 
-import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Pitch;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.seedramp.haters.core.Pitches;
+import java.io.IOException;
+import java.util.Collections;
+import org.xembly.Directive;
 
 /**
- * Integration case for {@link DyAuthor}.
+ * Fake Pitches.
+ *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DyAuthorITCase {
+public final class FkPitches implements Pitches {
 
-    /**
-     * DyAuthor can post and list.
-     * @throws Exception If some problem inside
-     */
-    @Test
-    public void postsAndLists() throws Exception {
-        final Author author = new DyAuthor(new Dynamo(), "jeff");
-        author.submit("the title", "the body");
-        MatcherAssert.assertThat(
-            author.recent(),
-            Matchers.not(Matchers.<Pitch>emptyIterable())
-        );
+    @Override
+    public Pitch pitch(final long num) {
+        return new FkPitch();
     }
 
-    /**
-     * DyAuthor can save all.
-     * @throws Exception If some problem inside
-     */
-    @Test
-    public void savesAllAttributes() throws Exception {
-        final Author author = new DyAuthor(new Dynamo(), "bob");
-        author.submit("the title 1", "the body 1");
+    @Override
+    public void submit(final String title, final String text) {
+        // nothing
     }
 
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return Collections.emptyList();
+    }
 }

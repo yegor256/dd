@@ -37,8 +37,8 @@ public final class DyPitchITCase {
     @Test
     public void deletesItself() throws Exception {
         final Author author = new DyAuthor(new Dynamo(), "jeff");
-        author.submit("the title", "the body");
-        final Pitch pitch = author.pitch(1L);
+        author.pitches().submit("the title", "the body");
+        final Pitch pitch = author.pitches().pitch(1L);
         pitch.delete();
     }
 

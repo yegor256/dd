@@ -15,36 +15,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.core;
+package com.seedramp.haters.dynamo;
 
-import java.io.IOException;
-import org.xembly.Directive;
+import com.jcabi.matchers.XhtmlMatchers;
+import com.seedramp.haters.core.Pitches;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
- * Pitch.
- *
+ * Integration case for {@link DyPitches}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public interface Pitch {
+public final class DyPitchesITCase {
 
     /**
-     * All comments.
-     * @return Comments
+     * DyAuthor can post and list.
+     * @throws Exception If some problem inside
      */
-    Comments comments() throws IOException;
-
-    /**
-     * Delete it.
-     * @throws IOException If fails
-     */
-    void delete() throws IOException;
-
-    /**
-     * Print it to Xembly.
-     * @return Xembly
-     */
-    Iterable<Directive> inXembly() throws IOException;
+    @Test
+    public void postsAndLists() throws Exception {
+        final Pitches pitches = new DyAuthor(new Dynamo(), "jeff").pitches();
+        pitches.submit("hello", "the body");
+        MatcherAssert.assertThat(
+            new Xembler(pitches.inXembly()).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/pitches[count(pitch)=1]",
+                "/pitches/pitch[title='hello']",
+                "/pitches/pitch[text='the body']"
+            )
+        );
+    }
 
 }

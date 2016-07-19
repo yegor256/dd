@@ -15,36 +15,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.core;
+package com.seedramp.haters.fake;
 
+import com.seedramp.haters.core.Comment;
+import com.seedramp.haters.core.Comments;
 import java.io.IOException;
+import java.util.Collections;
 import org.xembly.Directive;
 
 /**
- * Pitch.
+ * Fake Comments.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Pitch {
+public final class FkComments implements Comments {
 
-    /**
-     * All comments.
-     * @return Comments
-     */
-    Comments comments() throws IOException;
+    @Override
+    public Comment comment(final long num) throws IOException {
+        return new FkComment();
+    }
 
-    /**
-     * Delete it.
-     * @throws IOException If fails
-     */
-    void delete() throws IOException;
+    @Override
+    public void post(final String text) throws IOException {
+        // nothing
+    }
 
-    /**
-     * Print it to Xembly.
-     * @return Xembly
-     */
-    Iterable<Directive> inXembly() throws IOException;
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return Collections.emptyList();
+    }
 
 }

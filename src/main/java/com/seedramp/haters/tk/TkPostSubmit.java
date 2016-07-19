@@ -15,36 +15,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.core;
+package com.seedramp.haters.tk;
 
+import com.seedramp.haters.core.Base;
 import java.io.IOException;
-import org.xembly.Directive;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
 
 /**
- * Pitch.
+ * Pitch submit page (POST).
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Pitch {
+final class TkPostSubmit implements Take {
 
     /**
-     * All comments.
-     * @return Comments
+     * Base.
      */
-    Comments comments() throws IOException;
+    private final transient Base base;
 
     /**
-     * Delete it.
-     * @throws IOException If fails
+     * Ctor.
+     * @param bse Base
      */
-    void delete() throws IOException;
+    TkPostSubmit(final Base bse) {
+        this.base = bse;
+    }
 
-    /**
-     * Print it to Xembly.
-     * @return Xembly
-     */
-    Iterable<Directive> inXembly() throws IOException;
+    @Override
+    public Response act(final Request req) throws IOException {
+        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
+        new RqAuthor(this.base, req).pitches().submit(
+            form.single("title"), form.single("text")
+        );
+        return new RsForward(new RsFlash("thanks!"));
+    }
 
 }

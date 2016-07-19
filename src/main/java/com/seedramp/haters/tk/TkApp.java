@@ -130,6 +130,7 @@ public final class TkApp extends TkWrap {
                 new TkSecure(
                     new TkFork(
                         new FkRegex("/submit", new TkSubmit(base)),
+                        new FkRegex("/post", new TkPostSubmit(base)),
                         new FkRegex("/p/.*", new TkPitch(base))
                     )
                 )

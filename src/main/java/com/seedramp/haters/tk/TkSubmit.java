@@ -22,9 +22,7 @@ import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqMethod;
+import org.takes.rs.xe.XeLink;
 
 /**
  * Pitch submit page.
@@ -50,17 +48,12 @@ final class TkSubmit implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Response response;
-        if (RqMethod.POST.equals(new RqMethod.Base(req).method())) {
-//            this.base.pitches().post(
-//                new RqForm.Base(req).param("text").iterator().next(),
-//                new RqAuthor(req).name()
-//            );
-            response = new RsForward(new RsFlash("thanks!"));
-        } else {
-            response = new RsPage(this.base, "/xsl/submit.xsl", req);
-        }
-        return response;
+        return new RsPage(
+            this.base,
+            "/xsl/submit.xsl",
+            req,
+            new XeLink("post", "/post")
+        );
     }
 
 }

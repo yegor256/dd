@@ -17,26 +17,27 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.jcabi.aspects.Tv;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Dynamo Pitch.
+ * Dynamo Pitches.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class DyPitch implements Pitch {
+final class DyPitches implements Pitches {
 
     /**
      * The region to work with.
@@ -44,58 +45,64 @@ final class DyPitch implements Pitch {
     private final transient Region region;
 
     /**
-     * The author.
+     * The name.
      */
-    private final transient String author;
-
-    /**
-     * The number of the pitch.
-     */
-    private final transient long number;
+    private final transient String name;
 
     /**
      * Ctor.
      * @param reg Region
-     * @param user Who is the user
-     * @param num Its number
+     * @param author Author name
      */
-    DyPitch(final Region reg, final String user, final long num) {
+    DyPitches(final Region reg, final String author) {
         this.region = reg;
-        this.author = user;
-        this.number = num;
+        this.name = author;
     }
 
     @Override
-    public Comments comments() throws IOException {
-        return new DyComments(this.region, this.author, this.number);
+    public Pitch pitch(final long num) {
+        return new DyPitch(this.region, this.name, num);
     }
 
     @Override
-    public void delete() throws IOException {
-        this.table().delete(
-            new Attributes().with("id", this.number)
+    public void submit(final String title, final String text)
+        throws IOException {
+        this.table().put(
+            new Attributes()
+                .with("id", System.currentTimeMillis())
+                .with("title", title)
+                .with("text", text)
+                .with("author", this.name)
+                .with("alive", 1)
+                .with("comments", 0)
+                .with("created", System.currentTimeMillis())
         );
     }
 
     @Override
     public Iterable<Directive> inXembly() throws IOException {
-        final Item item = this.table()
+        final Iterable<Item> items = this.table()
             .frame()
             .through(
                 new QueryValve()
-                    .withLimit(1)
-                    .withAttributesToGet("title", "text", "author", "alive")
+                    .withLimit(Tv.TWENTY)
+                    .withIndexName("recent")
+                    .withAttributesToGet("id", "text", "author", "comments")
+                    .withScanIndexForward(false)
+                    .withConsistentRead(false)
             )
-            .where("pitch", Conditions.equalTo(this.number))
-            .iterator()
-            .next();
-        return new Directives()
-            .add("pitch")
-            .add("title").set(item.get("title").getS()).up()
-            .add("text").set(item.get("text").getS()).up()
-            .add("author").set(item.get("author").getS()).up()
-            .add("alive").set("1".equals(item.get("alive").getN())).up()
-            .add("age").set("? hours").up().up();
+            .where("alive", Conditions.equalTo(1));
+        final Directives dirs = new Directives().add("pitches");
+        for (final Item item : items) {
+            dirs.add("pitch")
+                .attr("alive", "1".equals(item.get("alive").getN()))
+                .add("id").set(item.get("id").getN()).up()
+                .add("title").set(item.get("title").getS()).up()
+                .add("comments").set(item.get("comments").getN()).up()
+                .add("author").set(item.get("author").getS()).up()
+                .up();
+        }
+        return dirs.up();
     }
 
     /**

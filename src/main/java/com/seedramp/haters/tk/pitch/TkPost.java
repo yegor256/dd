@@ -50,7 +50,7 @@ final class TkPost implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        new RqPitch(this.base, req).post(
+        new RqPitch(this.base, req).comments().post(
             new RqForm.Smart(new RqForm.Base(req)).single("text")
         );
         return new RsForward(

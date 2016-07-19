@@ -20,7 +20,7 @@ package com.seedramp.haters.tk;
 import com.jcabi.aspects.Tv;
 import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.facets.auth.Identity;
@@ -58,19 +58,8 @@ public final class RqAuthor implements Author {
     }
 
     @Override
-    public Iterable<Pitch> recent() throws IOException {
-        return this.author().recent();
-    }
-
-    @Override
-    public Pitch pitch(final long num) throws IOException {
-        return this.author().pitch(num);
-    }
-
-    @Override
-    public void submit(final String title, final String text)
-        throws IOException {
-        this.author().submit(title, text);
+    public Pitches pitches() throws IOException {
+        return this.author().pitches();
     }
 
     /**

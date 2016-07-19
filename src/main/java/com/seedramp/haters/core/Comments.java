@@ -21,28 +21,30 @@ import java.io.IOException;
 import org.xembly.Directive;
 
 /**
- * Pitch.
+ * Comments.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Pitch {
+public interface Comments {
 
     /**
-     * All comments.
-     * @return Comments
-     */
-    Comments comments() throws IOException;
-
-    /**
-     * Delete it.
+     * Get comment by ID.
+     * @param num ID of it
      * @throws IOException If fails
      */
-    void delete() throws IOException;
+    Comment comment(long num) throws IOException;
 
     /**
-     * Print it to Xembly.
+     * Post a new comment.
+     * @param text Text of the comment
+     * @throws IOException If fails
+     */
+    void post(String text) throws IOException;
+
+    /**
+     * Print them to Xembly.
      * @return Xembly
      */
     Iterable<Directive> inXembly() throws IOException;

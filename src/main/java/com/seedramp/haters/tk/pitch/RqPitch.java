@@ -18,12 +18,13 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Comment;
+import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.rq.RqHeaders;
+import org.xembly.Directive;
 
 /**
  * Pitch in the request.
@@ -55,23 +56,18 @@ final class RqPitch implements Pitch {
     }
 
     @Override
-    public Iterable<Comment> recent() throws IOException {
-        return this.pitch().recent();
-    }
-
-    @Override
-    public Comment comment(final long num) throws IOException {
-        return this.pitch().comment(num);
-    }
-
-    @Override
-    public void post(final String text) throws IOException {
-        this.pitch().post(text);
+    public Comments comments() throws IOException {
+        return this.pitch().comments();
     }
 
     @Override
     public void delete() throws IOException {
         this.pitch().delete();
+    }
+
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return this.pitch().inXembly();
     }
 
     /**
@@ -80,7 +76,7 @@ final class RqPitch implements Pitch {
      * @throws IOException If fails
      */
     private Pitch pitch() throws IOException {
-        return new RqAuthor(this.base, this.request).pitch(
+        return new RqAuthor(this.base, this.request).pitches().pitch(
             Long.parseLong(
                 new RqHeaders.Smart(
                     new RqHeaders.Base(this.request)

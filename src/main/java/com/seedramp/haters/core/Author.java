@@ -29,24 +29,9 @@ import java.io.IOException;
 public interface Author {
 
     /**
-     * List all recent pitches.
-     * @return Iterable of pitches for home page
+     * All his pitches.
+     * @return Pitches
      */
-    Iterable<Pitch> recent() throws IOException;
-
-    /**
-     * Get one by number.
-     * @param num Number
-     * @return Pitch
-     */
-    Pitch pitch(long num) throws IOException;
-
-    /**
-     * Submit a new pitch.
-     * @param title Title of the pitch
-     * @param text Text to post
-     * @throws IOException If fails
-     */
-    void submit(String title, String text) throws IOException;
+    Pitches pitches() throws IOException;
 
 }

@@ -17,16 +17,9 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.google.common.collect.Iterables;
-import com.jcabi.aspects.Tv;
-import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Conditions;
-import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
 import com.seedramp.haters.core.Author;
-import com.seedramp.haters.core.Pitch;
-import java.io.IOException;
+import com.seedramp.haters.core.Pitches;
 
 /**
  * Dynamo Author.
@@ -58,55 +51,8 @@ final class DyAuthor implements Author {
     }
 
     @Override
-    public Iterable<Pitch> recent() {
-        return Iterables.transform(
-            this.table()
-                .frame()
-                .through(
-                    new QueryValve()
-                        .withLimit(Tv.TWENTY)
-                        .withIndexName("recent")
-                        .withScanIndexForward(false)
-                        .withConsistentRead(false)
-                )
-                .where("alive", Conditions.equalTo(1)),
-            item -> {
-                try {
-                    return this.pitch(
-                        Long.parseLong(item.get("id").getN())
-                    );
-                } catch (final IOException ex) {
-                    throw new IllegalStateException(ex);
-                }
-            }
-        );
-    }
-
-    @Override
-    public Pitch pitch(final long num) {
-        return new DyPitch(this.region, this.name, num);
-    }
-
-    @Override
-    public void submit(final String title, final String text)
-        throws IOException {
-        this.table().put(
-            new Attributes()
-                .with("id", System.currentTimeMillis())
-                .with("title", title)
-                .with("text", text)
-                .with("author", this.name)
-                .with("alive", 1)
-                .with("created", System.currentTimeMillis())
-        );
-    }
-
-    /**
-     * Table to work with.
-     * @return Table
-     */
-    private Table table() {
-        return this.region.table("pitches");
+    public Pitches pitches() {
+        return new DyPitches(this.region, this.name);
     }
 
 }
