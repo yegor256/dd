@@ -17,8 +17,8 @@
  */
 package com.seedramp.haters.fake;
 
-import com.seedramp.haters.model.Vote;
-import com.seedramp.haters.model.Votes;
+import com.seedramp.haters.core.Vote;
+import com.seedramp.haters.core.Votes;
 import java.io.IOException;
 import java.util.Collections;
 

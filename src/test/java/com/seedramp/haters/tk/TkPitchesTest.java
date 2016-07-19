@@ -19,7 +19,7 @@ package com.seedramp.haters.tk;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.seedramp.haters.fake.FkBase;
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.Take;

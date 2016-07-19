@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.seedramp.haters.model.Author;
+import com.seedramp.haters.core.Author;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;

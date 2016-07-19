@@ -17,8 +17,8 @@
  */
 package com.seedramp.haters.fake;
 
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Pitches;
+import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
 import java.util.Collections;
 
 /**

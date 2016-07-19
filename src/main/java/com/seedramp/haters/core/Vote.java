@@ -15,36 +15,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.core;
 
 import java.io.IOException;
 
 /**
- * Votes.
+ * Vote.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Votes {
+public interface Vote {
 
     /**
-     * Top votes.
-     * @return List them
-     */
-    Iterable<Vote> top();
-
-    /**
-     * Post a new vote.
-     * @param text Text of the vote
-     * @param author Author posting
+     * Name of the author.
+     * @return Author of the vote (twitter handle)
      * @throws IOException If fails
      */
-    void post(String text, String author) throws IOException;
+    String author() throws IOException;
 
     /**
-     * Points total.
-     * @return Points
+     * Text of the vote.
+     * @return The text
+     * @throws IOException If fails
+     */
+    String text() throws IOException;
+
+    /**
+     * Points.
+     * @return How many points it has
      * @throws IOException If fails
      */
     long points() throws IOException;

@@ -17,8 +17,8 @@
  */
 package com.seedramp.haters.tk.xe;
 
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.model.Vote;
+import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Vote;
 import java.io.IOException;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeSource;

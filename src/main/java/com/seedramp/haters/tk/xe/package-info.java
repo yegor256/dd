@@ -17,7 +17,7 @@
  */
 
 /**
- * Xembly sources for the model.
+ * Xembly sources for the core.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$

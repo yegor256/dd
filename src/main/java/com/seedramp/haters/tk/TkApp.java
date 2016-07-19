@@ -19,7 +19,7 @@ package com.seedramp.haters.tk;
 
 import com.jcabi.log.VerboseProcess;
 import com.jcabi.manifests.Manifests;
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.tk.pitch.TkPitch;
 import java.io.File;
 import java.io.IOException;

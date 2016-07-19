@@ -19,7 +19,7 @@ package com.seedramp.haters.tk;
 
 import com.google.common.collect.Iterables;
 import com.jcabi.manifests.Manifests;
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.tk.xe.XeAuthor;
 import java.io.IOException;
 import java.util.Arrays;

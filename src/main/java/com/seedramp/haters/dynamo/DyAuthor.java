@@ -18,7 +18,7 @@
 package com.seedramp.haters.dynamo;
 
 import com.jcabi.dynamo.Region;
-import com.seedramp.haters.model.Author;
+import com.seedramp.haters.core.Author;
 import java.io.IOException;
 
 /**

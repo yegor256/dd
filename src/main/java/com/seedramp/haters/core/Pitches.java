@@ -15,28 +15,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
+package com.seedramp.haters.core;
+
+import java.io.IOException;
 
 /**
- * Base.
+ * Pitches.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Base {
+public interface Pitches {
 
     /**
-     * Get pitches.
-     * @return Pitches
+     * Home page.
+     * @return Iterable of pitches for home page
      */
-    Pitches pitches();
+    Iterable<Pitch> home();
 
     /**
-     * Get author by name.
-     * @param name Name of him (twitter handle)
-     * @return Author
+     * Pending.
+     * @return Iterable of pending pitches
      */
-    Author author(String name);
+    Iterable<Pitch> pending();
+
+    /**
+     * Get one by number.
+     * @param num Number
+     * @return Pitch
+     */
+    Pitch pitch(long num);
+
+    /**
+     * Post a new pitch.
+     * @param text Text to post
+     * @param author Author who is posting
+     * @return Pitch
+     * @throws IOException If fails
+     */
+    Pitch post(String text, String author) throws IOException;
 
 }

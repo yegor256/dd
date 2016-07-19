@@ -15,38 +15,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.model;
-
-import java.io.IOException;
 
 /**
- * Vote.
+ * Model.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Vote {
-
-    /**
-     * Name of the author.
-     * @return Author of the vote (twitter handle)
-     * @throws IOException If fails
-     */
-    String author() throws IOException;
-
-    /**
-     * Text of the vote.
-     * @return The text
-     * @throws IOException If fails
-     */
-    String text() throws IOException;
-
-    /**
-     * Points.
-     * @return How many points it has
-     * @throws IOException If fails
-     */
-    long points() throws IOException;
-
-}
+package com.seedramp.haters.core;

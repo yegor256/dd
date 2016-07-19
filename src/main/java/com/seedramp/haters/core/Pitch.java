@@ -15,52 +15,58 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.core;
 
-import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitch;
-import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
 
 /**
- * Post a vote.
+ * Pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class TkPost implements Take {
+public interface Pitch {
 
     /**
-     * Base.
+     * Votes.
+     * @return Its votes
+     * @throws IOException If fails
      */
-    private final transient Base base;
+    Votes votes() throws IOException;
 
     /**
-     * Ctor.
-     * @param bse Base
+     * ID of it.
+     * @return ID of the pitch
+     * @throws IOException If fails
      */
-    TkPost(final Base bse) {
-        this.base = bse;
-    }
+    long number() throws IOException;
 
-    @Override
-    public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req).pitch();
-        pitch.votes().post(
-            new RqForm.Smart(new RqForm.Base(req)).single("text"),
-            new RqAuthor(req).name()
-        );
-        return new RsForward(
-            new RsFlash("thanks!"),
-            String.format("/p/%d", pitch.number())
-        );
-    }
+    /**
+     * Approve it.
+     * @param author Who approves it
+     * @throws IOException If fails
+     */
+    void approve(String author) throws IOException;
+
+    /**
+     * Delete it.
+     * @throws IOException If fails
+     */
+    void delete() throws IOException;
+
+    /**
+     * Name of the author.
+     * @return Author of the pitch (twitter handle)
+     * @throws IOException If fails
+     */
+    String author() throws IOException;
+
+    /**
+     * Text of the pitch.
+     * @return The text
+     * @throws IOException If fails
+     */
+    String text() throws IOException;
 
 }

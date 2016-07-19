@@ -17,8 +17,8 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitch;
+import com.seedramp.haters.core.Base;
+import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.rq.RqHeaders;

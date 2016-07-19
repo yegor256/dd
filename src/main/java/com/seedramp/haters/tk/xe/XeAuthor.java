@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tk.xe;
 
-import com.seedramp.haters.model.Author;
+import com.seedramp.haters.core.Author;
 import java.io.IOException;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeDirectives;

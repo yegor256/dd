@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.tk.RsPage;
 import java.io.IOException;
 import java.util.Arrays;

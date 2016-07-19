@@ -18,7 +18,7 @@
 package com.seedramp.haters.dynamo;
 
 import com.jcabi.dynamo.Item;
-import com.seedramp.haters.model.Vote;
+import com.seedramp.haters.core.Vote;
 import java.io.IOException;
 
 /**

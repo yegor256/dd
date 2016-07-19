@@ -15,12 +15,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.seedramp.haters.core;
 
 /**
- * Model.
+ * Base.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-package com.seedramp.haters.model;
+public interface Base {
+
+    /**
+     * Get pitches.
+     * @return Pitches
+     */
+    Pitches pitches();
+
+    /**
+     * Get author by name.
+     * @param name Name of him (twitter handle)
+     * @return Author
+     */
+    Author author(String name);
+
+}

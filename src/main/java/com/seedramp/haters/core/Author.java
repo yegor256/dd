@@ -15,44 +15,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.core;
 
-import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitch;
 import java.io.IOException;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
 
 /**
- * Vote for a vote.
+ * Author.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class TkVote implements Take {
+public interface Author {
 
     /**
-     * Base.
+     * How many points it has now.
+     * @return Points
+     * @throws IOException If fails
      */
-    private final transient Base base;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
-    TkVote(final Base bse) {
-        this.base = bse;
-    }
-
-    @Override
-    public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req).pitch();
-        // not implemented yet
-        return new RsForward(new RsFlash("thanks!"));
-    }
+    long points() throws IOException;
 
 }

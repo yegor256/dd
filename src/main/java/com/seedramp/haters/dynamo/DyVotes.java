@@ -26,8 +26,8 @@ import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import com.seedramp.haters.model.Vote;
-import com.seedramp.haters.model.Votes;
+import com.seedramp.haters.core.Vote;
+import com.seedramp.haters.core.Votes;
 import java.io.IOException;
 
 /**

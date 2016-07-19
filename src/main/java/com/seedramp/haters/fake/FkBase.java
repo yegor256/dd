@@ -17,9 +17,9 @@
  */
 package com.seedramp.haters.fake;
 
-import com.seedramp.haters.model.Author;
-import com.seedramp.haters.model.Base;
-import com.seedramp.haters.model.Pitches;
+import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Base;
+import com.seedramp.haters.core.Pitches;
 
 /**
  * Fake Base.

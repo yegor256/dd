@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import org.takes.Take;
 import org.takes.facets.fork.TkFork;
 import org.takes.tk.TkWrap;
@@ -48,7 +48,7 @@ public final class TkPitch extends TkWrap {
         return new TkFork(
             new FkPitch("", new TkIndex(base)),
             new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base)),
+            new FkPitch("/post", new TkComment(base)),
             new FkPitch("/vote/.*", new TkVote(base))
         );
     }

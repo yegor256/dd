@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tk;
 
-import com.seedramp.haters.model.Base;
+import com.seedramp.haters.core.Base;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;

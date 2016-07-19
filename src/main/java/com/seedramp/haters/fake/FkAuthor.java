@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.fake;
 
-import com.seedramp.haters.model.Author;
+import com.seedramp.haters.core.Author;
 
 /**
  * Fake Author.
