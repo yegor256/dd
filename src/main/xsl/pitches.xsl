@@ -61,6 +61,12 @@
                     <xsl:text>closed</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:if test="links/link[@rel='delete']">
+                <xsl:text>, </xsl:text>
+                <a href="{links/link[@rel='delete']/@href}">
+                    <xsl:text>delete</xsl:text>
+                </a>
+            </xsl:if>
             <xsl:text>]</xsl:text>
         </p>
     </xsl:template>

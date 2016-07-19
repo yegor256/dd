@@ -28,15 +28,16 @@
         <link rel="stylesheet" href="/css/pitches.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <p>Let our haters take a look at your startup.</p>
+        <p><xsl:text>Let our haters take a look at your startup.</xsl:text></p>
         <form action="" method="post">
-            <label>Title (make it very short):</label>
+            <label><xsl:text>Title (make it very short):</xsl:text></label>
             <input name="title" size="50" type="text" maxlength="100"/>
-            <label>Elevator pitch:</label>
+            <label><xsl:text>Elevator pitch:</xsl:text></label>
             <textarea name="text" style="width:100%;height:5em;">
                 <xsl:text> </xsl:text>
             </textarea>
-            <button type="submit">Submit</button>
+            <button type="submit"><xsl:text>Submit</xsl:text></button>
+            <span><xsl:text>You will be able to delete it during 12 hours</xsl:text></span>
         </form>
     </xsl:template>
 </xsl:stylesheet>

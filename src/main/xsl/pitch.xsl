@@ -29,13 +29,21 @@
     </xsl:template>
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitch"/>
-        <form action="{links/link[@rel='post']/@href}" method="post">
-            <label>What do you think about it?</label>
-            <textarea name="text" style="width:100%;height:5em;">
-                <xsl:text> </xsl:text>
-            </textarea>
-            <button type="submit">Submit</button>
-        </form>
+        <xsl:choose>
+            <xsl:when test="links/link[@rel='comment']">
+                <form action="{links/link[@rel='comment']/@href}" method="post">
+                    <label><xsl:text>What do you think about it?</xsl:text></label>
+                    <textarea name="text" style="width:100%;height:5em;">
+                        <xsl:text> </xsl:text>
+                    </textarea>
+                    <button type="submit">Submit</button>
+                    <span><xsl:text>You will be able to delete it during 12 hours</xsl:text></span>
+                </form>
+            </xsl:when>
+            <xsl:otherwise>
+                <p><xsl:text>We're not allowed to comment now.</xsl:text></p>
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:apply-templates select="comments"/>
     </xsl:template>
     <xsl:template match="pitch">
@@ -51,8 +59,17 @@
     </xsl:template>
     <xsl:template match="comment">
         <p>
-            <xsl:text>@</xsl:text>
-            <xsl:value-of select="author"/>
+            <a href="https://twitter.com/{author}">
+                <xsl:text>@</xsl:text>
+                <xsl:value-of select="author"/>
+            </a>
+            <xsl:if test="links/link[@rel='delete']">
+                <xsl:text> [</xsl:text>
+                <a href="{links/link[@rel='delete']/@href}">
+                    <xsl:text>delete</xsl:text>
+                </a>
+                <xsl:text>]</xsl:text>
+            </xsl:if>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="text"/>
         </p>

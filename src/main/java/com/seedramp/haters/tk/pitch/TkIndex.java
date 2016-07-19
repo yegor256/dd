@@ -82,7 +82,7 @@ final class TkIndex implements Take {
                         new XeAppend(
                             "comment",
                             new XeChain(
-                                new XeLink("vote", "/p/123/c/5/vote"),
+                                new XeLink("delete", "/p/123/c/5/delete"),
                                 new XeDirectives(
                                     new Directives()
                                         .add("text").set("I love it").up()
@@ -92,18 +92,15 @@ final class TkIndex implements Take {
                         ),
                         new XeAppend(
                             "comment",
-                            new XeChain(
-                                new XeLink("vote", "/p/123/c/6/vote"),
-                                new XeDirectives(
-                                    new Directives()
-                                        .add("text").set("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n" +
-                                        "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n" +
-                                        "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n" +
-                                        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n" +
-                                        "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n" +
-                                        "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.").up()
-                                        .add("author").set("jeff").up()
-                                )
+                            new XeDirectives(
+                                new Directives()
+                                    .add("text").set("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n" +
+                                    "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n" +
+                                    "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n" +
+                                    "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n" +
+                                    "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n" +
+                                    "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.").up()
+                                    .add("author").set("jeff").up()
                             )
                         )
                     )

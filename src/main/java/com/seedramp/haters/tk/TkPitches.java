@@ -66,6 +66,7 @@ final class TkPitches implements Take {
                             "pitch",
                             new XeChain(
                                 new XeLink("see", "/p/123"),
+                                new XeLink("delete", "/p/123"),
                                 new XeDirectives(
                                     new Directives()
                                         .attr("alive", true)

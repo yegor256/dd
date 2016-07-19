@@ -24,7 +24,7 @@
                 <meta charset="UTF-8"/>
                 <link rel="shortcut icon" type="image/png"
                     href="http://www.seedramp.com/images/icon-64x64.png"/>
-                <link rel="stylesheet" href="http://yegor256.github.io/tacit/tacit.min.css"/>
+                <link rel="stylesheet" href="http://yegor256.github.io/tacit/tacit-0.6.1.min.css"/>
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
@@ -58,6 +58,10 @@
                                 </li>
                             </ul>
                         </nav>
+                        <form method="get" action="https://www.google.com/search">
+                            <input name="sitesearch" value="haters.seedramp.com" type="hidden"/>
+                            <input type="text" name="q" size="40" autocomplete="off" placeholder="Search..."/>
+                        </form>
                         <xsl:apply-templates select="flash"/>
                     </header>
                     <xsl:apply-templates select="." mode="body"/>
