@@ -15,7 +15,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk;
+package com.seedramp.haters.tk.pitch;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.seedramp.haters.core.Base;
@@ -24,33 +24,33 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.Take;
 import org.takes.rq.RqFake;
-import org.takes.rq.RqWithHeader;
+import org.takes.rq.RqWithHeaders;
 import org.takes.rs.RsPrint;
 
 /**
- * Test case for {@link TkPitches}.
+ * Test case for {@link TkIndex}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class TkPitchesTest {
+public final class TkIndexTest {
 
     /**
-     * TkPitches can render home page.
+     * TkIndex can render home page.
      * @throws Exception If some problem inside
      */
     @Test
     public void rendersHomePage() throws Exception {
         final Base base = new FkBase();
-        final Take take = new TkPitches(base);
+        final Take take = new TkIndex(base);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new RsPrint(
                     take.act(
-                        new RqWithHeader(
+                        new RqWithHeaders(
                             new RqFake("GET", "/"),
-                            "Accept",
-                            "text/xml"
+                            "Accept: text/xml",
+                            "X-Haters-Pitch: 123"
                         )
                     )
                 ).printBody()

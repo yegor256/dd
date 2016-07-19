@@ -20,11 +20,14 @@ package com.seedramp.haters.tk.pitch;
 import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.tk.RsHtmlPage;
+import com.seedramp.haters.tk.RsPage;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rs.RsXSLT;
 import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeLink;
 
 /**
  * Index of the pitch.
@@ -52,11 +55,23 @@ final class TkIndex implements Take {
     public Response act(final Request req) throws IOException {
         final Pitch pitch = new RqPitch(this.base, req);
         return new RsHtmlPage(
-            this.base,
-            "/xsl/pitch.xsl",
             req,
-            new XeDirectives(pitch.inXembly()),
-            new XeDirectives(pitch.comments().inXembly())
+            new RsXSLT(
+                new RsPage(
+                    this.base,
+                    "/com/seedramp/haters/tk/pitch/pre-pitch.xsl",
+                    req,
+                    new XeLink(
+                        "post",
+                        String.format(
+                            "/p/%d/post",
+                            new Path(req).pitch()
+                        )
+                    ),
+                    new XeDirectives(pitch.inXembly()),
+                    new XeDirectives(pitch.comments().inXembly())
+                )
+            )
         );
     }
 

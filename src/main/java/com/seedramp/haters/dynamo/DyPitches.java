@@ -89,7 +89,7 @@ final class DyPitches implements Pitches {
                     .withIndexName("recent")
                     .withAttributesToGet(
                         "id", "title", "author",
-                        "comments", "created"
+                        "comments", "created", "valid"
                     )
                     .withScanIndexForward(false)
                     .withConsistentRead(false)
@@ -100,8 +100,9 @@ final class DyPitches implements Pitches {
             final String author = item.get("author").getS();
             final Time created = new Time(item.get("created"));
             dirs.add("pitch")
-                .attr("open", created.isMature())
+                .attr("mature", created.isMature())
                 .attr("mine", author.equals(this.name))
+                .attr("valid", "1".equals(item.get("valid").getN()))
                 .add("id").set(item.get("id").getN()).up()
                 .add("title").set(item.get("title").getS()).up()
                 .add("comments").set(item.get("comments").getN()).up()

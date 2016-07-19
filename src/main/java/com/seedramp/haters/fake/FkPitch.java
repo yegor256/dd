@@ -20,8 +20,8 @@ package com.seedramp.haters.fake;
 import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
-import java.util.Collections;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Fake Pitch.
@@ -44,6 +44,13 @@ public final class FkPitch implements Pitch {
 
     @Override
     public Iterable<Directive> inXembly() throws IOException {
-        return Collections.emptyList();
+        return new Directives()
+            .add("pitch")
+            .attr("mature", "false")
+            .add("id").set("123").up()
+            .add("title").set("simple pitch title").up()
+            .add("comments").set("3").up()
+            .add("author").set("yegor256").up()
+            .add("created").set("2016-07-19T19:19:27Z");
     }
 }

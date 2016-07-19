@@ -83,19 +83,24 @@ final class DyPitch implements Pitch {
             .frame()
             .through(
                 new QueryValve().withLimit(1).withAttributesToGet(
-                    "id", "title", "text", "author", "valid"
+                    "id", "title", "text", "author", "created", "valid"
                 )
             )
             .where("id", Conditions.equalTo(this.number))
             .iterator()
             .next();
+        final String user = item.get("author").getS();
+        final Time created = new Time(item.get("created"));
         return new Directives()
             .add("pitch")
+            .attr("open", created.isMature())
+            .attr("mine", this.author.equals(user))
+            .attr("valid", "1".equals(item.get("valid").getN()))
             .add("id").set(item.get("id").getN()).up()
             .add("title").set(item.get("title").getS()).up()
             .add("text").set(item.get("text").getS()).up()
-            .add("author").set(item.get("author").getS()).up()
-            .add("created").set(new Time(item.get("author")).iso())
+            .add("author").set(user).up()
+            .add("created").set(created.iso())
             .up().up();
     }
 

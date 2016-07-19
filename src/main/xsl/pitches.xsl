@@ -49,8 +49,10 @@
                     <xsl:value-of select="title"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:text> /</xsl:text>
-            <xsl:value-of select="comments"/>
+            <xsl:if test="comments &gt; 0">
+                <xsl:text> /</xsl:text>
+                <xsl:value-of select="comments"/>
+            </xsl:if>
             <xsl:text> [</xsl:text>
             <xsl:choose>
                 <xsl:when test="@open = 'true'">

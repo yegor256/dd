@@ -47,7 +47,7 @@ public final class FkPitches implements Pitches {
         return new Directives()
             .add("pitches")
             .add("pitch")
-            .attr("open", "true")
+            .attr("mature", "false")
             .add("id").set("123").up()
             .add("title").set("simple pitch title").up()
             .add("comments").set("3").up()

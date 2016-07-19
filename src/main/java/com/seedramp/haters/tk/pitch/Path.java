@@ -15,43 +15,58 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.core.Comment;
-import com.seedramp.haters.core.Comments;
 import java.io.IOException;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import org.takes.Request;
+import org.takes.rq.RqHeaders;
 
 /**
- * Fake Comments.
+ * Path to the pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkComments implements Comments {
+final class Path {
 
-    @Override
-    public Comment comment(final long num) throws IOException {
-        return new FkComment();
+    /**
+     * The request.
+     */
+    private final transient Request request;
+
+    /**
+     * Ctor.
+     * @param req Request
+     */
+    Path(final Request req) {
+        this.request = req;
     }
 
-    @Override
-    public void post(final String text) throws IOException {
-        // nothing
+    /**
+     * Get pitch number.
+     * @return The pitch
+     * @throws IOException If fails
+     */
+    public long pitch() throws IOException {
+        return Long.parseLong(
+            new RqHeaders.Smart(
+                new RqHeaders.Base(this.request)
+            ).single("X-Haters-Pitch")
+        );
     }
 
-    @Override
-    public Iterable<Directive> inXembly() throws IOException {
-        return new Directives()
-            .add("comments")
-            .add("comment")
-            .attr("mature", "true")
-            .add("id").set("55").up()
-            .add("text").set("I love this startup").up()
-            .add("author").set("yegor256").up()
-            .add("created").set("2016-07-19T19:19:27Z");
+    /**
+     * Get comment number.
+     * @return The pitch
+     * @throws IOException If fails
+     */
+    public long comment() throws IOException {
+        return Long.parseLong(
+            new RqHeaders.Smart(
+                new RqHeaders.Base(this.request)
+            ).single("X-Haters-Comment")
+        );
     }
 
 }

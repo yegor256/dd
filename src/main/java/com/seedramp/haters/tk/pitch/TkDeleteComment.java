@@ -18,6 +18,7 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import org.takes.Request;
@@ -33,7 +34,7 @@ import org.takes.facets.forward.RsForward;
  * @version $Id$
  * @since 1.0
  */
-final class TkWipe implements Take {
+final class TkDeleteComment implements Take {
 
     /**
      * Base.
@@ -44,15 +45,21 @@ final class TkWipe implements Take {
      * Ctor.
      * @param bse Base
      */
-    TkWipe(final Base bse) {
+    TkDeleteComment(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
         final Pitch pitch = new RqPitch(this.base, req);
-        pitch.delete();
-        return new RsForward(new RsFlash("deleted, thanks!"));
+        final Comment comment = pitch.comments().comment(
+            new Path(req).comment()
+        );
+        comment.delete();
+        return new RsForward(
+            new RsFlash("comment deleted"),
+            String.format("/p/%d", new Path(req).pitch())
+        );
     }
 
 }

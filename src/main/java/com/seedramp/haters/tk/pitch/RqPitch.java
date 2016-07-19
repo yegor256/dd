@@ -23,7 +23,6 @@ import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
 import org.takes.Request;
-import org.takes.rq.RqHeaders;
 import org.xembly.Directive;
 
 /**
@@ -77,11 +76,7 @@ final class RqPitch implements Pitch {
      */
     private Pitch pitch() throws IOException {
         return new RqAuthor(this.base, this.request).pitches().pitch(
-            Long.parseLong(
-                new RqHeaders.Smart(
-                    new RqHeaders.Base(this.request)
-                ).single("X-Haters-Pitch")
-            )
+            new Path(this.request).pitch()
         );
     }
 

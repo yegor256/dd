@@ -20,6 +20,7 @@ package com.seedramp.haters.tk.pitch;
 import com.seedramp.haters.core.Base;
 import org.takes.Take;
 import org.takes.facets.fork.TkFork;
+import org.takes.tk.TkText;
 import org.takes.tk.TkWrap;
 
 /**
@@ -49,7 +50,13 @@ public final class TkPitch extends TkWrap {
             new FkPitch("", new TkIndex(base)),
             new FkPitch("/delete", new TkDelete(base)),
             new FkPitch("/post", new TkPost(base)),
-            new FkPitch("/wipe", new TkWipe(base))
+            new FkPitch(
+                "/c/.*",
+                new TkFork(
+                    new FkComment("", new TkText("what?")),
+                    new FkComment("/delete", new TkDeleteComment(base))
+                )
+            )
         );
     }
 

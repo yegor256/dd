@@ -50,7 +50,9 @@ final class TkDelete implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         new RqPitch(this.base, req).delete();
-        return new RsForward(new RsFlash("deleted, thanks!"));
+        return new RsForward(
+            new RsFlash("pitch deleted")
+        );
     }
 
 }

@@ -28,22 +28,22 @@ import org.takes.misc.Opt;
 import org.takes.rq.RqWithHeader;
 
 /**
- * Fork of pitch.
+ * Fork of comment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class FkPitch extends FkWrap {
+final class FkComment extends FkWrap {
 
     /**
      * Ctor.
      * @param regex Regular expression
      * @param take Take
      */
-    FkPitch(final String regex, final Take take) {
-        super(req -> FkPitch.route(regex, take, req));
+    FkComment(final String regex, final Take take) {
+        super(req -> FkComment.route(regex, take, req));
     }
 
     /**
@@ -57,12 +57,12 @@ final class FkPitch extends FkWrap {
     private static Opt<Response> route(final String regex, final Take take,
         final Request req) throws IOException {
         return new FkRegex(
-            String.format("/p/([0-9]+)%s", regex),
+            String.format("/p/[0-9]+/c/([0-9]+)%s", regex),
             (TkRegex) rreq -> {
                 final long num = Long.parseLong(rreq.matcher().group(1));
                 return take.act(
                     new RqWithHeader(
-                        rreq, "X-Haters-Pitch",
+                        rreq, "X-Haters-Comment",
                         Long.toString(num)
                     )
                 );

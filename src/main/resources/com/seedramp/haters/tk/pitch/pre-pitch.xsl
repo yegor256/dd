@@ -29,9 +29,18 @@
             </xsl:if>
             <xsl:apply-templates select="node() except (id|created)"/>
             <links>
-                <link rel="see" href="/p/{id}"/>
                 <xsl:if test="@mine = 'true' and @mature = 'false'">
                     <link rel="delete" href="/p/{id}/delete"/>
+                </xsl:if>
+            </links>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="comment">
+        <xsl:copy>
+            <xsl:apply-templates select="node() except (id|created|pitch)"/>
+            <links>
+                <xsl:if test="@mine = 'true' and @mature = 'false'">
+                    <link rel="delete" href="/p/{pitch}/c/{id}/delete"/>
                 </xsl:if>
             </links>
         </xsl:copy>
@@ -39,7 +48,7 @@
     <xsl:template match="/">
         <xsl:copy>
             <xsl:processing-instruction name="xml-stylesheet">
-                <xsl:text>href='/xsl/pitches.xsl' type='text/xsl'</xsl:text>
+                <xsl:text>href='/xsl/pitch.xsl' type='text/xsl'</xsl:text>
             </xsl:processing-instruction>
             <xsl:apply-templates select="node()"/>
         </xsl:copy>

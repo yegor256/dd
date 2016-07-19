@@ -76,15 +76,24 @@ final class DyComments implements Comments {
                     .withIndexName("recent")
                     .withScanIndexForward(true)
                     .withConsistentRead(false)
-                    .withAttributesToGet("id", "text", "author")
+                    .withAttributesToGet(
+                        "id", "text", "author",
+                        "created", "pitch"
+                    )
             )
             .where("pitch", Conditions.equalTo(this.number));
         final Directives dirs = new Directives().add("comments");
         for (final Item item : items) {
+            final String user = item.get("author").getS();
+            final Time created = new Time(item.get("created"));
             dirs.add("comment")
+                .attr("mature", created.isMature())
+                .attr("mine", user.equals(this.author))
                 .add("id").set(item.get("id").getN()).up()
+                .add("pitch").set(item.get("pitch").getN()).up()
                 .add("text").set(item.get("text").getS()).up()
-                .add("author").set(item.get("author").getS()).up()
+                .add("author").set(user).up()
+                .add("created").set(created.iso()).up()
                 .up();
         }
         return dirs.up();
@@ -112,7 +121,7 @@ final class DyComments implements Comments {
      * @return Table
      */
     private Table table() {
-        return this.region.table("pitches");
+        return this.region.table("comments");
     }
 
 }

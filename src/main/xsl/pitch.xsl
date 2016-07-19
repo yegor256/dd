@@ -30,8 +30,8 @@
     <xsl:template match="page" mode="body">
         <xsl:apply-templates select="pitch"/>
         <xsl:choose>
-            <xsl:when test="links/link[@rel='comment']">
-                <form action="{links/link[@rel='comment']/@href}" method="post">
+            <xsl:when test="links/link[@rel='post']">
+                <form action="{links/link[@rel='post']/@href}" method="post">
                     <label><xsl:text>What do you think about it?</xsl:text></label>
                     <textarea name="text" style="width:100%;height:5em;">
                         <xsl:text> </xsl:text>
