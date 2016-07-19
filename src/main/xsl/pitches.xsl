@@ -53,23 +53,15 @@
                 <xsl:text> /</xsl:text>
                 <xsl:value-of select="comments"/>
             </xsl:if>
-            <xsl:text> [</xsl:text>
-            <xsl:choose>
-                <xsl:when test="@open = 'true'">
-                    <xsl:value-of select="lifespan"/>
-                    <xsl:text> left</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>closed</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:if test="not(@open) or @open != 'true'">
+                <xsl:text> [closed]</xsl:text>
+            </xsl:if>
             <xsl:if test="links/link[@rel='delete']">
-                <xsl:text>, </xsl:text>
+                <xsl:text> </xsl:text>
                 <a href="{links/link[@rel='delete']/@href}">
                     <xsl:text>delete</xsl:text>
                 </a>
             </xsl:if>
-            <xsl:text>]</xsl:text>
         </p>
     </xsl:template>
 </xsl:stylesheet>

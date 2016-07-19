@@ -64,11 +64,10 @@
                 <xsl:value-of select="author"/>
             </a>
             <xsl:if test="links/link[@rel='delete']">
-                <xsl:text> [</xsl:text>
+                <xsl:text> </xsl:text>
                 <a href="{links/link[@rel='delete']/@href}">
                     <xsl:text>delete</xsl:text>
                 </a>
-                <xsl:text>]</xsl:text>
             </xsl:if>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="text"/>
