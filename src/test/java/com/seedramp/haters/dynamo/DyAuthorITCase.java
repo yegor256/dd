@@ -20,6 +20,7 @@ package com.seedramp.haters.dynamo;
 import com.seedramp.haters.model.Author;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,6 +37,7 @@ public final class DyAuthorITCase {
      * @throws Exception If some problem inside
      */
     @Test
+    @Ignore
     public void retrievesPoints() throws Exception {
         final Author author = new DyAuthor(new Dynamo(), "jeff");
         MatcherAssert.assertThat(

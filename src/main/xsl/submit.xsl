@@ -25,7 +25,7 @@
         <title>
             <xsl:text>submit</xsl:text>
         </title>
-        <link rel="stylesheet" href="/css/home.css?{version/revision}"/>
+        <link rel="stylesheet" href="/css/pitches.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
         <form action="" method="post">

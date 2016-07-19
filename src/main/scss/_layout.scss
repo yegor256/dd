@@ -1,44 +1,32 @@
 @import 'colors';
 
-* {
-  font-family: monospace;
-  font-size: 20px;
+body {
+  background-color: white;
 }
 
-section {
-  width: 36em;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2em;
-}
+nav {
+  text-align: left;
 
-p,
-form {
-  margin-bottom: 2em;
-  margin-top: 2em;
-}
-
-.flash {
-  &.SEVERE { color: red; }
-
-  &.INFO { color: green; }
-
-  &.WARNING { color: orange; }
+  ul {
+    text-align: left;
+  }
 }
 
 .logo {
   background-color: $blue;
-  color: $white;
-  padding: .5em 1em;
-  text-decoration: none;
-}
+  color: white;
+  padding: 0 .2em;
 
-.menu {
-  list-style: none;
-  padding-left: 0;
-  li {
-    display: inline;
-    margin-right: 1em;
+  &:hover {
+    text-decoration: none;
   }
 }
+
+.flash {
+  &.SEVERE { color: $red; }
+
+  &.INFO { color: $green; }
+
+  &.WARNING { color: $orange; }
+}
+

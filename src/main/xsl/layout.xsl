@@ -24,42 +24,41 @@
                 <meta charset="UTF-8"/>
                 <link rel="shortcut icon" type="image/png"
                     href="http://www.seedramp.com/images/icon-64x64.png"/>
+                <link rel="stylesheet" href="http://yegor256.github.io/tacit/tacit.min.css"/>
                 <xsl:apply-templates select="." mode="head"/>
             </head>
             <body>
                 <section>
-                    <a href="{links/link[@rel='home']/@href}" class="logo">
-                        <xsl:text>startup haters</xsl:text>
-                    </a>
-                    <xsl:apply-templates select="flash"/>
-                    <ul class="menu">
-                        <li>
-                            <xsl:if test="identity">
-                                <xsl:text>@</xsl:text>
-                                <xsl:value-of select="identity/name"/>
-                                <xsl:text> (</xsl:text>
-                                <xsl:value-of select="author/points"/>
-                                <xsl:text>)</xsl:text>
-                            </xsl:if>
-                            <xsl:if test="not(identity)">
-                                <a href="{links/link[@rel='takes:github']/@href}">
-                                    <xsl:text>login</xsl:text>
-                                </a>
-                            </xsl:if>
-                        </li>
-                        <li>
-                            <a href="{links/link[@rel='submit']/@href}">
-                                <xsl:text>submit</xsl:text>
-                            </a>
-                        </li>
-                        <li>
-                            <xsl:if test="links/link[@rel='pending']">
-                                <a href="{links/link[@rel='pending']/@href}">
-                                    <xsl:text>pending</xsl:text>
-                                </a>
-                            </xsl:if>
-                        </li>
-                    </ul>
+                    <header>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="{links/link[@rel='home']/@href}" class="logo">
+                                        <xsl:text>startup_haters</xsl:text>
+                                    </a>
+                                </li>
+                                <li>
+                                    <xsl:choose>
+                                        <xsl:when test="identity/name">
+                                            <xsl:text>@</xsl:text>
+                                            <xsl:value-of select="identity/name"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <a href="{links/link[@rel='takes:github']/@href}">
+                                                <xsl:text>login</xsl:text>
+                                            </a>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </li>
+                                <li>
+                                    <a href="{links/link[@rel='submit']/@href}">
+                                        <xsl:text>submit</xsl:text>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <xsl:apply-templates select="flash"/>
+                    </header>
                     <xsl:apply-templates select="." mode="body"/>
                 </section>
             </body>

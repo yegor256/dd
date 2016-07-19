@@ -281,6 +281,7 @@
                         <executions>
                             <execution>
                                 <id>minify-css</id>
+                                <phase>generate-resources</phase>
                                 <goals>
                                     <goal>minify</goal>
                                 </goals>
@@ -441,6 +442,7 @@
                                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
                                     <arguments>
                                         <argument>--port=${port}</argument>
+                                        <argument>--hit-refresh</argument>
                                     </arguments>
                                     <systemProperties>
                                         <property>

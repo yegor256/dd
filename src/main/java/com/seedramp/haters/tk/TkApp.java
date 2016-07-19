@@ -27,7 +27,6 @@ import java.nio.charset.Charset;
 import org.takes.Take;
 import org.takes.facets.auth.TkSecure;
 import org.takes.facets.flash.TkFlash;
-import org.takes.facets.fork.FkAnonymous;
 import org.takes.facets.fork.FkAuthenticated;
 import org.takes.facets.fork.FkFixed;
 import org.takes.facets.fork.FkHitRefresh;
@@ -126,22 +125,10 @@ public final class TkApp extends TkWrap {
                     "text/css"
                 )
             ),
-            new FkAnonymous(
-                new TkFork(
-                    new FkRegex("/", new TkHome(base))
-                )
-            ),
+            new FkRegex("/", new TkPitches(base)),
             new FkAuthenticated(
                 new TkSecure(
                     new TkFork(
-                        new FkRegex("/", new TkHome(base)),
-                        new FkRegex(
-                            "/pending",
-                            new TkSecret(
-                                base, new TkPending(base),
-                                (long) 0
-                            )
-                        ),
                         new FkRegex("/submit", new TkSubmit(base)),
                         new FkRegex("/p/.*", new TkPitch(base))
                     )

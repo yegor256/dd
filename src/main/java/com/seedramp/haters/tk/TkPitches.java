@@ -17,22 +17,20 @@
  */
 package com.seedramp.haters.tk;
 
-import com.seedramp.haters.model.Author;
 import com.seedramp.haters.model.Base;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.forward.RsFailure;
 
 /**
- * Secure take.
+ * List of all pitches.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class TkSecret implements Take {
+final class TkPitches implements Take {
 
     /**
      * Base.
@@ -40,37 +38,20 @@ final class TkSecret implements Take {
     private final transient Base base;
 
     /**
-     * Origin take.
-     */
-    private final transient Take origin;
-
-    /**
-     * Minimim points required.
-     */
-    private final transient long min;
-
-    /**
      * Ctor.
      * @param bse Base
      */
-    TkSecret(final Base bse, final Take take, final long threshold) {
+    TkPitches(final Base bse) {
         this.base = bse;
-        this.origin = take;
-        this.min = threshold;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Author author = this.base.author(new RqAuthor(req).name());
-        if (author.points() < this.min) {
-            throw new RsFailure(
-                String.format(
-                    "you have %d points, but need at least %d to access this",
-                    author.points(), this.min
-                )
-            );
-        }
-        return this.origin.act(req);
+        return new RsPage(
+            this.base,
+            "/xsl/pitches.xsl",
+            req
+        );
     }
 
 }

@@ -28,12 +28,12 @@ import org.takes.rq.RqWithHeader;
 import org.takes.rs.RsPrint;
 
 /**
- * Test case for {@link TkHome}.
+ * Test case for {@link TkPitches}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class TkHomeTest {
+public final class TkPitchesTest {
 
     /**
      * TkHome can render home page.
@@ -42,7 +42,7 @@ public final class TkHomeTest {
     @Test
     public void rendersHomePage() throws Exception {
         final Base base = new FkBase();
-        final Take take = new TkHome(base);
+        final Take take = new TkPitches(base);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new RsPrint(
