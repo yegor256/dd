@@ -391,7 +391,7 @@
                                     <secret>${failsafe.dynamo.secret}</secret>
                                     <tables>
                                         <table>${basedir}/src/test/dynamodb/pitches.json</table>
-                                        <table>${basedir}/src/test/dynamodb/votes.json</table>
+                                        <table>${basedir}/src/test/dynamodb/comments.json</table>
                                     </tables>
                                 </configuration>
                             </execution>

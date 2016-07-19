@@ -18,47 +18,72 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.rq.RqHeaders;
-import org.takes.rq.RqWrap;
 
 /**
- * Index of the pitch.
+ * Pitch in the request.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class RqPitch extends RqWrap {
+final class RqPitch implements Pitch {
 
     /**
-     * Base.
+     * The base.
      */
     private final transient Base base;
 
     /**
+     * The request.
+     */
+    private final transient Request request;
+
+    /**
      * Ctor.
-     * @param bse The base
+     * @param bse Base
      * @param req Request
      */
-    public RqPitch(final Base bse, final Request req) {
-        super(req);
+    RqPitch(final Base bse, final Request req) {
         this.base = bse;
+        this.request = req;
+    }
+
+    @Override
+    public Iterable<Comment> recent() throws IOException {
+        return this.pitch().recent();
+    }
+
+    @Override
+    public Comment comment(final long num) throws IOException {
+        return this.pitch().comment(num);
+    }
+
+    @Override
+    public void post(final String text) throws IOException {
+        this.pitch().post(text);
+    }
+
+    @Override
+    public void delete() throws IOException {
+        this.pitch().delete();
     }
 
     /**
-     * Get deck.
-     * @return The deck
+     * Get pitch.
+     * @return The pitch
      * @throws IOException If fails
      */
-    public Pitch pitch() throws IOException {
-        return new RqAuthor(this.base, this).pitch(
+    private Pitch pitch() throws IOException {
+        return new RqAuthor(this.base, this.request).pitch(
             Long.parseLong(
                 new RqHeaders.Smart(
-                    new RqHeaders.Base(this)
+                    new RqHeaders.Base(this.request)
                 ).single("X-Haters-Pitch")
             )
         );

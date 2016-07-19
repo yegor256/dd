@@ -18,7 +18,6 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
@@ -28,7 +27,7 @@ import org.takes.facets.forward.RsForward;
 import org.takes.rq.RqForm;
 
 /**
- * Post a vote.
+ * Post a comment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
@@ -51,8 +50,9 @@ final class TkPost implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req).pitch();
-        pitch.post(new RqForm.Smart(new RqForm.Base(req)).single("text"));
+        new RqPitch(this.base, req).post(
+            new RqForm.Smart(new RqForm.Base(req)).single("text")
+        );
         return new RsForward(
             new RsFlash("thanks!"),
             String.format("/p/%d", 0) // wrong

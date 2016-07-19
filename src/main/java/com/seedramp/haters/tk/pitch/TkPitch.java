@@ -48,8 +48,8 @@ public final class TkPitch extends TkWrap {
         return new TkFork(
             new FkPitch("", new TkIndex(base)),
             new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base))
-//            new FkPitch("/c/.*", new TkVote(base))
+            new FkPitch("/post", new TkPost(base)),
+            new FkPitch("/wipe", new TkWipe(base))
         );
     }
 

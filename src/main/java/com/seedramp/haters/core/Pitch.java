@@ -32,7 +32,7 @@ public interface Pitch {
      * All comments, in chronological order.
      * @return List them
      */
-    Iterable<Comment> recent();
+    Iterable<Comment> recent() throws IOException;
 
     /**
      * Get comment by ID.

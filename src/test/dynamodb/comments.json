@@ -7,6 +7,10 @@
         {
             "AttributeName": "pitch",
             "AttributeType": "N"
+        },
+        {
+            "AttributeName": "created",
+            "AttributeType": "N"
         }
     ],
     "KeySchema": [
