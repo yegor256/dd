@@ -35,7 +35,7 @@
     </xsl:template>
     <xsl:template match="pitch">
         <p>
-            <xsl:if test="not(@alive) or @alive != 'true'">
+            <xsl:if test="not(@open) or @open != 'true'">
                 <xsl:value-of select="date"/>
                 <xsl:text>: </xsl:text>
             </xsl:if>
@@ -53,8 +53,8 @@
             <xsl:value-of select="comments"/>
             <xsl:text> [</xsl:text>
             <xsl:choose>
-                <xsl:when test="@alive = 'true'">
-                    <xsl:value-of select="left"/>
+                <xsl:when test="@open = 'true'">
+                    <xsl:value-of select="lifespan"/>
                     <xsl:text> left</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>

@@ -5,7 +5,7 @@
             "AttributeType": "N"
         },
         {
-            "AttributeName": "alive",
+            "AttributeName": "valid",
             "AttributeType": "N"
         },
         {
@@ -29,7 +29,7 @@
             "IndexName": "recent",
             "KeySchema": [
                 {
-                    "AttributeName": "alive",
+                    "AttributeName": "valid",
                     "KeyType": "HASH"
                 },
                 {

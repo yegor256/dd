@@ -73,7 +73,7 @@ final class DyPitches implements Pitches {
                 .with("title", title)
                 .with("text", text)
                 .with("author", this.name)
-                .with("alive", 1)
+                .with("valid", 1)
                 .with("comments", 0)
                 .with("created", System.currentTimeMillis())
         );
@@ -91,15 +91,16 @@ final class DyPitches implements Pitches {
                     .withScanIndexForward(false)
                     .withConsistentRead(false)
             )
-            .where("alive", Conditions.equalTo(1));
+            .where("valid", Conditions.equalTo(1));
         final Directives dirs = new Directives().add("pitches");
         for (final Item item : items) {
             dirs.add("pitch")
-                .attr("alive", "1".equals(item.get("alive").getN()))
+                .attr("open", "true")
                 .add("id").set(item.get("id").getN()).up()
                 .add("title").set(item.get("title").getS()).up()
                 .add("comments").set(item.get("comments").getN()).up()
                 .add("author").set(item.get("author").getS()).up()
+                .add("lifespan").set("12 hours").up()
                 .up();
         }
         return dirs.up();
