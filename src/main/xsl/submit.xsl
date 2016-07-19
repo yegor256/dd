@@ -28,7 +28,11 @@
         <link rel="stylesheet" href="/css/pitches.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
+        <p>Let our haters take a look at your startup.</p>
         <form action="" method="post">
+            <label>Title (make it very short):</label>
+            <input name="title" size="50" type="text" maxlength="100"/>
+            <label>Elevator pitch:</label>
             <textarea name="text" style="width:100%;height:5em;">
                 <xsl:text> </xsl:text>
             </textarea>

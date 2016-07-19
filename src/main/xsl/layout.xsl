@@ -60,6 +60,12 @@
                         <xsl:apply-templates select="flash"/>
                     </header>
                     <xsl:apply-templates select="." mode="body"/>
+                    <footer>
+                        <xsl:text>made by </xsl:text>
+                        <a href="http://www.seedramp.com">
+                            <xsl:text>SeedRamp</xsl:text>
+                        </a>
+                    </footer>
                 </section>
             </body>
         </html>

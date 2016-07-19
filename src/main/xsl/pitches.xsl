@@ -35,10 +35,18 @@
     </xsl:template>
     <xsl:template match="pitch">
         <p>
-            <a href="{links/link[@rel='see']/@href}">
-                <xsl:value-of select="points"/>
-            </a>
-            <xsl:value-of select="text"/>
+            <xsl:choose>
+                <xsl:when test="links/link[@rel='see']">
+                    <a href="{links/link[@rel='see']/@href}">
+                        <xsl:value-of select="title"/>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="title"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text> /</xsl:text>
+            <xsl:value-of select="comments"/>
         </p>
     </xsl:template>
 </xsl:stylesheet>

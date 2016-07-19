@@ -4,12 +4,20 @@ body {
   background-color: white;
 }
 
+section {
+  width: 100%;
+}
+
 nav {
   text-align: left;
 
   ul {
     text-align: left;
   }
+}
+
+footer {
+  font-size: .75em;
 }
 
 .logo {

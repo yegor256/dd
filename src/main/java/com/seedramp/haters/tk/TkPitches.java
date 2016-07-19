@@ -19,9 +19,16 @@ package com.seedramp.haters.tk;
 
 import com.seedramp.haters.model.Base;
 import java.io.IOException;
+import java.util.Arrays;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeChain;
+import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeLink;
+import org.takes.rs.xe.XeSource;
+import org.xembly.Directives;
 
 /**
  * List of all pitches.
@@ -50,7 +57,28 @@ final class TkPitches implements Take {
         return new RsPage(
             this.base,
             "/xsl/pitches.xsl",
-            req
+            req,
+            new XeAppend(
+                "pitches",
+                new XeChain(
+                    Arrays.<XeSource>asList(
+                        new XeAppend(
+                            "pitch",
+                            new XeChain(
+                                new XeLink("see", "/p/123"),
+                                new XeDirectives(
+                                    new Directives()
+                                        .add("title").set("rultor, a DevOps chat bot").up()
+                                        .add("author").set("yegor256").up()
+                                        .add("comments").set("3").up()
+                                        .add("alive").set("true").up()
+                                        .add("age").set("14 hours").up()
+                                )
+                            )
+                        )
+                    )
+                )
+            )
         );
     }
 
