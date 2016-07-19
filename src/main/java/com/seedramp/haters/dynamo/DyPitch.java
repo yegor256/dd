@@ -83,7 +83,8 @@ final class DyPitch implements Pitch {
             .frame()
             .through(
                 new QueryValve().withLimit(1).withAttributesToGet(
-                    "id", "title", "text", "author", "created", "valid"
+                    "id", "title", "text", "author",
+                    "created", "valid", "comments"
                 )
             )
             .where("id", Conditions.equalTo(this.number))
@@ -99,6 +100,7 @@ final class DyPitch implements Pitch {
             .add("id").set(item.get("id").getN()).up()
             .add("title").set(item.get("title").getS()).up()
             .add("text").set(item.get("text").getS()).up()
+            .add("comments").set(item.get("comments").getN()).up()
             .add("author").set(user).up()
             .add("created").set(created.iso())
             .up().up();

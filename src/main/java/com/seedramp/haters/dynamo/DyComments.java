@@ -17,7 +17,11 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.jcabi.aspects.Tv;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
@@ -114,6 +118,20 @@ final class DyComments implements Comments {
                 .with("text", text)
                 .with("author", this.author)
         );
+        this.region.table("pitches")
+            .frame()
+            .through(new QueryValve().withLimit(1))
+            .where("id", Conditions.equalTo(this.number))
+            .iterator()
+            .next()
+            .put(
+                new AttributeUpdates().with(
+                    "comments",
+                    new AttributeValueUpdate()
+                        .withAction(AttributeAction.ADD)
+                        .withValue(new AttributeValue().withN("1"))
+                )
+            );
     }
 
     /**

@@ -17,7 +17,13 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.seedramp.haters.core.Comment;
@@ -61,9 +67,28 @@ final class DyComment implements Comment {
 
     @Override
     public void delete() throws IOException {
+        final String pitch = this.table()
+            .frame()
+            .through(new QueryValve().withLimit(1))
+            .where("id", Conditions.equalTo(this.number))
+            .iterator().next().get("pitch").getN();
         this.table().delete(
             new Attributes().with("id", this.number)
         );
+        this.region.table("pitches")
+            .frame()
+            .through(new QueryValve().withLimit(1))
+            .where("id", Conditions.equalTo(Long.parseLong(pitch)))
+            .iterator()
+            .next()
+            .put(
+                new AttributeUpdates().with(
+                    "comments",
+                    new AttributeValueUpdate()
+                        .withAction(AttributeAction.ADD)
+                        .withValue(new AttributeValue().withN("-1"))
+                )
+            );
     }
 
     /**

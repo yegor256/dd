@@ -44,11 +44,12 @@ public final class DyCommentsITCase {
         author.pitches().submit("the title", "the body");
         final Pitch pitch =
             new Pitches.AsArray(author.pitches()).iterator().next();
-        pitch.comments().post("the comment");
+        pitch.comments().post("first comment");
+        pitch.comments().post("second comment");
         MatcherAssert.assertThat(
             new Xembler(pitch.comments().inXembly()).xml(),
             XhtmlMatchers.hasXPaths(
-                "/comments[count(comment)=1]",
+                "/comments[count(comment)=2]",
                 "/comments/comment[id]",
                 "/comments/comment[pitch]",
                 "/comments/comment[text]",
