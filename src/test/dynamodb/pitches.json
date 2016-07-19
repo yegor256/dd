@@ -1,21 +1,21 @@
 {
     "AttributeDefinitions": [
         {
-            "AttributeName": "number",
+            "AttributeName": "id",
             "AttributeType": "N"
         },
         {
-            "AttributeName": "visible",
+            "AttributeName": "alive",
             "AttributeType": "N"
         },
         {
-            "AttributeName": "rank",
+            "AttributeName": "created",
             "AttributeType": "N"
         }
     ],
     "KeySchema": [
         {
-            "AttributeName": "number",
+            "AttributeName": "id",
             "KeyType": "HASH"
         }
     ],
@@ -26,14 +26,14 @@
     "TableName": "pitches",
     "GlobalSecondaryIndexes": [
         {
-            "IndexName": "home",
+            "IndexName": "recent",
             "KeySchema": [
                 {
-                    "AttributeName": "visible",
+                    "AttributeName": "alive",
                     "KeyType": "HASH"
                 },
                 {
-                    "AttributeName": "rank",
+                    "AttributeName": "created",
                     "KeyType": "RANGE"
                 }
             ],

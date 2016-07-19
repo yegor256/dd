@@ -15,38 +15,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.core;
+package com.seedramp.haters.fake;
 
-import java.io.IOException;
+import com.seedramp.haters.core.Comment;
 
 /**
- * Vote.
+ * Fake Comment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Vote {
+public final class FkComment implements Comment {
 
-    /**
-     * Name of the author.
-     * @return Author of the vote (twitter handle)
-     * @throws IOException If fails
-     */
-    String author() throws IOException;
-
-    /**
-     * Text of the vote.
-     * @return The text
-     * @throws IOException If fails
-     */
-    String text() throws IOException;
-
-    /**
-     * Points.
-     * @return How many points it has
-     * @throws IOException If fails
-     */
-    long points() throws IOException;
-
+    @Override
+    public void delete() {
+        // nothing
+    }
 }

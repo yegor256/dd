@@ -17,9 +17,10 @@
  */
 package com.seedramp.haters.fake;
 
+import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.core.Votes;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Fake Pitch.
@@ -31,33 +32,22 @@ import java.io.IOException;
 public final class FkPitch implements Pitch {
 
     @Override
-    public Votes votes() {
-        return new FkVotes();
+    public Iterable<Comment> recent() {
+        return Collections.<Comment>singleton(new FkComment());
     }
 
     @Override
-    public long number() {
-        return 1L;
+    public Comment comment(final long num) throws IOException {
+        return new FkComment();
     }
 
     @Override
-    public void approve(final String author) {
-        // nothing to do
+    public void post(final String text) throws IOException {
+        // nothing
     }
 
     @Override
     public void delete() throws IOException {
         // nothing
     }
-
-    @Override
-    public String author() {
-        return "jeff";
-    }
-
-    @Override
-    public String text() {
-        return "it's a fake pitch";
-    }
-
 }

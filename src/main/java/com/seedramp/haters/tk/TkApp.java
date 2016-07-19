@@ -148,16 +148,13 @@ public final class TkApp extends TkWrap {
         return new TkFork(
             new FkHitRefresh(
                 new File(path),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        new VerboseProcess(
-                            new ProcessBuilder(
-                                "mvn",
-                                "generate-resources"
-                            )
-                        ).stdout();
-                    }
+                () -> {
+                    new VerboseProcess(
+                        new ProcessBuilder(
+                            "mvn",
+                            "generate-resources"
+                        )
+                    ).stdout();
                 },
                 new TkFiles("./target/classes")
             ),

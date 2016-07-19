@@ -23,9 +23,7 @@ import com.jcabi.http.response.XmlResponse;
 import com.jcabi.http.wire.VerboseWire;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.seedramp.haters.fake.FkBase;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -80,24 +78,21 @@ public final class TkAppTest {
     public void rendersHomePageViaHttp() throws Exception {
         final Take app = new TkApp(new FkBase());
         new FtRemote(app).exec(
-            new FtRemote.Script() {
-                @Override
-                public void exec(final URI home) throws IOException {
-                    new JdkRequest(home)
-                        .fetch()
-                        .as(RestResponse.class)
-                        .assertStatus(HttpURLConnection.HTTP_OK)
-                        .as(XmlResponse.class)
-                        .assertXPath("/xhtml:html");
-                    new JdkRequest(home)
-                        .through(VerboseWire.class)
-                        .header("Accept", "application/xml")
-                        .fetch()
-                        .as(RestResponse.class)
-                        .assertStatus(HttpURLConnection.HTTP_OK)
-                        .as(XmlResponse.class)
-                        .assertXPath("/page/version");
-                }
+            home -> {
+                new JdkRequest(home)
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK)
+                    .as(XmlResponse.class)
+                    .assertXPath("/xhtml:html");
+                new JdkRequest(home)
+                    .through(VerboseWire.class)
+                    .header("Accept", "application/xml")
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK)
+                    .as(XmlResponse.class)
+                    .assertXPath("/page/version");
             }
         );
     }

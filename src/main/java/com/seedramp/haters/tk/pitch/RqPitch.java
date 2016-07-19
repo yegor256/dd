@@ -19,6 +19,7 @@ package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.tk.RqAuthor;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.rq.RqHeaders;
@@ -54,7 +55,7 @@ public final class RqPitch extends RqWrap {
      * @throws IOException If fails
      */
     public Pitch pitch() throws IOException {
-        return this.base.pitches().pitch(
+        return new RqAuthor(this.base, this).pitch(
             Long.parseLong(
                 new RqHeaders.Smart(
                     new RqHeaders.Base(this)

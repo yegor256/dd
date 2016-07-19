@@ -24,7 +24,7 @@ import org.takes.http.Exit;
 import org.takes.http.FtCLI;
 
 /**
- * Command line entry.
+ * Command line entry point.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$

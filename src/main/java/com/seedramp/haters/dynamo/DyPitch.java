@@ -17,16 +17,16 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.google.common.collect.Iterables;
+import com.jcabi.aspects.Tv;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
-import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
+import com.jcabi.dynamo.Region;
+import com.jcabi.dynamo.Table;
+import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.core.Votes;
 import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Dynamo Pitch.
@@ -35,62 +35,90 @@ import java.util.Iterator;
  * @version $Id$
  * @since 1.0
  */
-public final class DyPitch implements Pitch {
+final class DyPitch implements Pitch {
 
     /**
-     * The item.
+     * The region to work with.
      */
-    private final transient Item item;
+    private final transient Region region;
+
+    /**
+     * The author.
+     */
+    private final transient String author;
+
+    /**
+     * The number of the pitch.
+     */
+    private final transient long number;
 
     /**
      * Ctor.
-     * @param itm Item with pitch
+     * @param reg Region
+     * @param user Who is the user
+     * @param num Its number
      */
-    public DyPitch(final Item itm) {
-        this.item = itm;
-    }
-
-    @Override
-    public Votes votes() throws IOException {
-        return new DyVotes(this.item.frame().table().region(), this.number());
-    }
-
-    @Override
-    public long number() throws IOException {
-        return Long.parseLong(this.item.get("number").getN());
-    }
-
-    @Override
-    public void approve(final String author) throws IOException {
-        this.item.put(
-            "visible",
-            new AttributeValueUpdate()
-                .withAction(AttributeAction.PUT)
-                .withValue(new AttributeValue().withN("1"))
-        );
-        new TbAuthors(this.item.frame().table().region()).add(author, 1L);
+    DyPitch(final Region reg, final String user, final long num) {
+        this.region = reg;
+        this.author = user;
+        this.number = num;
     }
 
     @Override
     public void delete() throws IOException {
-        final Iterator<Item> items = this.item.frame()
-            .through(new QueryValve().withLimit(1))
-            .where("number", Conditions.equalTo(this.number()))
-            .iterator();
-        final Item itm = items.next();
-        final String author = itm.get("author").getS();
-        items.remove();
-        new TbAuthors(this.item.frame().table().region()).add(author, -1L);
+        this.table().delete(
+            new Attributes().with("id", this.number)
+        );
     }
 
     @Override
-    public String author() throws IOException {
-        return this.item.get("author").getS();
+    public Iterable<Comment> recent() {
+        return Iterables.transform(
+            this.table()
+                .frame()
+                .through(
+                    new QueryValve()
+                        .withLimit(Tv.TWENTY)
+                        .withIndexName("recent")
+                        .withScanIndexForward(true)
+                        .withConsistentRead(false)
+                )
+                .where("pitch", Conditions.equalTo(this.number)),
+            item -> {
+                try {
+                    return this.comment(
+                        Long.parseLong(item.get("id").getN())
+                    );
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
+            }
+        );
     }
 
     @Override
-    public String text() throws IOException {
-        return this.item.get("text").getS();
+    public Comment comment(final long num) {
+        return new DyComment(this.region, this.author, num);
+    }
+
+    @Override
+    public void post(final String text) throws IOException {
+        this.table().put(
+            new Attributes()
+                .with("id", System.currentTimeMillis())
+                .with("pitch", this.number)
+                .with("created", System.currentTimeMillis())
+                .with("text", text)
+                .with("author", this.author)
+        );
+    }
+
+    /**
+     * Table to work with.
+     * @return Table
+     */
+    private Table table() {
+        return this.region.table("pitches");
     }
 
 }

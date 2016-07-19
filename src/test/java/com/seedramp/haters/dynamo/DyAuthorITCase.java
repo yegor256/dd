@@ -18,9 +18,9 @@
 package com.seedramp.haters.dynamo;
 
 import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Pitch;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,17 +33,27 @@ import org.junit.Test;
 public final class DyAuthorITCase {
 
     /**
-     * DyAuthor can fetch points.
+     * DyAuthor can post and list.
      * @throws Exception If some problem inside
      */
     @Test
-    @Ignore
-    public void retrievesPoints() throws Exception {
+    public void postsAndLists() throws Exception {
         final Author author = new DyAuthor(new Dynamo(), "jeff");
+        author.submit("the title", "the body");
         MatcherAssert.assertThat(
-            author.points(),
-            Matchers.greaterThanOrEqualTo(0L)
+            author.recent(),
+            Matchers.not(Matchers.<Pitch>emptyIterable())
         );
+    }
+
+    /**
+     * DyAuthor can save all.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void savesAllAttributes() throws Exception {
+        final Author author = new DyAuthor(new Dynamo(), "bob");
+        author.submit("the title 1", "the body 1");
     }
 
 }

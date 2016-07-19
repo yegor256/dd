@@ -24,8 +24,6 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.FkWrap;
-import org.takes.facets.fork.Fork;
-import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
 import org.takes.facets.forward.RsForward;
 import org.takes.misc.Opt;
@@ -48,15 +46,7 @@ final class FkPitch extends FkWrap {
      * @param take Take
      */
     FkPitch(final String regex, final Take take) {
-        super(
-            new Fork() {
-                @Override
-                public Opt<Response> route(final Request req)
-                    throws IOException {
-                    return FkPitch.route(regex, take, req);
-                }
-            }
-        );
+        super(req -> FkPitch.route(regex, take, req));
     }
 
     /**
@@ -71,17 +61,14 @@ final class FkPitch extends FkWrap {
         final Request req) throws IOException {
         return new FkRegex(
             String.format("/p/([0-9]+)%s", regex),
-            new TkRegex() {
-                @Override
-                public Response act(final RqRegex rreq) throws IOException {
-                    final long num = Long.parseLong(rreq.matcher().group(1));
-                    return FkPitch.redirect(num, take).act(
-                        new RqWithHeader(
-                            rreq, "X-Haters-Pitch",
-                            Long.toString(num)
-                        )
-                    );
-                }
+            (TkRegex) rreq -> {
+                final long num = Long.parseLong(rreq.matcher().group(1));
+                return FkPitch.redirect(num, take).act(
+                    new RqWithHeader(
+                        rreq, "X-Haters-Pitch",
+                        Long.toString(num)
+                    )
+                );
             }
         ).route(req);
     }
@@ -93,22 +80,19 @@ final class FkPitch extends FkWrap {
      * @return New take
      */
     private static Take redirect(final long num, final Take take) {
-        return new Take() {
-            @Override
-            public Response act(final Request req) throws IOException {
-                try {
-                    return take.act(req);
-                } catch (final RsForward ex) {
-                    if (ex.code() == HttpURLConnection.HTTP_SEE_OTHER) {
-                        throw new RsForward(
-                            ex,
-                            new RqHref.Smart(
-                                new RqHref.Base(req)
-                            ).home().path("p").path(num)
-                        );
-                    }
-                    throw ex;
+        return req -> {
+            try {
+                return take.act(req);
+            } catch (final RsForward ex) {
+                if (ex.code() == HttpURLConnection.HTTP_SEE_OTHER) {
+                    throw new RsForward(
+                        ex,
+                        new RqHref.Smart(
+                            new RqHref.Base(req)
+                        ).home().path("p").path(num)
+                    );
                 }
+                throw ex;
             }
         };
     }

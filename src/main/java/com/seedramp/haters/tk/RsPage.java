@@ -17,14 +17,10 @@
  */
 package com.seedramp.haters.tk;
 
-import com.google.common.collect.Iterables;
 import com.jcabi.manifests.Manifests;
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tk.xe.XeAuthor;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
 import lombok.EqualsAndHashCode;
 import org.takes.Request;
 import org.takes.Response;
@@ -87,10 +83,7 @@ public final class RsPage extends RsWrap {
         this(
             xsl,
             req,
-            Iterables.concat(
-                Arrays.asList(src),
-                RsPage.extra(base, req)
-            )
+            Arrays.asList(src)
         );
     }
 
@@ -154,27 +147,6 @@ public final class RsPage extends RsWrap {
                 new RsXSLT(new RsWithType(raw, "text/html"))
             )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param base Base
-     * @param req Request
-     * @throws IOException If fails
-     */
-    private static Iterable<XeSource> extra(final Base base,
-        final Request req) throws IOException {
-        final Collection<XeSource> extra = new LinkedList<>();
-        final RqAuthor author = new RqAuthor(req);
-        if (author.authorized()) {
-            extra.addAll(
-                Arrays.asList(
-                    new XeLink("pending", "/pending"),
-                    new XeAuthor(base.author(author.name()))
-                )
-            );
-        }
-        return extra;
     }
 
 }

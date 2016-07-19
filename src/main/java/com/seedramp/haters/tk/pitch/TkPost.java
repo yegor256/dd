@@ -15,45 +15,48 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.xe;
+package com.seedramp.haters.tk.pitch;
 
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.core.Vote;
 import java.io.IOException;
-import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeSource;
-import org.takes.rs.xe.XeTransform;
-import org.takes.rs.xe.XeWrap;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.RqForm;
 
 /**
- * Votes as a Xembly source.
+ * Post a vote.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class XeVotes extends XeWrap {
+final class TkPost implements Take {
+
+    /**
+     * Base.
+     */
+    private final transient Base base;
 
     /**
      * Ctor.
-     * @param pitch Pitch
-     * @param votes Votes
+     * @param bse Base
      */
-    public XeVotes(final Pitch pitch, final Iterable<Vote> votes) {
-        super(
-            new XeAppend(
-                "votes",
-                new XeTransform<>(
-                    votes,
-                    new XeTransform.Func<Vote>() {
-                        @Override
-                        public XeSource transform(final Vote vote)
-                            throws IOException {
-                            return new XeVote(pitch, vote);
-                        }
-                    }
-                )
-            )
+    TkPost(final Base bse) {
+        this.base = bse;
+    }
+
+    @Override
+    public Response act(final Request req) throws IOException {
+        final Pitch pitch = new RqPitch(this.base, req).pitch();
+        pitch.post(new RqForm.Smart(new RqForm.Base(req)).single("text"));
+        return new RsForward(
+            new RsFlash("thanks!"),
+            String.format("/p/%d", 0) // wrong
         );
     }
+
 }

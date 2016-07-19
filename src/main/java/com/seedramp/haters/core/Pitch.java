@@ -29,44 +29,29 @@ import java.io.IOException;
 public interface Pitch {
 
     /**
-     * Votes.
-     * @return Its votes
-     * @throws IOException If fails
+     * All comments, in chronological order.
+     * @return List them
      */
-    Votes votes() throws IOException;
+    Iterable<Comment> recent();
 
     /**
-     * ID of it.
-     * @return ID of the pitch
+     * Get comment by ID.
+     * @param num ID of it
      * @throws IOException If fails
      */
-    long number() throws IOException;
+    Comment comment(long num) throws IOException;
 
     /**
-     * Approve it.
-     * @param author Who approves it
+     * Post a new comment.
+     * @param text Text of the comment
      * @throws IOException If fails
      */
-    void approve(String author) throws IOException;
+    void post(String text) throws IOException;
 
     /**
      * Delete it.
      * @throws IOException If fails
      */
     void delete() throws IOException;
-
-    /**
-     * Name of the author.
-     * @return Author of the pitch (twitter handle)
-     * @throws IOException If fails
-     */
-    String author() throws IOException;
-
-    /**
-     * Text of the pitch.
-     * @return The text
-     * @throws IOException If fails
-     */
-    String text() throws IOException;
 
 }

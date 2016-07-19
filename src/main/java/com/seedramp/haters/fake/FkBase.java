@@ -19,7 +19,6 @@ package com.seedramp.haters.fake;
 
 import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Pitches;
 
 /**
  * Fake Base.
@@ -29,11 +28,6 @@ import com.seedramp.haters.core.Pitches;
  * @since 1.0
  */
 public final class FkBase implements Base {
-
-    @Override
-    public Pitches pitches() {
-        return new FkPitches();
-    }
 
     @Override
     public Author author(final String name) {

@@ -18,6 +18,8 @@
 package com.seedramp.haters.fake;
 
 import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Pitch;
+import java.util.Collections;
 
 /**
  * Fake Author.
@@ -29,8 +31,17 @@ import com.seedramp.haters.core.Author;
 public final class FkAuthor implements Author {
 
     @Override
-    public long points() {
-        return 1L;
+    public Iterable<Pitch> recent() {
+        return Collections.<Pitch>singleton(new FkPitch());
     }
 
+    @Override
+    public Pitch pitch(final long num) {
+        return new FkPitch();
+    }
+
+    @Override
+    public void submit(final String title, final String text) {
+        // nothing
+    }
 }

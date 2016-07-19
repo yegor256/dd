@@ -17,8 +17,8 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.core.Pitches;
 import org.junit.Test;
 
 /**
@@ -36,8 +36,9 @@ public final class DyPitchITCase {
      */
     @Test
     public void deletesItself() throws Exception {
-        final Pitches pitches = new DyPitches(new Dynamo());
-        final Pitch pitch = pitches.post("test me", "jeff");
+        final Author author = new DyAuthor(new Dynamo(), "jeff");
+        author.submit("the title", "the body");
+        final Pitch pitch = author.pitch(1L);
         pitch.delete();
     }
 

@@ -20,7 +20,6 @@ package com.seedramp.haters.dynamo;
 import com.jcabi.dynamo.Region;
 import com.seedramp.haters.core.Author;
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Pitches;
 
 /**
  * Dynamo Base.
@@ -49,11 +48,6 @@ public final class DyBase implements Base {
      */
     public DyBase(final Region reg) {
         this.region = reg;
-    }
-
-    @Override
-    public Pitches pitches() {
-        return new DyPitches(this.region);
     }
 
     @Override

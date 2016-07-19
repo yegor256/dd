@@ -15,34 +15,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.fake;
+package com.seedramp.haters.core;
 
-import com.seedramp.haters.core.Vote;
-import com.seedramp.haters.core.Votes;
 import java.io.IOException;
-import java.util.Collections;
 
 /**
- * Fake Votes.
+ * Comment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class FkVotes implements Votes {
+public interface Comment {
 
-    @Override
-    public Iterable<Vote> top() {
-        return Collections.emptyList();
-    }
+    /**
+     * Delete it.
+     * @throws IOException If fails
+     */
+    void delete() throws IOException;
 
-    @Override
-    public void post(final String text, final String author) throws IOException {
-        // nothing
-    }
-
-    @Override
-    public long points() throws IOException {
-        return 1L;
-    }
 }

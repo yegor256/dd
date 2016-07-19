@@ -27,12 +27,6 @@ package com.seedramp.haters.core;
 public interface Base {
 
     /**
-     * Get pitches.
-     * @return Pitches
-     */
-    Pitches pitches();
-
-    /**
      * Get author by name.
      * @param name Name of him (twitter handle)
      * @return Author
