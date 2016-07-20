@@ -17,6 +17,10 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
@@ -63,7 +67,7 @@ final class TblPitch {
     /**
      * Get it as an item.
      * @return The item
-     * @throws IOException
+     * @throws IOException If fails
      */
     public Item item() throws IOException {
         final Iterator<Item> items = this.region.table("pitches")
@@ -82,6 +86,22 @@ final class TblPitch {
             );
         }
         return items.next();
+    }
+
+    /**
+     * Increment comments counter.
+     * @param inc How many to add
+     * @throws IOException If fails
+     */
+    public void inc(final long inc) throws IOException {
+        this.item().put(
+            new AttributeUpdates().with(
+                "comments",
+                new AttributeValueUpdate()
+                    .withAction(AttributeAction.ADD)
+                    .withValue(new AttributeValue().withN(Long.toString(inc)))
+            )
+        );
     }
 
 }

@@ -49,6 +49,7 @@ final class TkPostSubmit implements Take {
     }
 
     @Override
+    // @checkstyle DiamondOperatorCheck (5 lines)
     public Response act(final Request req) throws IOException {
         final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
         new RqAuthor(this.base, req).pitches().submit(

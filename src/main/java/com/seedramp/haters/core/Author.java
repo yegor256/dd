@@ -31,6 +31,7 @@ public interface Author {
     /**
      * All his pitches.
      * @return Pitches
+     * @throws IOException If fails
      */
     Pitches pitches() throws IOException;
 

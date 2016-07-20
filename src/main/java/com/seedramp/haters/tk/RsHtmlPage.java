@@ -17,7 +17,6 @@
  */
 package com.seedramp.haters.tk;
 
-import com.seedramp.haters.core.Base;
 import java.io.IOException;
 import java.util.Arrays;
 import lombok.EqualsAndHashCode;
@@ -49,26 +48,9 @@ public final class RsHtmlPage extends RsWrap {
      * @param src Source
      * @throws IOException If fails
      */
-    public RsHtmlPage(final String xsl, final Request req, final XeSource... src)
-        throws IOException {
+    public RsHtmlPage(final String xsl, final Request req,
+        final XeSource... src) throws IOException {
         this(xsl, req, Arrays.asList(src));
-    }
-
-    /**
-     * Ctor.
-     * @param xsl XSL
-     * @param req Request
-     * @param src Source
-     * @throws IOException If fails
-     */
-    public RsHtmlPage(final Base base, final String xsl,
-        final Request req, final XeSource... src)
-        throws IOException {
-        this(
-            xsl,
-            req,
-            Arrays.asList(src)
-        );
     }
 
     /**
@@ -88,9 +70,8 @@ public final class RsHtmlPage extends RsWrap {
      * Ctor.
      * @param req Request
      * @param res Another response
-     * @throws IOException If fails
      */
-    public RsHtmlPage(final Request req, final Response res) throws IOException {
+    public RsHtmlPage(final Request req, final Response res) {
         super(RsHtmlPage.make(req, res));
     }
 
@@ -99,10 +80,8 @@ public final class RsHtmlPage extends RsWrap {
      * @param req Request
      * @param res Another response
      * @return Response
-     * @throws IOException If fails
      */
-    private static Response make(final Request req,
-        final Response res) throws IOException {
+    private static Response make(final Request req, final Response res) {
         return new RsFork(
             req,
             new FkTypes(

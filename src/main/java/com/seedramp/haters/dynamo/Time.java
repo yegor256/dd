@@ -33,6 +33,11 @@ import java.util.concurrent.TimeUnit;
 final class Time {
 
     /**
+     * Maturity period.
+     */
+    private static final long AGE = 12L;
+
+    /**
      * The value.
      */
     private final transient long date;
@@ -69,7 +74,7 @@ final class Time {
      */
     public boolean isMature() {
         return this.date - System.currentTimeMillis()
-            + TimeUnit.HOURS.toMillis(12L) < 0L;
+            + TimeUnit.HOURS.toMillis(Time.AGE) < 0L;
     }
 
 }

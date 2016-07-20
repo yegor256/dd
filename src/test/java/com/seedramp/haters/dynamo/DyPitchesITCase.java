@@ -43,7 +43,7 @@ public final class DyPitchesITCase {
         MatcherAssert.assertThat(
             new Xembler(pitches.inXembly()).xml(),
             XhtmlMatchers.hasXPaths(
-                "/pitches[count(pitch)>1]",
+                "/pitches[count(pitch)>0]",
                 "/pitches/pitch[id]",
                 "/pitches/pitch[title]",
                 "/pitches/pitch[text]",

@@ -32,6 +32,7 @@ public interface Pitch {
     /**
      * All comments.
      * @return Comments
+     * @throws IOException If fails
      */
     Comments comments() throws IOException;
 
@@ -44,6 +45,7 @@ public interface Pitch {
     /**
      * Print it to Xembly.
      * @return Xembly
+     * @throws IOException If fails
      */
     Iterable<Directive> inXembly() throws IOException;
 

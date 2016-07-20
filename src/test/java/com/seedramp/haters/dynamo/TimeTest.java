@@ -17,6 +17,7 @@
  */
 package com.seedramp.haters.dynamo;
 
+import com.jcabi.aspects.Tv;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -56,7 +57,7 @@ public final class TimeTest {
         MatcherAssert.assertThat(
             new Time(
                 System.currentTimeMillis()
-                - TimeUnit.DAYS.toMillis(10L)
+                - TimeUnit.DAYS.toMillis((long) Tv.TEN)
             ).isMature(),
             Matchers.is(true)
         );

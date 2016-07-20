@@ -38,6 +38,7 @@ public interface Pitches {
      * Get one by number.
      * @param num Number
      * @return Pitch
+     * @throws IOException If fails
      */
     Pitch pitch(long num) throws IOException;
 
@@ -52,6 +53,7 @@ public interface Pitches {
     /**
      * Print them to Xembly.
      * @return Xembly
+     * @throws IOException If fails
      */
     Iterable<Directive> inXembly() throws IOException;
 

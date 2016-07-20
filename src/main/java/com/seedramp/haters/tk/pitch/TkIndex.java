@@ -58,7 +58,6 @@ final class TkIndex implements Take {
             req,
             new RsXSLT(
                 new RsPage(
-                    this.base,
                     "/com/seedramp/haters/tk/pitch/pre-pitch.xsl",
                     req,
                     new XeLink(

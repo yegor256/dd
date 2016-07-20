@@ -15,40 +15,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.core;
-
-import java.io.IOException;
-import org.xembly.Directive;
 
 /**
- * Comments.
+ * Takes for a selected pitch, tests.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public interface Comments {
-
-    /**
-     * Get comment by ID.
-     * @param num ID of it
-     * @return Comment
-     * @throws IOException If fails
-     */
-    Comment comment(long num) throws IOException;
-
-    /**
-     * Post a new comment.
-     * @param text Text of the comment
-     * @throws IOException If fails
-     */
-    void post(String text) throws IOException;
-
-    /**
-     * Print them to Xembly.
-     * @return Xembly
-     * @throws IOException If fails
-     */
-    Iterable<Directive> inXembly() throws IOException;
-
-}
+package com.seedramp.haters.tk.pitch;

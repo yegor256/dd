@@ -29,6 +29,7 @@ import org.takes.tk.TkWrap;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TkPitch extends TkWrap {
 

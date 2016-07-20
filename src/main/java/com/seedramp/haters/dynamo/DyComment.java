@@ -17,10 +17,6 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
 import com.jcabi.dynamo.QueryValve;
@@ -67,31 +63,15 @@ final class DyComment implements Comment {
 
     @Override
     public void delete() throws IOException {
+        final Table table = this.region.table("comments");
         final long pitch = Long.parseLong(
-            this.table()
-                .frame()
+            table.frame()
                 .through(new QueryValve().withLimit(1))
                 .where("id", Conditions.equalTo(this.number))
                 .iterator().next().get("pitch").getN()
         );
-        this.table().delete(
-            new Attributes().with("id", this.number)
-        );
-        new TblPitch(this.region, this.author, pitch).item().put(
-            new AttributeUpdates().with(
-                "comments",
-                new AttributeValueUpdate()
-                    .withAction(AttributeAction.ADD)
-                    .withValue(new AttributeValue().withN("-1"))
-            )
-        );
+        table.delete(new Attributes().with("id", this.number));
+        new TblPitch(this.region, this.author, pitch).inc(-1L);
     }
 
-    /**
-     * Table to work with.
-     * @return Table
-     */
-    private Table table() {
-        return this.region.table("comments");
-    }
 }

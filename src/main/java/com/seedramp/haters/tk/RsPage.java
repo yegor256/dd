@@ -18,7 +18,6 @@
 package com.seedramp.haters.tk;
 
 import com.jcabi.manifests.Manifests;
-import com.seedramp.haters.core.Base;
 import java.io.IOException;
 import java.util.Arrays;
 import lombok.EqualsAndHashCode;
@@ -63,23 +62,6 @@ public final class RsPage extends RsWrap {
     public RsPage(final String xsl, final Request req, final XeSource... src)
         throws IOException {
         this(xsl, req, Arrays.asList(src));
-    }
-
-    /**
-     * Ctor.
-     * @param xsl XSL
-     * @param req Request
-     * @param src Source
-     * @throws IOException If fails
-     */
-    public RsPage(final Base base, final String xsl,
-        final Request req, final XeSource... src)
-        throws IOException {
-        this(
-            xsl,
-            req,
-            Arrays.asList(src)
-        );
     }
 
     /**

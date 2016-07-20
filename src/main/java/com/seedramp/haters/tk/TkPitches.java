@@ -53,7 +53,6 @@ final class TkPitches implements Take {
             req,
             new RsXSLT(
                 new RsPage(
-                    this.base,
                     "/com/seedramp/haters/tk/pre-pitches.xsl",
                     req,
                     new XeDirectives(
