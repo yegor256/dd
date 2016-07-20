@@ -19,11 +19,13 @@ package com.seedramp.haters.dynamo;
 
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.seedramp.haters.core.Comment;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Dynamo Comment.
@@ -64,12 +66,19 @@ final class DyComment implements Comment {
     @Override
     public void delete() throws IOException {
         final Table table = this.region.table("comments");
-        final long pitch = Long.parseLong(
-            table.frame()
-                .through(new QueryValve().withLimit(1))
-                .where("id", Conditions.equalTo(this.number))
-                .iterator().next().get("pitch").getN()
-        );
+        final Iterator<Item> items = table.frame()
+            .through(new QueryValve().withLimit(1))
+            .where("id", Conditions.equalTo(this.number))
+            .iterator();
+        if (!items.hasNext()) {
+            throw new IOException(
+                String.format(
+                    "comment #%d doesn't exist",
+                    this.number
+                )
+            );
+        }
+        final long pitch = Long.parseLong(items.next().get("pitch").getN());
         table.delete(new Attributes().with("id", this.number));
         new TblPitch(this.region, this.author, pitch).inc(-1L);
     }

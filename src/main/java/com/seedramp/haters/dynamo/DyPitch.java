@@ -18,6 +18,7 @@
 package com.seedramp.haters.dynamo;
 
 import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.Region;
 import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
@@ -67,6 +68,18 @@ final class DyPitch implements Pitch {
 
     @Override
     public void delete() throws IOException {
+        final Item item = new TblPitch(
+            this.region, this.author, this.number
+        ).item();
+        final long comments = Long.parseLong(item.get("comments").getN());
+        if (comments != 0L) {
+            throw new IOException(
+                String.format(
+                    "pitch can't be deleted, since there are %d comments",
+                    comments
+                )
+            );
+        }
         this.region.table("pitches").delete(
             new Attributes().with("id", this.number)
         );
