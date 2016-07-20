@@ -35,6 +35,7 @@ import java.util.Iterator;
  * @version $Id$
  * @since 1.0
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class TblPitch {
 
     /**

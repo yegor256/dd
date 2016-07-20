@@ -81,6 +81,7 @@ final class DyPitches implements Pitches {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public Iterable<Directive> inXembly() throws IOException {
         final Iterable<Item> items = this.table()
             .frame()
