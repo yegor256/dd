@@ -27,7 +27,6 @@ import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Dynamo Pitch.
@@ -66,7 +65,7 @@ final class DyPitch implements Pitch {
     }
 
     @Override
-    public Comments comments() throws IOException {
+    public Comments comments() {
         return new DyComments(this.region, this.author, this.number);
     }
 
@@ -90,20 +89,7 @@ final class DyPitch implements Pitch {
             .where("id", Conditions.equalTo(this.number))
             .iterator()
             .next();
-        final String user = item.get("author").getS();
-        final Time created = new Time(item.get("created"));
-        return new Directives()
-            .add("pitch")
-            .attr("open", created.isMature())
-            .attr("mine", this.author.equals(user))
-            .attr("valid", "1".equals(item.get("valid").getN()))
-            .add("id").set(item.get("id").getN()).up()
-            .add("title").set(item.get("title").getS()).up()
-            .add("text").set(item.get("text").getS()).up()
-            .add("comments").set(item.get("comments").getN()).up()
-            .add("author").set(user).up()
-            .add("created").set(created.iso())
-            .up().up();
+        return new ItmPitch(item, this.author).inXembly();
     }
 
     /**

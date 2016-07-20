@@ -46,6 +46,7 @@ public final class DyPitchesITCase {
                 "/pitches[count(pitch)>1]",
                 "/pitches/pitch[id]",
                 "/pitches/pitch[title]",
+                "/pitches/pitch[text]",
                 "/pitches/pitch[comments]",
                 "/pitches/pitch[author]"
             )

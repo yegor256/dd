@@ -19,7 +19,6 @@ package com.seedramp.haters.fake;
 
 import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.core.Pitches;
-import java.io.IOException;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -43,7 +42,7 @@ public final class FkPitches implements Pitches {
     }
 
     @Override
-    public Iterable<Directive> inXembly() throws IOException {
+    public Iterable<Directive> inXembly() {
         return new Directives()
             .add("pitches")
             .add("pitch")

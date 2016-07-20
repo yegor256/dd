@@ -88,7 +88,7 @@ final class DyPitches implements Pitches {
                     .withLimit(Tv.TWENTY)
                     .withIndexName("recent")
                     .withAttributesToGet(
-                        "id", "title", "author",
+                        "id", "title", "text", "author",
                         "comments", "created", "valid"
                     )
                     .withScanIndexForward(false)
@@ -97,18 +97,7 @@ final class DyPitches implements Pitches {
             .where("valid", Conditions.equalTo(1));
         final Directives dirs = new Directives().add("pitches");
         for (final Item item : items) {
-            final String author = item.get("author").getS();
-            final Time created = new Time(item.get("created"));
-            dirs.add("pitch")
-                .attr("mature", created.isMature())
-                .attr("mine", author.equals(this.name))
-                .attr("valid", "1".equals(item.get("valid").getN()))
-                .add("id").set(item.get("id").getN()).up()
-                .add("title").set(item.get("title").getS()).up()
-                .add("comments").set(item.get("comments").getN()).up()
-                .add("author").set(author).up()
-                .add("created").set(created.iso()).up()
-                .up();
+            dirs.append(new ItmPitch(item, this.name).inXembly());
         }
         return dirs.up();
     }
