@@ -70,6 +70,7 @@ final class TblPitch {
      * @throws IOException If fails
      */
     public Item item() throws IOException {
+        assert this.author != null;
         final Iterator<Item> items = this.region.table("pitches")
             .frame()
             .through(

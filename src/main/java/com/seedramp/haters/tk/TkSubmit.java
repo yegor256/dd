@@ -17,7 +17,6 @@
  */
 package com.seedramp.haters.tk;
 
-import com.seedramp.haters.core.Base;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
@@ -32,19 +31,6 @@ import org.takes.rs.xe.XeLink;
  * @since 1.0
  */
 final class TkSubmit implements Take {
-
-    /**
-     * Base.
-     */
-    private final transient Base base;
-
-    /**
-     * Ctor.
-     * @param bse Base
-     */
-    TkSubmit(final Base bse) {
-        this.base = bse;
-    }
 
     @Override
     public Response act(final Request req) throws IOException {

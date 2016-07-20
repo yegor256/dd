@@ -31,7 +31,7 @@ import org.takes.Take;
 import org.takes.facets.hamcrest.HmRsStatus;
 import org.takes.http.FtRemote;
 import org.takes.rq.RqFake;
-import org.takes.rq.RqWithHeader;
+import org.takes.rq.RqWithHeaders;
 import org.takes.rs.RsPrint;
 
 /**
@@ -54,11 +54,9 @@ public final class TkAppTest {
             XhtmlMatchers.xhtml(
                 new RsPrint(
                     take.act(
-                        new RqWithHeader(
+                        new RqWithHeaders(
                             new RqFake("GET", "/"),
-                            // @checkstyle MultipleStringLiteralsCheck (1 line)
-                            "Accept",
-                            "text/xml"
+                            "Accept: text/xml"
                         )
                     )
                 ).printBody()
