@@ -118,20 +118,14 @@ final class DyComments implements Comments {
                 .with("text", text)
                 .with("author", this.author)
         );
-        this.region.table("pitches")
-            .frame()
-            .through(new QueryValve().withLimit(1))
-            .where("id", Conditions.equalTo(this.number))
-            .iterator()
-            .next()
-            .put(
-                new AttributeUpdates().with(
-                    "comments",
-                    new AttributeValueUpdate()
-                        .withAction(AttributeAction.ADD)
-                        .withValue(new AttributeValue().withN("1"))
-                )
-            );
+        new TblPitch(this.region, this.author, this.number).item().put(
+            new AttributeUpdates().with(
+                "comments",
+                new AttributeValueUpdate()
+                    .withAction(AttributeAction.ADD)
+                    .withValue(new AttributeValue().withN("1"))
+            )
+        );
     }
 
     /**

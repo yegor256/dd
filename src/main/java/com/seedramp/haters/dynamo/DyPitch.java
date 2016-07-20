@@ -18,11 +18,7 @@
 package com.seedramp.haters.dynamo;
 
 import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Conditions;
-import com.jcabi.dynamo.Item;
-import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
 import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
@@ -71,33 +67,17 @@ final class DyPitch implements Pitch {
 
     @Override
     public void delete() throws IOException {
-        this.table().delete(
+        this.region.table("pitches").delete(
             new Attributes().with("id", this.number)
         );
     }
 
     @Override
     public Iterable<Directive> inXembly() throws IOException {
-        final Item item = this.table()
-            .frame()
-            .through(
-                new QueryValve().withLimit(1).withAttributesToGet(
-                    "id", "title", "text", "author",
-                    "created", "valid", "comments"
-                )
-            )
-            .where("id", Conditions.equalTo(this.number))
-            .iterator()
-            .next();
-        return new ItmPitch(item, this.author).inXembly();
-    }
-
-    /**
-     * Table to work with.
-     * @return Table
-     */
-    private Table table() {
-        return this.region.table("pitches");
+        return new ItmPitch(
+            new TblPitch(this.region, this.author, this.number).item(),
+            this.author
+        ).inXembly();
     }
 
 }

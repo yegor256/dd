@@ -17,26 +17,21 @@
  */
 package com.seedramp.haters.dynamo;
 
-import com.amazonaws.services.dynamodbv2.model.AttributeAction;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
-import com.jcabi.dynamo.AttributeUpdates;
-import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Conditions;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Region;
-import com.jcabi.dynamo.Table;
-import com.seedramp.haters.core.Comment;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
- * Dynamo Comment.
+ * Pitch in Dynamo table.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class DyComment implements Comment {
+final class TblPitch {
 
     /**
      * The region to work with.
@@ -49,7 +44,7 @@ final class DyComment implements Comment {
     private final transient String author;
 
     /**
-     * The number of the comment.
+     * The number of the pitch.
      */
     private final transient long number;
 
@@ -59,39 +54,34 @@ final class DyComment implements Comment {
      * @param user Who is the user
      * @param num Its number
      */
-    DyComment(final Region reg, final String user, final long num) {
+    TblPitch(final Region reg, final String user, final long num) {
         this.region = reg;
         this.author = user;
         this.number = num;
     }
 
-    @Override
-    public void delete() throws IOException {
-        final long pitch = Long.parseLong(
-            this.table()
-                .frame()
-                .through(new QueryValve().withLimit(1))
-                .where("id", Conditions.equalTo(this.number))
-                .iterator().next().get("pitch").getN()
-        );
-        this.table().delete(
-            new Attributes().with("id", this.number)
-        );
-        new TblPitch(this.region, this.author, pitch).item().put(
-            new AttributeUpdates().with(
-                "comments",
-                new AttributeValueUpdate()
-                    .withAction(AttributeAction.ADD)
-                    .withValue(new AttributeValue().withN("-1"))
+    /**
+     * Get it as an item.
+     * @return The item
+     * @throws IOException
+     */
+    public Item item() throws IOException {
+        final Iterator<Item> items = this.region.table("pitches")
+            .frame()
+            .through(
+                new QueryValve().withLimit(1).withAttributesToGet(
+                    "id", "title", "text", "author",
+                    "created", "valid", "comments"
+                )
             )
-        );
+            .where("id", Conditions.equalTo(this.number))
+            .iterator();
+        if (!items.hasNext()) {
+            throw new IOException(
+                String.format("pitch #%d doesn't exist", this.number)
+            );
+        }
+        return items.next();
     }
 
-    /**
-     * Table to work with.
-     * @return Table
-     */
-    private Table table() {
-        return this.region.table("comments");
-    }
 }
