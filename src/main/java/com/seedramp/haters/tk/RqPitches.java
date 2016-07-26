@@ -18,9 +18,11 @@
 package com.seedramp.haters.tk;
 
 import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
+import org.takes.Request;
 import org.xembly.Directive;
 
 /**
@@ -36,6 +38,15 @@ public final class RqPitches implements Pitches {
      * The author.
      */
     private final transient Author author;
+
+    /**
+     * Ctor.
+     * @param base Base
+     * @param req Request
+     */
+    public RqPitches(final Base base, final Request req) {
+        this(new RqAuthor(base, req));
+    }
 
     /**
      * Ctor.

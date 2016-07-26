@@ -18,8 +18,6 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tk.RqAuthor;
-import com.seedramp.haters.tk.RqPitches;
 import com.seedramp.haters.tx.TxDeleted;
 import java.io.IOException;
 import org.takes.Request;
@@ -54,12 +52,7 @@ final class TkDelete implements Take {
     public Response act(final Request req) throws IOException {
         return new RsForward(
             new RsFlash(
-                new TxDeleted(
-                    new RqPitch(
-                        new RqPitches(new RqAuthor(this.base, req)),
-                        req
-                    )
-                )
+                new TxDeleted(new RqPitch(this.base, req))
             )
         );
     }

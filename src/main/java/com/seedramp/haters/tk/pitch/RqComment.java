@@ -17,6 +17,7 @@
  */
 package com.seedramp.haters.tk.pitch;
 
+import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Comments;
 import java.io.IOException;
@@ -40,6 +41,15 @@ final class RqComment implements Comment {
      * The request.
      */
     private final transient Request request;
+
+    /**
+     * Ctor.
+     * @param base Base
+     * @param req Request
+     */
+    RqComment(final Base base, final Request req) {
+        this(new RqComments(base, req), req);
+    }
 
     /**
      * Ctor.

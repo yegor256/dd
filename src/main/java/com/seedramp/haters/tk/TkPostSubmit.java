@@ -54,7 +54,7 @@ final class TkPostSubmit implements Take {
         return new RsForward(
             new RsFlash(
                 new TxSubmitted(
-                    new RqPitches(new RqAuthor(this.base, req)),
+                    new RqPitches(this.base, req),
                     new RqFormBase(req)
                 )
             )

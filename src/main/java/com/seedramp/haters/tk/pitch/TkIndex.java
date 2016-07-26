@@ -18,8 +18,6 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tk.RqAuthor;
-import com.seedramp.haters.tk.RqPitches;
 import com.seedramp.haters.tk.RsHtmlPage;
 import com.seedramp.haters.tk.RsPage;
 import com.seedramp.haters.tx.TxComments;
@@ -72,24 +70,12 @@ final class TkIndex implements Take {
                     ),
                     new XeDirectives(
                         new TxPitch(
-                            new RqPitch(
-                                new RqPitches(
-                                    new RqAuthor(this.base, req)
-                                ),
-                                req
-                            )
+                            new RqPitch(this.base, req)
                         )
                     ),
                     new XeDirectives(
                         new TxComments(
-                            new RqComments(
-                                new RqPitch(
-                                    new RqPitches(
-                                        new RqAuthor(this.base, req)
-                                    ),
-                                    req
-                                )
-                            )
+                            new RqComments(this.base, req)
                         )
                     )
                 )

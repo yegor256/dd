@@ -18,8 +18,6 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tk.RqAuthor;
-import com.seedramp.haters.tk.RqPitches;
 import com.seedramp.haters.tx.TxPosted;
 import java.io.IOException;
 import org.takes.Request;
@@ -57,12 +55,7 @@ final class TkPost implements Take {
         return new RsForward(
             new RsFlash(
                 new TxPosted(
-                    new RqComments(
-                        new RqPitch(
-                            new RqPitches(new RqAuthor(this.base, req)),
-                            req
-                        )
-                    ),
+                    new RqComments(this.base, req),
                     new RqFormBase(req)
                 )
             ),

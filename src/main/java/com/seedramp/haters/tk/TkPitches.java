@@ -57,11 +57,7 @@ final class TkPitches implements Take {
                     "/com/seedramp/haters/tk/pre-pitches.xsl",
                     req,
                     new XeDirectives(
-                        new TxPitches(
-                            new RqPitches(
-                                new RqAuthor(this.base, req)
-                            )
-                        )
+                        new TxPitches(new RqPitches(this.base, req))
                     )
                 )
             )
