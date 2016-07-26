@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import java.util.Iterator;
 import org.xembly.Directive;
@@ -32,22 +32,22 @@ import org.xembly.Directive;
 public final class TxPitches implements Iterable<Directive> {
 
     /**
-     * Author.
+     * Pitches.
      */
-    private final transient Author author;
+    private final transient Pitches pitches;
 
     /**
      * Ctor.
-     * @param atr Author
+     * @param pts Pitches
      */
-    public TxPitches(final Author atr) {
-        this.author = atr;
+    public TxPitches(final Pitches pts) {
+        this.pitches = pts;
     }
 
     @Override
     public Iterator<Directive> iterator() {
         try {
-            return this.author.pitches().inXembly().iterator();
+            return this.pitches.inXembly().iterator();
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }

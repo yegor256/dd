@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Author;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import org.takes.rq.RqForm;
 import org.takes.rq.form.RqFormSmart;
@@ -32,9 +32,9 @@ import org.takes.rq.form.RqFormSmart;
 public final class TxSubmitted extends AbstractText {
 
     /**
-     * Author.
+     * Pitches.
      */
-    private final transient Author author;
+    private final transient Pitches pitches;
 
     /**
      * Form.
@@ -43,18 +43,18 @@ public final class TxSubmitted extends AbstractText {
 
     /**
      * Ctor.
-     * @param atr Author
+     * @param pts Pitches
      * @param frm Form
      */
-    public TxSubmitted(final Author atr, final RqForm frm) {
+    public TxSubmitted(final Pitches pts, final RqForm frm) {
         super();
-        this.author = atr;
+        this.pitches = pts;
         this.form = new RqFormSmart(frm);
     }
 
     @Override
     public String toText() throws IOException {
-        this.author.pitches().submit(
+        this.pitches.submit(
             this.form.single("title"),
             this.form.single("text")
         );

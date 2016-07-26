@@ -18,52 +18,64 @@
 package com.seedramp.haters.tk;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tx.TxPitches;
+import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.rs.RsXslt;
-import org.takes.rs.xe.XeDirectives;
+import org.xembly.Directive;
 
 /**
- * List of all pitches.
+ * Pitches from HTTP request.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class TkPitches implements Take {
+public final class RqPitches implements Pitches {
 
     /**
-     * Base.
+     * The base.
      */
     private final transient Base base;
 
     /**
+     * The request.
+     */
+    private final transient Request request;
+
+    /**
      * Ctor.
      * @param bse Base
+     * @param req Request
      */
-    TkPitches(final Base bse) {
+    public RqPitches(final Base bse, final Request req) {
         this.base = bse;
+        this.request = req;
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        return new RsHtmlPage(
-            req,
-            new RsXslt(
-                new RsPage(
-                    "/com/seedramp/haters/tk/pre-pitches.xsl",
-                    req,
-                    new XeDirectives(
-                        new TxPitches(
-                            new RqPitches(this.base, req)
-                        )
-                    )
-                )
-            )
-        );
+    public Pitch pitch(final long num) throws IOException {
+        return this.pitches().pitch(num);
+    }
+
+    @Override
+    public void submit(final String title, final String text)
+        throws IOException {
+        this.pitches().submit(title, text);
+    }
+
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return this.pitches().inXembly();
+    }
+
+    /**
+     * Get pitches.
+     * @return Pitches
+     * @throws IOException If fails
+     */
+    private Pitches pitches() throws IOException {
+        return new RqAuthor(this.base, this.request).pitches();
     }
 
 }
