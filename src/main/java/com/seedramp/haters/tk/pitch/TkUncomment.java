@@ -18,6 +18,8 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tk.RqAuthor;
+import com.seedramp.haters.tk.RqPitches;
 import com.seedramp.haters.tx.TxUncommented;
 import java.io.IOException;
 import org.takes.Request;
@@ -32,6 +34,7 @@ import org.takes.facets.forward.RsForward;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkUncomment implements Take {
 
@@ -51,7 +54,21 @@ final class TkUncomment implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         return new RsForward(
-            new RsFlash(new TxUncommented(new RqComment(this.base, req))),
+            new RsFlash(
+                new TxUncommented(
+                    new RqComment(
+                        new RqComments(
+                            new RqPitch(
+                                new RqPitches(
+                                    new RqAuthor(this.base, req)
+                                ),
+                                req
+                            )
+                        ),
+                        req
+                    )
+                )
+            ),
             String.format("/p/%d", new Path(req).pitch())
         );
     }

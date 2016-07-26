@@ -58,7 +58,9 @@ final class TkPitches implements Take {
                     req,
                     new XeDirectives(
                         new TxPitches(
-                            new RqPitches(this.base, req)
+                            new RqPitches(
+                                new RqAuthor(this.base, req)
+                            )
                         )
                     )
                 )

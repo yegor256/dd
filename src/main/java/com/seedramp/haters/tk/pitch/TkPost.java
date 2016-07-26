@@ -18,6 +18,8 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tk.RqAuthor;
+import com.seedramp.haters.tk.RqPitches;
 import com.seedramp.haters.tx.TxPosted;
 import java.io.IOException;
 import org.takes.Request;
@@ -33,6 +35,7 @@ import org.takes.rq.form.RqFormBase;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkPost implements Take {
 
@@ -54,7 +57,12 @@ final class TkPost implements Take {
         return new RsForward(
             new RsFlash(
                 new TxPosted(
-                    new RqComments(this.base, req),
+                    new RqComments(
+                        new RqPitch(
+                            new RqPitches(new RqAuthor(this.base, req)),
+                            req
+                        )
+                    ),
                     new RqFormBase(req)
                 )
             ),

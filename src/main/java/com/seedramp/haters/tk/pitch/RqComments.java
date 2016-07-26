@@ -17,11 +17,10 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Comment;
 import com.seedramp.haters.core.Comments;
+import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
-import org.takes.Request;
 import org.xembly.Directive;
 
 /**
@@ -34,23 +33,16 @@ import org.xembly.Directive;
 final class RqComments implements Comments {
 
     /**
-     * The base.
+     * The pitch.
      */
-    private final transient Base base;
-
-    /**
-     * The request.
-     */
-    private final transient Request request;
+    private final transient Pitch pitch;
 
     /**
      * Ctor.
-     * @param bse Base
-     * @param req Request
+     * @param pth Pitch
      */
-    RqComments(final Base bse, final Request req) {
-        this.base = bse;
-        this.request = req;
+    RqComments(final Pitch pth) {
+        this.pitch = pth;
     }
 
     @Override
@@ -74,6 +66,6 @@ final class RqComments implements Comments {
      * @throws IOException If fails
      */
     private Comments comments() throws IOException {
-        return new RqPitch(this.base, this.request).comments();
+        return this.pitch.comments();
     }
 }

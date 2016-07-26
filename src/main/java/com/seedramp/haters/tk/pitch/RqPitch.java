@@ -17,10 +17,9 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Comments;
 import com.seedramp.haters.core.Pitch;
-import com.seedramp.haters.tk.RqAuthor;
+import com.seedramp.haters.core.Pitches;
 import java.io.IOException;
 import org.takes.Request;
 import org.xembly.Directive;
@@ -35,9 +34,9 @@ import org.xembly.Directive;
 final class RqPitch implements Pitch {
 
     /**
-     * The base.
+     * Pitches.
      */
-    private final transient Base base;
+    private final transient Pitches pitches;
 
     /**
      * The request.
@@ -46,11 +45,11 @@ final class RqPitch implements Pitch {
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param pts Pitches
      * @param req Request
      */
-    RqPitch(final Base bse, final Request req) {
-        this.base = bse;
+    RqPitch(final Pitches pts, final Request req) {
+        this.pitches = pts;
         this.request = req;
     }
 
@@ -75,7 +74,7 @@ final class RqPitch implements Pitch {
      * @throws IOException If fails
      */
     private Pitch pitch() throws IOException {
-        return new RqAuthor(this.base, this.request).pitches().pitch(
+        return this.pitches.pitch(
             new Path(this.request).pitch()
         );
     }
