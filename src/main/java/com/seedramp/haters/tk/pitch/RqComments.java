@@ -19,17 +19,19 @@ package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Comment;
+import com.seedramp.haters.core.Comments;
 import java.io.IOException;
 import org.takes.Request;
+import org.xembly.Directive;
 
 /**
- * Comment in the request.
+ * Comments in the request.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class RqComment implements Comment {
+final class RqComments implements Comments {
 
     /**
      * The base.
@@ -46,24 +48,32 @@ final class RqComment implements Comment {
      * @param bse Base
      * @param req Request
      */
-    RqComment(final Base bse, final Request req) {
+    RqComments(final Base bse, final Request req) {
         this.base = bse;
         this.request = req;
     }
 
     @Override
-    public void delete() throws IOException {
-        this.comment().delete();
+    public Comment comment(final long num) throws IOException {
+        return this.comments().comment(num);
+    }
+
+    @Override
+    public void post(final String text) throws IOException {
+        this.comments().post(text);
+    }
+
+    @Override
+    public Iterable<Directive> inXembly() throws IOException {
+        return this.comments().inXembly();
     }
 
     /**
-     * Get comment.
-     * @return The comment
+     * Get comments.
+     * @return The comments
      * @throws IOException If fails
      */
-    private Comment comment() throws IOException {
-        return new RqComments(this.base, this.request).comment(
-            new Path(this.request).comment()
-        );
+    private Comments comments() throws IOException {
+        return new RqPitch(this.base, this.request).comments();
     }
 }

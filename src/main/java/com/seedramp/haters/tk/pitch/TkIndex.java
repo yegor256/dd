@@ -75,7 +75,7 @@ final class TkIndex implements Take {
                     ),
                     new XeDirectives(
                         new TxComments(
-                            new RqPitch(this.base, req)
+                            new RqComments(this.base, req)
                         )
                     )
                 )

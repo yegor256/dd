@@ -54,7 +54,7 @@ final class TkPost implements Take {
         return new RsForward(
             new RsFlash(
                 new TxPosted(
-                    new RqPitch(this.base, req),
+                    new RqComments(this.base, req),
                     new RqFormBase(req)
                 )
             ),

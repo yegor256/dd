@@ -17,7 +17,7 @@
  */
 package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Pitch;
+import com.seedramp.haters.core.Comments;
 import java.io.IOException;
 import java.util.Iterator;
 import org.xembly.Directive;
@@ -32,22 +32,22 @@ import org.xembly.Directive;
 public final class TxComments implements Iterable<Directive> {
 
     /**
-     * Pitch.
+     * Comments.
      */
-    private final transient Pitch pitch;
+    private final transient Comments comments;
 
     /**
      * Ctor.
-     * @param pth Pitch
+     * @param cmt Comments
      */
-    public TxComments(final Pitch pth) {
-        this.pitch = pth;
+    public TxComments(final Comments cmt) {
+        this.comments = cmt;
     }
 
     @Override
     public Iterator<Directive> iterator() {
         try {
-            return this.pitch.comments().inXembly().iterator();
+            return this.comments.inXembly().iterator();
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
