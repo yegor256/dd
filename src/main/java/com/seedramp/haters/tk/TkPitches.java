@@ -18,11 +18,12 @@
 package com.seedramp.haters.tk;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tx.TxPitches;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.RsXSLT;
+import org.takes.rs.RsXslt;
 import org.takes.rs.xe.XeDirectives;
 
 /**
@@ -51,12 +52,14 @@ final class TkPitches implements Take {
     public Response act(final Request req) throws IOException {
         return new RsHtmlPage(
             req,
-            new RsXSLT(
+            new RsXslt(
                 new RsPage(
                     "/com/seedramp/haters/tk/pre-pitches.xsl",
                     req,
                     new XeDirectives(
-                        new RqAuthor(this.base, req).pitches().inXembly()
+                        new TxPitches(
+                            new RqAuthor(this.base, req)
+                        )
                     )
                 )
             )

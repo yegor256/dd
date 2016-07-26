@@ -19,47 +19,51 @@ package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
 import com.seedramp.haters.core.Comment;
-import com.seedramp.haters.core.Pitch;
 import java.io.IOException;
 import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
 
 /**
- * Delete comment.
+ * Comment in the request.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-final class TkDeleteComment implements Take {
+final class RqComment implements Comment {
 
     /**
-     * Base.
+     * The base.
      */
     private final transient Base base;
 
     /**
+     * The request.
+     */
+    private final transient Request request;
+
+    /**
      * Ctor.
      * @param bse Base
+     * @param req Request
      */
-    TkDeleteComment(final Base bse) {
+    RqComment(final Base bse, final Request req) {
         this.base = bse;
+        this.request = req;
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req);
-        final Comment comment = pitch.comments().comment(
-            new Path(req).comment()
-        );
-        comment.delete();
-        return new RsForward(
-            new RsFlash("comment deleted"),
-            String.format("/p/%d", new Path(req).pitch())
-        );
+    public void delete() throws IOException {
+        this.comment().delete();
     }
 
+    /**
+     * Get pitch.
+     * @return The pitch
+     * @throws IOException If fails
+     */
+    private Comment comment() throws IOException {
+        return new RqPitch(this.base, this.request)
+            .comments()
+            .comment(new Path(this.request).comment());
+    }
 }

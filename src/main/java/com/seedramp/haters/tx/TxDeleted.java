@@ -15,51 +15,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Base;
-import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkText;
-import org.takes.tk.TkWrap;
+import com.seedramp.haters.core.Pitch;
+import java.io.IOException;
 
 /**
- * Index of pitch.
+ * Pitch deleted.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class TkPitch extends TkWrap {
+public final class TxDeleted extends AbstractText {
+
+    /**
+     * Pitch.
+     */
+    private final transient Pitch pitch;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param pth Pitch
      */
-    public TkPitch(final Base base) {
-        super(TkPitch.make(base));
+    public TxDeleted(final Pitch pth) {
+        super();
+        this.pitch = pth;
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkPitch("", new TkIndex(base)),
-            new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base)),
-            new FkPitch(
-                "/c/.*",
-                new TkFork(
-                    new FkComment("", new TkText("what?")),
-                    new FkComment("/delete", new TkUncomment(base))
-                )
-            )
-        );
+    @Override
+    public String toText() throws IOException {
+        this.pitch.delete();
+        return "pitch deleted";
     }
-
 }

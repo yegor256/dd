@@ -18,47 +18,41 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tx.TxUncommented;
+import java.io.IOException;
+import org.takes.Request;
+import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkText;
-import org.takes.tk.TkWrap;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
 
 /**
- * Index of pitch.
+ * Delete comment.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class TkPitch extends TkWrap {
+final class TkUncomment implements Take {
+
+    /**
+     * Base.
+     */
+    private final transient Base base;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param bse Base
      */
-    public TkPitch(final Base base) {
-        super(TkPitch.make(base));
+    TkUncomment(final Base bse) {
+        this.base = bse;
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkPitch("", new TkIndex(base)),
-            new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base)),
-            new FkPitch(
-                "/c/.*",
-                new TkFork(
-                    new FkComment("", new TkText("what?")),
-                    new FkComment("/delete", new TkUncomment(base))
-                )
-            )
+    @Override
+    public Response act(final Request req) throws IOException {
+        return new RsForward(
+            new RsFlash(new TxUncommented(new RqComment(this.base, req))),
+            String.format("/p/%d", new Path(req).pitch())
         );
     }
 

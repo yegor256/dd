@@ -15,40 +15,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters;
-
-import com.seedramp.haters.dynamo.DyBase;
-import com.seedramp.haters.tk.TkApp;
-import java.io.IOException;
-import org.takes.http.Exit;
-import org.takes.http.FtCli;
 
 /**
- * Command line entry point.
+ * Transactions.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class Entry {
-
-    /**
-     * Ctor.
-     */
-    private Entry() {
-        // utility class
-    }
-
-    /**
-     * Main entry point.
-     * @param args Arguments
-     * @throws IOException If fails
-     */
-    public static void main(final String... args) throws IOException {
-        new FtCli(
-            new TkApp(new DyBase()),
-            args
-        ).start(Exit.NEVER);
-    }
-
-}
+package com.seedramp.haters.tx;

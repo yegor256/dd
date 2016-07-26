@@ -18,13 +18,14 @@
 package com.seedramp.haters.tk;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tx.TxSubmitted;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
+import org.takes.rq.form.RqFormBase;
 
 /**
  * Pitch submit page (POST).
@@ -49,13 +50,15 @@ final class TkPostSubmit implements Take {
     }
 
     @Override
-    // @checkstyle DiamondOperatorCheck (5 lines)
     public Response act(final Request req) throws IOException {
-        final RqForm.Smart form = new RqForm.Smart(new RqForm.Base(req));
-        new RqAuthor(this.base, req).pitches().submit(
-            form.single("title"), form.single("text")
+        return new RsForward(
+            new RsFlash(
+                new TxSubmitted(
+                    new RqAuthor(this.base, req),
+                    new RqFormBase(req)
+                )
+            )
         );
-        return new RsForward(new RsFlash("thanks!"));
     }
 
 }

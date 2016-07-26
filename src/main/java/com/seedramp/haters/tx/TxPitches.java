@@ -15,51 +15,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Base;
-import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkText;
-import org.takes.tk.TkWrap;
+import com.seedramp.haters.core.Author;
+import java.io.IOException;
+import java.util.Iterator;
+import org.xembly.Directive;
 
 /**
- * Index of pitch.
+ * List of all pitches.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class TkPitch extends TkWrap {
+public final class TxPitches implements Iterable<Directive> {
+
+    /**
+     * Author.
+     */
+    private final transient Author author;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param atr Author
      */
-    public TkPitch(final Base base) {
-        super(TkPitch.make(base));
+    public TxPitches(final Author atr) {
+        this.author = atr;
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkPitch("", new TkIndex(base)),
-            new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base)),
-            new FkPitch(
-                "/c/.*",
-                new TkFork(
-                    new FkComment("", new TkText("what?")),
-                    new FkComment("/delete", new TkUncomment(base))
-                )
-            )
-        );
+    @Override
+    public Iterator<Directive> iterator() {
+        try {
+            return this.author.pitches().inXembly().iterator();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 }

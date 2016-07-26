@@ -18,13 +18,14 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tx.TxPosted;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.RqForm;
+import org.takes.rq.form.RqFormBase;
 
 /**
  * Post a comment.
@@ -50,11 +51,13 @@ final class TkPost implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        new RqPitch(this.base, req).comments().post(
-            new RqForm.Smart(new RqForm.Base(req)).single("text")
-        );
         return new RsForward(
-            new RsFlash("thanks!"),
+            new RsFlash(
+                new TxPosted(
+                    new RqPitch(this.base, req),
+                    new RqFormBase(req)
+                )
+            ),
             String.format("/p/%d", new Path(req).pitch())
         );
     }

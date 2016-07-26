@@ -15,40 +15,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters;
+package com.seedramp.haters.tx;
 
-import com.seedramp.haters.dynamo.DyBase;
-import com.seedramp.haters.tk.TkApp;
 import java.io.IOException;
-import org.takes.http.Exit;
-import org.takes.http.FtCli;
 
 /**
- * Command line entry point.
+ * Text.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
  */
-public final class Entry {
+abstract class AbstractText implements CharSequence {
 
     /**
-     * Ctor.
-     */
-    private Entry() {
-        // utility class
-    }
-
-    /**
-     * Main entry point.
-     * @param args Arguments
+     * Make it.
+     * @return Text
      * @throws IOException If fails
      */
-    public static void main(final String... args) throws IOException {
-        new FtCli(
-            new TkApp(new DyBase()),
-            args
-        ).start(Exit.NEVER);
+    public abstract String toText() throws IOException;
+
+    @Override
+    public final String toString() {
+        try {
+            return this.toText();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
+    @Override
+    public final int length() {
+        return this.toString().length();
+    }
+
+    @Override
+    public final char charAt(final int index) {
+        return this.toString().charAt(index);
+    }
+
+    @Override
+    public final CharSequence subSequence(final int start, final int end) {
+        return this.toString().subSequence(start, end);
+    }
 }

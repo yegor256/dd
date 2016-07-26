@@ -24,10 +24,10 @@ import org.takes.Request;
 import org.takes.Response;
 import org.takes.facets.fork.FkTypes;
 import org.takes.facets.fork.RsFork;
-import org.takes.rs.RsPrettyXML;
+import org.takes.rs.RsPrettyXml;
 import org.takes.rs.RsWithType;
 import org.takes.rs.RsWrap;
-import org.takes.rs.RsXSLT;
+import org.takes.rs.RsXslt;
 import org.takes.rs.xe.XeSource;
 
 /**
@@ -86,11 +86,11 @@ public final class RsHtmlPage extends RsWrap {
             req,
             new FkTypes(
                 "application/xml,text/xml",
-                new RsPrettyXML(new RsWithType(res, "text/xml"))
+                new RsPrettyXml(new RsWithType(res, "text/xml"))
             ),
             new FkTypes(
                 "*/*",
-                new RsXSLT(new RsWithType(res, "text/html"))
+                new RsXslt(new RsWithType(res, "text/html"))
             )
         );
     }

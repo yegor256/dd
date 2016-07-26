@@ -18,14 +18,15 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
-import com.seedramp.haters.core.Pitch;
 import com.seedramp.haters.tk.RsHtmlPage;
 import com.seedramp.haters.tk.RsPage;
+import com.seedramp.haters.tx.TxComments;
+import com.seedramp.haters.tx.TxPitch;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.RsXSLT;
+import org.takes.rs.RsXslt;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeLink;
 
@@ -35,6 +36,7 @@ import org.takes.rs.xe.XeLink;
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkIndex implements Take {
 
@@ -53,10 +55,9 @@ final class TkIndex implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Pitch pitch = new RqPitch(this.base, req);
         return new RsHtmlPage(
             req,
-            new RsXSLT(
+            new RsXslt(
                 new RsPage(
                     "/com/seedramp/haters/tk/pitch/pre-pitch.xsl",
                     req,
@@ -67,8 +68,16 @@ final class TkIndex implements Take {
                             new Path(req).pitch()
                         )
                     ),
-                    new XeDirectives(pitch.inXembly()),
-                    new XeDirectives(pitch.comments().inXembly())
+                    new XeDirectives(
+                        new TxPitch(
+                            new RqPitch(this.base, req)
+                        )
+                    ),
+                    new XeDirectives(
+                        new TxComments(
+                            new RqPitch(this.base, req)
+                        )
+                    )
                 )
             )
         );

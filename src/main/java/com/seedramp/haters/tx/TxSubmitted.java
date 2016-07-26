@@ -15,51 +15,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.seedramp.haters.tk.pitch;
+package com.seedramp.haters.tx;
 
-import com.seedramp.haters.core.Base;
-import org.takes.Take;
-import org.takes.facets.fork.TkFork;
-import org.takes.tk.TkText;
-import org.takes.tk.TkWrap;
+import com.seedramp.haters.core.Author;
+import java.io.IOException;
+import org.takes.rq.RqForm;
+import org.takes.rq.form.RqFormSmart;
 
 /**
- * Index of pitch.
+ * Submitted question.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class TkPitch extends TkWrap {
+public final class TxSubmitted extends AbstractText {
+
+    /**
+     * Author.
+     */
+    private final transient Author author;
+
+    /**
+     * Form.
+     */
+    private final transient RqFormSmart form;
 
     /**
      * Ctor.
-     * @param base Base
+     * @param atr Author
+     * @param frm Form
      */
-    public TkPitch(final Base base) {
-        super(TkPitch.make(base));
+    public TxSubmitted(final Author atr, final RqForm frm) {
+        super();
+        this.author = atr;
+        this.form = new RqFormSmart(frm);
     }
 
-    /**
-     * Ctor.
-     * @param base Base
-     * @return Take
-     */
-    private static Take make(final Base base) {
-        return new TkFork(
-            new FkPitch("", new TkIndex(base)),
-            new FkPitch("/delete", new TkDelete(base)),
-            new FkPitch("/post", new TkPost(base)),
-            new FkPitch(
-                "/c/.*",
-                new TkFork(
-                    new FkComment("", new TkText("what?")),
-                    new FkComment("/delete", new TkUncomment(base))
-                )
-            )
+    @Override
+    public String toText() throws IOException {
+        this.author.pitches().submit(
+            this.form.single("title"),
+            this.form.single("text")
         );
+        return "submitted, thanks";
     }
 
 }

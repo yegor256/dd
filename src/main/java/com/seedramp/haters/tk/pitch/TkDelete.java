@@ -18,6 +18,7 @@
 package com.seedramp.haters.tk.pitch;
 
 import com.seedramp.haters.core.Base;
+import com.seedramp.haters.tx.TxDeleted;
 import java.io.IOException;
 import org.takes.Request;
 import org.takes.Response;
@@ -49,9 +50,12 @@ final class TkDelete implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        new RqPitch(this.base, req).delete();
         return new RsForward(
-            new RsFlash("pitch deleted")
+            new RsFlash(
+                new TxDeleted(
+                    new RqPitch(this.base, req)
+                )
+            )
         );
     }
 
