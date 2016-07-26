@@ -73,7 +73,7 @@ final class RqComment implements Comment {
      */
     private Comment comment() throws IOException {
         return this.comments.comment(
-            new Path(this.request).comment()
+            new CommentNumber(this.request).longValue()
         );
     }
 }

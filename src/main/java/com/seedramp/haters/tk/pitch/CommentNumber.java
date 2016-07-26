@@ -17,50 +17,63 @@
  */
 package com.seedramp.haters.tk.pitch;
 
-import com.seedramp.haters.core.Base;
-import com.seedramp.haters.tx.TxPosted;
 import java.io.IOException;
 import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormBase;
+import org.takes.rq.RqHeaders;
 
 /**
- * Post a comment.
+ * Path to the pitch.
  *
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class TkPost implements Take {
+final class CommentNumber extends Number {
 
     /**
-     * Base.
+     * Serialization marker.
      */
-    private final transient Base base;
+    private static final long serialVersionUID = 408648085627351628L;
+
+    /**
+     * The request.
+     */
+    private final transient Request request;
 
     /**
      * Ctor.
-     * @param bse Base
+     * @param req Request
      */
-    TkPost(final Base bse) {
-        this.base = bse;
+    CommentNumber(final Request req) {
+        super();
+        this.request = req;
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        return new RsForward(
-            new RsFlash(
-                new TxPosted(
-                    new RqComments(this.base, req),
-                    new RqFormBase(req)
-                )
-            ),
-            String.format("/p/%d", new PitchNumber(req).longValue())
-        );
+    public int intValue() {
+        throw new UnsupportedOperationException("#intValue()");
     }
 
+    @Override
+    public long longValue() {
+        try {
+            return Long.parseLong(
+                new RqHeaders.Smart(
+                    new RqHeaders.Base(this.request)
+                ).single("X-Haters-Comment")
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    public float floatValue() {
+        throw new UnsupportedOperationException("#floatValue()");
+    }
+
+    @Override
+    public double doubleValue() {
+        throw new UnsupportedOperationException("#doubleValue()");
+    }
 }

@@ -86,7 +86,7 @@ final class RqPitch implements Pitch {
      */
     private Pitch pitch() throws IOException {
         return this.pitches.pitch(
-            new Path(this.request).pitch()
+            new PitchNumber(this.request).longValue()
         );
     }
 

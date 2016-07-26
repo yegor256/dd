@@ -57,7 +57,7 @@ final class TkUncomment implements Take {
                     new RqComment(this.base, req)
                 )
             ),
-            String.format("/p/%d", new Path(req).pitch())
+            String.format("/p/%d", new PitchNumber(req).longValue())
         );
     }
 

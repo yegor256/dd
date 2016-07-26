@@ -65,7 +65,7 @@ final class TkIndex implements Take {
                         "post",
                         String.format(
                             "/p/%d/post",
-                            new Path(req).pitch()
+                            new PitchNumber(req).longValue()
                         )
                     ),
                     new XeDirectives(

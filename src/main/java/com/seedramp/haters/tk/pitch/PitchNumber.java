@@ -28,45 +28,52 @@ import org.takes.rq.RqHeaders;
  * @version $Id$
  * @since 1.0
  */
-final class Path {
+final class PitchNumber extends Number {
+
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = 408648085627351628L;
 
     /**
      * The request.
      */
-    private final transient Request request;
+    private final Request request;
 
     /**
      * Ctor.
      * @param req Request
      */
-    Path(final Request req) {
+    PitchNumber(final Request req) {
+        super();
         this.request = req;
     }
 
-    /**
-     * Get pitch number.
-     * @return The pitch
-     * @throws IOException If fails
-     */
-    public long pitch() throws IOException {
-        return Long.parseLong(
-            new RqHeaders.Smart(
-                new RqHeaders.Base(this.request)
-            ).single("X-Haters-Pitch")
-        );
+    @Override
+    public int intValue() {
+        throw new UnsupportedOperationException("#intValue()");
     }
 
-    /**
-     * Get comment number.
-     * @return The pitch
-     * @throws IOException If fails
-     */
-    public long comment() throws IOException {
-        return Long.parseLong(
-            new RqHeaders.Smart(
-                new RqHeaders.Base(this.request)
-            ).single("X-Haters-Comment")
-        );
+    @Override
+    public long longValue() {
+        try {
+            return Long.parseLong(
+                new RqHeaders.Smart(
+                    new RqHeaders.Base(this.request)
+                ).single("X-Haters-Pitch")
+            );
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
+    @Override
+    public float floatValue() {
+        throw new UnsupportedOperationException("#floatValue()");
+    }
+
+    @Override
+    public double doubleValue() {
+        throw new UnsupportedOperationException("#doubleValue()");
+    }
 }

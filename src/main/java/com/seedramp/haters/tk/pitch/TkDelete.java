@@ -52,7 +52,9 @@ final class TkDelete implements Take {
     public Response act(final Request req) throws IOException {
         return new RsForward(
             new RsFlash(
-                new TxDeleted(new RqPitch(this.base, req))
+                new TxDeleted(
+                    new RqPitch(this.base, req)
+                )
             )
         );
     }
