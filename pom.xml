@@ -26,16 +26,16 @@
         <version>0.45</version>
     </parent>
     <groupId>com.seedramp</groupId>
-    <artifactId>haters</artifactId>
+    <artifactId>dd</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>haters</name>
-    <description>haters</description>
-    <url>http://haters.yegor256.com</url>
+    <name>dd</name>
+    <description>dd</description>
+    <url>http://dd.yegor256.com</url>
     <inceptionYear>2015</inceptionYear>
     <organization>
         <name>Yegor Bugayenko</name>
-        <url>http://haters.yegor256.com</url>
+        <url>http://dd.yegor256.com</url>
     </organization>
     <licenses>
         <license>
@@ -60,16 +60,16 @@
     </developers>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/yegor256/haters/issues</url>
+        <url>https://github.com/yegor256/dd/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:git@github.com:yegor256/haters.git</connection>
-        <developerConnection>scm:git:git@github.com:yegor256/haters.git</developerConnection>
-        <url>https://github.com/yegor256/haters</url>
+        <connection>scm:git:git@github.com:yegor256/dd.git</connection>
+        <developerConnection>scm:git:git@github.com:yegor256/dd.git</developerConnection>
+        <url>https://github.com/yegor256/dd</url>
     </scm>
     <ciManagement>
         <system>travis</system>
-        <url>https://travis-ci.org/yegor256/haters</url>
+        <url>https://travis-ci.org/yegor256/dd</url>
     </ciManagement>
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>
@@ -441,7 +441,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>com.seedramp.haters.Entry</mainClass>
+                                    <mainClass>com.seedramp.dd.Entry</mainClass>
                                     <classpathScope>test</classpathScope>
                                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
                                     <arguments>
@@ -467,7 +467,7 @@
                 <file><exists>pom.xml</exists></file>
             </activation>
             <build>
-                <finalName>haters</finalName>
+                <finalName>dd</finalName>
                 <plugins>
                     <plugin>
                         <artifactId>maven-jar-plugin</artifactId>

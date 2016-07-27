@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="/css/pitches.css?{version/revision}"/>
     </xsl:template>
     <xsl:template match="page" mode="body">
-        <p><xsl:text>Let our haters take a look at your startup.</xsl:text></p>
+        <p><xsl:text>Let our dd take a look at your startup.</xsl:text></p>
         <form action="{links/link[@rel='post']/@href}" method="post">
             <label><xsl:text>Title (make it very short):</xsl:text></label>
             <input name="title" size="50" type="text" maxlength="100"/>

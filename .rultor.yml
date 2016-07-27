@@ -11,21 +11,21 @@ architect:
 - alex-palevsky
 assets:
   id_rsa: yegor256/home#assets/heroku-key
-  settings.xml: yegor256/home#assets/haters/settings.xml
+  settings.xml: yegor256/home#assets/dd/settings.xml
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
   s3cfg: yegor256/home#assets/s3cfg
 merge:
   script: |-
-    mvn help:system clean install -Pqulice -Phaters --errors --settings ../settings.xml
+    mvn help:system clean install -Pqulice -Pdd --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
 deploy:
   script: |-
-    mvn clean package -Phaters --errors --settings ../settings.xml --batch-mode
+    mvn clean package -Pdd --errors --settings ../settings.xml --batch-mode
     mvn clean
-    pdd --source=$(pwd) --verbose --file=haters.xml
-    s3cmd --no-progress put haters.xml --config=../s3cfg s3://pdd.teamed.io/haters.xml
+    pdd --source=$(pwd) --verbose --file=dd.xml
+    s3cmd --no-progress put dd.xml --config=../s3cfg s3://pdd.teamed.io/dd.xml
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
@@ -33,8 +33,8 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     cp ../settings.xml settings.xml
-    mvn clean package -Pqulice -Phaters --errors --batch-mode
-    git remote add heroku git@heroku.com:whaters.git
+    mvn clean package -Pqulice -Pdd --errors --batch-mode
+    git remote add heroku git@heroku.com:wdd.git
     mkdir -p ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
     chmod -R 600 ~/.ssh/*

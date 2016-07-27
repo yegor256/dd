@@ -35,7 +35,7 @@
                             <ul>
                                 <li>
                                     <a href="{links/link[@rel='home']/@href}" class="logo">
-                                        <xsl:text>startup_haters</xsl:text>
+                                        <xsl:text>startup_dd</xsl:text>
                                     </a>
                                 </li>
                                 <li>
@@ -59,7 +59,7 @@
                             </ul>
                         </nav>
                         <form method="get" action="https://www.google.com/search">
-                            <input name="sitesearch" value="haters.seedramp.com" type="hidden"/>
+                            <input name="sitesearch" value="dd.seedramp.com" type="hidden"/>
                             <input type="text" name="q" size="40" autocomplete="off" placeholder="Search..."/>
                         </form>
                         <xsl:apply-templates select="flash"/>
