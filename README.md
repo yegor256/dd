@@ -1,6 +1,6 @@
-[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/haters)](http://www.rultor.com/p/yegor256/haters)
+[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/dd)](http://www.rultor.com/p/yegor256/dd)
 
-It's a pet project of mine...
+SeedRamp Due Diligence.
 
 To run it locally:
 
