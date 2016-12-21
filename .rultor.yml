@@ -10,10 +10,10 @@ architect:
 - yegor256
 - alex-palevsky
 assets:
-  id_rsa: yegor256/home#assets/heroku-key
-  settings.xml: yegor256/home#assets/dd/settings.xml
-  id_rsa.pub: yegor256/home#assets/heroku-key.pub
-  s3cfg: yegor256/home#assets/s3cfg
+  id_rsa: zerocracy/home#assets/heroku-key
+  settings.xml: zerocracy/home#assets/dd/settings.xml
+  id_rsa.pub: zerocracy/home#assets/heroku-key.pub
+  s3cfg: zerocracy/home#assets/s3cfg
 merge:
   script: |-
     mvn help:system clean install -Pqulice -Pdd --errors --settings ../settings.xml
@@ -24,8 +24,6 @@ deploy:
   script: |-
     mvn clean package -Pdd --errors --settings ../settings.xml --batch-mode
     mvn clean
-    pdd --source=$(pwd) --verbose --file=dd.xml
-    s3cmd --no-progress put dd.xml --config=../s3cfg s3://pdd.teamed.io/dd.xml
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
