@@ -19,7 +19,7 @@
 /**
  * Mody, tests.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @since 1.0
  */
 package com.seedramp.dd;
