@@ -10,10 +10,10 @@ architect:
 - yegor256
 - alex-palevsky
 assets:
-  id_rsa: zerocracy/home#assets/heroku-key
-  settings.xml: zerocracy/home#assets/dd/settings.xml
-  id_rsa.pub: zerocracy/home#assets/heroku-key.pub
-  s3cfg: zerocracy/home#assets/s3cfg
+  id_rsa: yegor256/home#assets/heroku-key
+  settings.xml: yegor256/home#assets/dd/settings.xml
+  id_rsa.pub: yegor256/home#assets/heroku-key.pub
+  s3cfg: yegor256/home#assets/s3cfg
 merge:
   script: |-
     mvn help:system clean install -Pqulice -Pdd --errors --settings ../settings.xml
